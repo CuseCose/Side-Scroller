@@ -14,6 +14,7 @@ public class Character implements Sprite {
     private int xvel=0, yvel=0;
     private double friction=.9;
     private double gravity=.9;
+    private boolean isClimbing=false;
 
     private int timer=0;
 
@@ -65,8 +66,15 @@ public class Character implements Sprite {
         int futureY=y+yvel;
         double futureRealY=(double)map.height/2-((double)futureY/map.blockSize);
         if(map.isNotStandable((int)futureRealX,(int)futureRealY+1)&&map.isNotStandable((int)(futureRealX+.4),(int)futureRealY+1)&&yvel<0){
-            y += yvel;
-            realy = (double) map.height / 2 - ((double) y / map.blockSize);
+            if (!isClimbing) {
+                y += yvel;
+                realy = (double) map.height / 2 - ((double) y / map.blockSize);
+            }else {
+                if(map.isNotClimbable((int)futureRealX,(int)futureRealY+1)&&map.isNotClimbable((int)(futureRealX+.4),(int)futureRealY+1)&&yvel<0){
+                    y += yvel;
+                    realy = (double) map.height / 2 - ((double) y / map.blockSize);
+                }
+            }
         } else if (yvel > 0) {
             if(futureRealY>0&&futureRealY<map.height-1) {
                 y += yvel;
@@ -93,6 +101,7 @@ public class Character implements Sprite {
 
     public void setMovingLeft(boolean input){isMovingLeft=input;}
     public void setMovingRight(boolean input){isMovingRight=input;}
+    public void setClimbing(boolean input){isClimbing=input;}
     public int getY() {
         return y;
     }

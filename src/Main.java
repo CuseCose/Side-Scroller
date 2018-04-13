@@ -94,6 +94,8 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
                 map.setMovingLeft(true);
             }else if(e.getKeyCode()==KeyEvent.VK_SPACE){
                 map.jump();
+            }else if(e.getKeyCode()==KeyEvent.VK_W){
+                map.setClimbing(true);
             }
         }
     }
@@ -106,6 +108,8 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
                 map.setMovingRight(false);
             }else if (e.getKeyCode() == KeyEvent.VK_A) {
                 map.setMovingLeft(false);
+            }else if(e.getKeyCode()==KeyEvent.VK_W){
+                map.setClimbing(false);
             }
         }else if(screenNum==0){
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {

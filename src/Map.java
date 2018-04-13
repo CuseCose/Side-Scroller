@@ -81,7 +81,7 @@ public class Map implements Sprite {
                         }
                     }
                     if(hasGrass) {
-                        int treeHeight = (int) (10 * Math.random())+3;
+                        int treeHeight = (int) (15 * Math.random())+3;
                         for (int y = groundLevel-1; y >= groundLevel - treeHeight; y--) {
                             System.out.println("putting bark at: ("+x+", "+y+")");
                             if(y>=0)
@@ -194,9 +194,9 @@ public class Map implements Sprite {
             case 4:
                 return false;
             case 5:
-                return false;
+                return true;
             case 6:
-                return false;
+                return true;
             case 7:
                 return false;
             default:
@@ -226,6 +226,29 @@ public class Map implements Sprite {
                 return false;
         }
     }
+    public boolean isNotClimbable(int x, int y){
+        //System.out.println("ispassable?");
+        switch (map[x][y]){
+            case 0:
+                return true;
+            case 1:
+                return false;
+            case 2:
+                return false;
+            case 3:
+                return false;
+            case 4:
+                return false;
+            case 5:
+                return false;
+            case 6:
+                return false;
+            case 7:
+                return false;
+            default:
+                return false;
+        }
+    }
 
 
     public void move() {
@@ -234,6 +257,7 @@ public class Map implements Sprite {
 
     public void setMovingRight(boolean input){p1.setMovingRight(input);}
     public void setMovingLeft(boolean input){p1.setMovingLeft(input);}
+    public void setClimbing(boolean input){p1.setClimbing(input);}
     public void jump(){p1.jump();}
 
     public int getY() {
