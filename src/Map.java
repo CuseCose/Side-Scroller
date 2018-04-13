@@ -18,18 +18,18 @@ public class Map implements Sprite {
     public Map(int size){
         switch (size){
             case 1:
-                length=100;
+                length=200;
                 height=60;
                 blockSize=50;
                 break;
             case 2:
-                length=200;
-                height=120;
+                length=400;
+                height=80;
                 blockSize=40;
                 break;
             case 3:
-                length=300;
-                height=160;
+                length=600;
+                height=100;
                 blockSize=30;
                 break;
         }
@@ -106,7 +106,7 @@ public class Map implements Sprite {
 
         System.out.println("generating clouds");
         for (int x=3; x<length-10; x++){
-            if (Math.random()*100<10){
+            if (Math.random()*100<20){
                 int cloudheight=2+(int)(Math.random()*10);
                 int cloudsize=5+(int)(Math.random()*10);
                 for(int cloudx=x; cloudx<x+cloudsize;cloudx++){
