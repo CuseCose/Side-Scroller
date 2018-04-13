@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.concurrent.Future;
 
 public class Character implements Sprite {
 
@@ -7,7 +8,7 @@ public class Character implements Sprite {
     private double realx;
     private double realy;
 
-    private int height=50, width=20;
+    private int height=80, width=20;
     private boolean isMovingRight;
     private boolean isMovingLeft;
     private int xvel=0, yvel=0;
@@ -34,6 +35,8 @@ public class Character implements Sprite {
         g.fillRect(WIDTH/2, HEIGHT/2-25, width, height);
         g.drawString(x+", "+y,WIDTH/2-5, HEIGHT/2-30);
         g.drawString(realx+", "+realy,WIDTH/2-5, HEIGHT/2-45);
+        //g.drawString((realx+5)+", "+realy,WIDTH/2-5, HEIGHT/2-60);
+
     }
 
 
@@ -54,21 +57,27 @@ public class Character implements Sprite {
         if (!isMovingLeft&&!isMovingRight){
             xvel=(int)(xvel*friction);
         }
-        if (yvel>-5){
+        if (yvel>-10){
             yvel--;
         }
         int futureX=x+xvel;
         double futureRealX=(double)map.length/2+((double)futureX/map.blockSize);
         int futureY=y+yvel;
         double futureRealY=(double)map.height/2-((double)futureY/map.blockSize);
-        if(map.isPassable((int)futureRealX,(int)futureRealY+1)&&yvel<0){
-            y+=yvel;
-            realy=(double)map.height/2-((double)y/map.blockSize);
+        if(map.isNotStandable((int)futureRealX,(int)futureRealY+1)&&map.isNotStandable((int)(futureRealX+.4),(int)futureRealY+1)&&yvel<0){
+            y += yvel;
+            realy = (double) map.height / 2 - ((double) y / map.blockSize);
         } else if (yvel > 0) {
-            y+=yvel;
+            if(futureRealY>0&&futureRealY<map.height-1) {
+                y += yvel;
+            }
         }
-        realx=(double)map.length/2+((double)x/map.blockSize);
-        x+=xvel;
+        if((xvel<0&&map.isPassable((int)(futureRealX),((int)futureRealY)))||(xvel>0&&map.isPassable((int)(futureRealX+.4),((int)futureRealY)))) {
+            if (futureRealX>0&&futureRealX<map.length-1) {
+                realx = (double) map.length / 2 + ((double) x / map.blockSize);
+                x += xvel;
+            }
+        }
 
 
 
@@ -79,7 +88,7 @@ public class Character implements Sprite {
 
     public void jump(){
         System.out.println("jump");
-        yvel=10;
+        yvel=20;
     }
 
     public void setMovingLeft(boolean input){isMovingLeft=input;}
