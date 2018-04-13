@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Map implements Sprite {
 
@@ -65,32 +66,58 @@ public class Map implements Sprite {
 
         }
         System.out.println("generating biomes");
-        int currentBiome=1;
-        if (currentBiome==1){
-            for (int x=3; x<length-3; x++){
-                if (Math.random()*100<20){
-                    System.out.println("generating tree at"+x);
-                    boolean hasGrass=false;
-                    int groundLevel=0;
-                    for (int y=0; y<height; y++){
-                        if (map[x][y]==1||map[x][y]==4){
-                            hasGrass=true;
-                            groundLevel=y;
-                            System.out.println("groundlevel: "+groundLevel);
+        int cbiome=0;
+
+        for (int x=0;x<length-1;x++){
+            biomemap[x]=cbiome;
+            if (Math.random()*100<2){
+                System.out.println("change biome");
+                int newbiome=(int)(Math.random()*100);
+                if (newbiome<40){
+                    cbiome=1;
+                }else if (newbiome<80){
+                    cbiome=2;
+                }else {
+                    cbiome=0;
+                }
+
+            }
+        }
+
+        boolean adjacentHasTree=false;
+        for (int x=0; x<length-1; x++) {
+
+            if (biomemap[x] == 0) {
+                for (int y=0; y<height-1; y++){
+                    if (map[x][y]==1){
+                        map[x][y]=8;
+                    }
+                }
+            }else if (biomemap[x] == 1) {
+                if (Math.random() * 100 < 20&&!adjacentHasTree) {
+                    adjacentHasTree=true;
+                    System.out.println("generating tree at" + x);
+                    boolean hasGrass = false;
+                    int groundLevel = 0;
+                    for (int y = 0; y < height; y++) {
+                        if (map[x][y] == 1 || map[x][y] == 4) {
+                            hasGrass = true;
+                            groundLevel = y;
+                            System.out.println("groundlevel: " + groundLevel);
                             break;
                         }
                     }
-                    if(hasGrass) {
-                        int treeHeight = (int) (15 * Math.random())+3;
-                        for (int y = groundLevel-1; y >= groundLevel - treeHeight; y--) {
-                            System.out.println("putting bark at: ("+x+", "+y+")");
-                            if(y>=0)
+                    if (hasGrass) {
+                        int treeHeight = (int) (15 * Math.random()) + 3;
+                        for (int y = groundLevel - 1; y >= groundLevel - treeHeight; y--) {
+                            System.out.println("putting bark at: (" + x + ", " + y + ")");
+                            if (y >= 0)
                                 map[x][y] = 5;
                         }
                         for (int treex = x - 2; treex < x + 3; treex++) {
                             for (int treey = groundLevel - treeHeight - 2; treey < groundLevel - treeHeight + 2; treey++) {
                                 if (!(treex == x && treey >= groundLevel - treeHeight)) {
-                                    if (map[treex][treey]==0) {
+                                    if (map[treex][treey] == 0) {
                                         map[treex][treey] = 6;
                                     }
                                 }
@@ -98,8 +125,49 @@ public class Map implements Sprite {
                         }
                     }
                     x++;
+                }else {
+                    adjacentHasTree=false;
+                }
+            }else if(biomemap[x]==2){
+                if (Math.random() * 100 < 20&&!adjacentHasTree) {
+                    adjacentHasTree=true;
+                    System.out.println("generating tree at" + x);
+                    boolean hasGrass = false;
+                    int groundLevel = 0;
+                    for (int y = 0; y < height; y++) {
+                        if (map[x][y] == 1 || map[x][y] == 4) {
+                            hasGrass = true;
+                            groundLevel = y;
+                            System.out.println("groundlevel: " + groundLevel);
+                            break;
+                        }
+                    }
+                    if (hasGrass) {
+                        int treeHeight = (int) (15 * Math.random()) + 3;
+                        for (int y = groundLevel - 1; y >= groundLevel - treeHeight; y--) {
+                            System.out.println("putting bark at: (" + x + ", " + y + ")");
+                            if (y >= 0)
+                                map[x][y] = 5;
+                        }
+                        for (int treex = x - 2; treex < x + 3; treex++) {
+                            for (int treey = groundLevel - treeHeight - 2; treey < groundLevel - treeHeight + 2; treey++) {
+                                if (!(treex == x && treey >= groundLevel - treeHeight)) {
+                                    if (map[treex][treey] == 0) {
+                                        map[treex][treey] = 10;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
-
+                    //x++;
+                }else {
+                    adjacentHasTree=false;
+                }
+                for (int y=0; y<height-1; y++){
+                    if (map[x][y]==1){
+                        map[x][y]=9;
+                    }
                 }
             }
         }
@@ -167,7 +235,14 @@ public class Map implements Sprite {
                     case 7://clouds
                         g.setColor(Color.white);
                         break;
-
+                    case 8://sand
+                        g.setColor(Color.yellow);
+                        break;
+                    case 9://snow
+                        g.setColor(Color.WHITE);
+                        break;
+                    case 10://snowy leaves
+                        g.setColor(Color.white);
                 }
 
                 g.fillRect(WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY(), blockSize, blockSize);
@@ -199,6 +274,12 @@ public class Map implements Sprite {
                 return true;
             case 7:
                 return false;
+            case 8:
+                return false;
+            case 9:
+                return false;
+            case 10:
+                return true;
             default:
                 return false;
         }
@@ -222,6 +303,12 @@ public class Map implements Sprite {
                 return true;
             case 7:
                 return true;
+            case 8:
+                return false;
+            case 9:
+                return false;
+            case 10:
+                return true;
             default:
                 return false;
         }
@@ -244,6 +331,12 @@ public class Map implements Sprite {
             case 6:
                 return false;
             case 7:
+                return false;
+            case 8:
+                return false;
+            case 9:
+                return false;
+            case 10:
                 return false;
             default:
                 return false;
