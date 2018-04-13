@@ -56,6 +56,11 @@ public class Map implements Sprite {
                 }
             }
             int randChangeSize=(int)(Math.random()*100);
+            if (randChangeSize<30){
+                cground++;
+            }else if (randChangeSize<60){
+                cground--;
+            }
 
 
         }
