@@ -5,6 +5,7 @@ public class Map implements Sprite {
 
     int[][] map;//block map
     int[] biomemap;//biome map
+    Block[][] blocks;//block block map
 
     private Character p1;
     int length, height;
@@ -37,6 +38,7 @@ public class Map implements Sprite {
         System.out.println("generating map");
         biomemap=new int[length];
         map=new int[length][height];
+        blocks=new Block[length][height];
         int cground=height/2;
         for (int x=0; x<length;x++){
             for (int y=0; y<height; y++){
@@ -194,6 +196,7 @@ public class Map implements Sprite {
         for (int y=0; y<height; y++){
             for (int x=0; x<length; x++){
                 System.out.print(map[x][y]+" ");
+                blocks[x][y]=new Block(x,y,map[x][y], blockSize);
             }
             System.out.println("");
         }
@@ -208,47 +211,11 @@ public class Map implements Sprite {
     }
 
     public void draw(Graphics g) {
-
+        g.setColor(Color.cyan);
+        g.fillRect(0,0,WIDTH,HEIGHT);
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
             for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
-                switch (map[loadx][loady]){
-                    case 0://empty
-                        g.setColor(Color.cyan);
-                        break;
-                    case 1://grass
-                        g.setColor(Color.green);
-                        break;
-                    case 2://grey rock
-                        g.setColor(Color.GRAY);
-                        break;
-                    case 3://black rock
-                        g.setColor(Color.black);
-                        break;
-                    case 4://dirt
-                        g.setColor(dirt);
-                        break;
-                    case 5://wood
-                        g.setColor(bark);
-                        break;
-                    case 6://leaves
-                        g.setColor(leaves);
-                        break;
-                    case 7://clouds
-                        g.setColor(Color.white);
-                        break;
-                    case 8://sand
-                        g.setColor(Color.yellow);
-                        break;
-                    case 9://snow
-                        g.setColor(Color.WHITE);
-                        break;
-                    case 10://snowy leaves
-                        g.setColor(Color.white);
-                }
-
-                g.fillRect(WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY(), blockSize, blockSize);
-                //g.setColor(Color.black);
-                //g.drawString("("+loadx+", "+loady+")",WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX()+7, HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY()+30);
+                blocks[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY());
             }
         }
         p1.draw(g);
@@ -257,90 +224,26 @@ public class Map implements Sprite {
     }
 
     public boolean isNotStandable(int x, int y){
-        //System.out.println("ispassable?");
-        switch (map[x][y]){
-            case 0:
-                return true;
-            case 1:
-                return false;
-            case 2:
-                return false;
-            case 3:
-                return false;
-            case 4:
-                return false;
-            case 5:
-                return true;
-            case 6:
-                return true;
-            case 7:
-                return false;
-            case 8:
-                return false;
-            case 9:
-                return false;
-            case 10:
-                return true;
-            default:
-                return false;
+        if ( blocks[x][y].isNotStandable()){
+            return true;
+        }else {
+            return false;
         }
     }
     public boolean isPassable(int x, int y){
-        //System.out.println("ispassable?");
-        switch (map[x][y]){
-            case 0:
-                return true;
-            case 1:
-                return false;
-            case 2:
-                return false;
-            case 3:
-                return false;
-            case 4:
-                return false;
-            case 5:
-                return true;
-            case 6:
-                return true;
-            case 7:
-                return true;
-            case 8:
-                return false;
-            case 9:
-                return false;
-            case 10:
-                return true;
-            default:
-                return false;
+
+        if ( blocks[x][y].isPassable()){
+            return true;
+        }else {
+            return false;
         }
     }
     public boolean isNotClimbable(int x, int y){
-        //System.out.println("ispassable?");
-        switch (map[x][y]){
-            case 0:
-                return true;
-            case 1:
-                return false;
-            case 2:
-                return false;
-            case 3:
-                return false;
-            case 4:
-                return false;
-            case 5:
-                return false;
-            case 6:
-                return false;
-            case 7:
-                return false;
-            case 8:
-                return false;
-            case 9:
-                return false;
-            case 10:
-                return false;
-            default:
-                return false;
+
+        if ( blocks[x][y].isNotClimbable()){
+            return true;
+        }else {
+            return false;
         }
     }
 
