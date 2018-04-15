@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Map implements Sprite {
 
-    int[][] map;//block map
+    //int[][] map;//block map
     int[] biomemap;//biome map
     Block[][] blocks;//block block map
 
@@ -33,7 +33,7 @@ public class Map implements Sprite {
         }
         System.out.println("generating map");
         biomemap=new int[length];
-        map=new int[length][height];
+        int[][] map=new int[length][height];
         blocks=new Block[length][height];
         int cground=height/2;
         for (int x=0; x<length;x++){
