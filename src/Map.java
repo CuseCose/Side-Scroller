@@ -78,7 +78,6 @@ public class Map implements Sprite {
                 }else {
                     cbiome=0;
                 }
-                x+=10;
 
             }
         }
