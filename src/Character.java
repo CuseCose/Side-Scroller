@@ -19,11 +19,15 @@ public class Character implements Sprite {
     private int timer=0;
 
     private boolean isJumping=true;
+    private boolean firstLaunch=true;
+    public int mapLength,mapHeight;
 
     public Character(){
         x=0;
         y=0;
         inventory=new int[10];
+        firstLaunch=true;
+
 
     }
 
@@ -42,6 +46,10 @@ public class Character implements Sprite {
 
 
     public void move(Map map) {
+        if (firstLaunch){
+            mapHeight=map.height;
+            mapLength=map.length;
+        }
         timer++;
         if (timer==50){timer=0;}
         if (timer==19){ System.out.println("is moving left: "+isMovingLeft+" is moving right: "+isMovingRight+" x velocity: "+xvel+" y velocity: "+yvel);}
@@ -109,6 +117,36 @@ public class Character implements Sprite {
         return x;
     }
 
+    public double getRealx() { return realx; }
+    public double getRealy() { return realy; }
 
+    public int getLoadXMin(){
+        int loadx=(int)realx-50;
+        if (loadx<0){
+            loadx=0;
+        }
+        return loadx;
+    }
+    public int getLoadXMax(){
+        int loadx=(int) realx+50;
+        if (loadx>mapLength-1){
+            loadx=mapLength-1;
+        }
+        return loadx;
+    }
+    public int getLoadYMin(){
+        int loady=(int)realy-50;
+        if (loady<0){
+            loady=0;
+        }
+        return loady;
+    }
+    public int getLoadYMax(){
+        int loady=(int)realy+50;
+        if (loady>mapHeight-1){
+            loady=mapHeight-1;
+        }
+        return loady;
+    }
 
 }

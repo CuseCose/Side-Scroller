@@ -19,18 +19,18 @@ public class Map implements Sprite {
     public Map(int size){
         switch (size){
             case 1:
-                length=200;
-                height=60;
+                length=1000;
+                height=100;
                 blockSize=50;
                 break;
             case 2:
-                length=400;
-                height=80;
+                length=2000;
+                height=200;
                 blockSize=40;
                 break;
             case 3:
-                length=600;
-                height=100;
+                length=3000;
+                height=300;
                 blockSize=30;
                 break;
         }
@@ -208,8 +208,9 @@ public class Map implements Sprite {
     }
 
     public void draw(Graphics g) {
-        for(int loadx=0;loadx<length;loadx++){
-            for(int loady=0; loady<height; loady++){
+
+        for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
+            for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
                 switch (map[loadx][loady]){
                     case 0://empty
                         g.setColor(Color.cyan);
