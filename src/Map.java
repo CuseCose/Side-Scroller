@@ -10,11 +10,7 @@ public class Map implements Sprite {
     private Character p1;
     int length, height;
     int blockSize;
-    int loadsizex=10;
-    int loadsizey=5;
-    Color dirt=new Color(102,51,0);
-    Color bark=new Color(153,102,51);
-    Color leaves=new Color(0, 153, 51);
+
 
 
     public Map(int size){
@@ -118,7 +114,7 @@ public class Map implements Sprite {
                         }
                         for (int treex = x - 2; treex < x + 3; treex++) {
                             for (int treey = groundLevel - treeHeight - 2; treey < groundLevel - treeHeight + 2; treey++) {
-                                if (!(treex == x && treey >= groundLevel - treeHeight)) {
+                                if (!(treex == x && treey >= groundLevel - treeHeight&&treey<=0)) {
                                     if (map[treex][treey] == 0) {
                                         map[treex][treey] = 6;
                                     }
@@ -211,7 +207,14 @@ public class Map implements Sprite {
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.cyan);
+        if (p1.getRealy()<(height*.1)){
+            g.setColor(Color.black);
+        }else if(p1.getRealy()<height*.8){
+            g.setColor(Color.cyan);
+        }else {
+            g.setColor(Color.GRAY);
+        }
+
         g.fillRect(0,0,WIDTH,HEIGHT);
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
             for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
