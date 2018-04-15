@@ -3,15 +3,11 @@ import java.util.ArrayList;
 
 public class Map implements Sprite {
 
-    //int[][] map;//block map
     int[] biomemap;//biome map
     Block[][] blocks;//block block map
-
     private Character p1;
     int length, height;
     int blockSize;
-
-
 
     public Map(int size){
         switch (size){
@@ -60,12 +56,9 @@ public class Map implements Sprite {
             }else if (randChangeSize<60){
                 cground--;
             }
-
-
         }
         System.out.println("generating biomes");
         int cbiome=0;
-
         for (int x=0;x<length-1;x++){
             biomemap[x]=cbiome;
             if (Math.random()*100<2){
@@ -78,13 +71,10 @@ public class Map implements Sprite {
                 }else {
                     cbiome=0;
                 }
-
             }
         }
-
         boolean adjacentHasTree=false;
         for (int x=0; x<length-1; x++) {
-
             if (biomemap[x] == 0) {
                 for (int y=0; y<height-1; y++){
                     if (map[x][y]==1){
@@ -157,8 +147,6 @@ public class Map implements Sprite {
                             }
                         }
                     }
-
-                    //x++;
                 }else {
                     adjacentHasTree=false;
                 }
@@ -169,7 +157,6 @@ public class Map implements Sprite {
                 }
             }
         }
-
         System.out.println("generating clouds");
         for (int x=3; x<length-10; x++){
             if (Math.random()*100<20){
@@ -187,7 +174,6 @@ public class Map implements Sprite {
                 x+=20;
             }
         }
-
         p1=new Character();
         for (int y=0; y<height; y++){
             for (int x=0; x<length; x++){
@@ -227,34 +213,24 @@ public class Map implements Sprite {
     }
 
     public boolean isNotStandable(int x, int y){
-        if ( blocks[x][y].isNotStandable()){
-            return true;
-        }else {
-            return false;
-        }
+        if ( blocks[x][y].isNotStandable()){ return true;
+        }else { return false; }
     }
+
     public boolean isPassable(int x, int y){
-
-        if ( blocks[x][y].isPassable()){
-            return true;
-        }else {
-            return false;
-        }
+        if ( blocks[x][y].isPassable()){ return true;
+        }else { return false; }
     }
-    public boolean isNotClimbable(int x, int y){
 
-        if ( blocks[x][y].isNotClimbable()){
-            return true;
-        }else {
-            return false;
-        }
+    public boolean isNotClimbable(int x, int y){
+        if ( blocks[x][y].isNotClimbable()){ return true;
+        }else { return false; }
     }
 
 
     public void move() {
         p1.move(this);
     }
-
     public void setMovingRight(boolean input){p1.setMovingRight(input);}
     public void setMovingLeft(boolean input){p1.setMovingLeft(input);}
     public void setClimbing(boolean input){p1.setClimbing(input);}
