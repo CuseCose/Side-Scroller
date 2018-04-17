@@ -3,7 +3,7 @@ import java.util.concurrent.Future;
 
 public class Character implements Sprite {
 
-    private int[] inventory;
+    private Item[][] inv;
     private int x, y;
     private double realx;
     private double realy;
@@ -15,6 +15,8 @@ public class Character implements Sprite {
     private double friction=.9;
     private double gravity=.9;
     private boolean isClimbing=false;
+    private int invLength=10;
+    private int invHeight=2;
 
     private int timer=0;
 
@@ -22,11 +24,22 @@ public class Character implements Sprite {
     private boolean firstLaunch=true;
     public int mapLength,mapHeight;
 
+    int selectedItem=0;
+    int selectedItemID;
+
     public Character(){
         x=0;
         y=0;
-        inventory=new int[10];
+        inv=new Item[invHeight][invLength];
         firstLaunch=true;
+        for (int invy=0;invy<invHeight-1;invy++){
+            for (int invx=0;invx<invLength-1;invx++){
+                inv[y][x]=new Item(0,x,y);
+            }
+        }
+        inv[0][0]=new Item(12,0,0);
+
+
 
 
     }
@@ -46,6 +59,7 @@ public class Character implements Sprite {
 
 
     public void move(Map map) {
+        selectedItemID=inv[0][selectedItem].getItemID();
         if (firstLaunch){
             mapHeight=map.height;
             mapLength=map.length;

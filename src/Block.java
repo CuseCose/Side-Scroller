@@ -96,6 +96,12 @@ public class Block implements Sprite {
                 isPassable=true;
                 color=Color.white;
                 break;
+            case 11://cactus
+                isNotStandable=true;
+                isNotClimbable=true;
+                isPassable=true;
+                color=new Color(0,120,3);
+                break;
         }
 
 

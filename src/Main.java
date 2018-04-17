@@ -19,10 +19,12 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
     Image img;
     private boolean firstLaunch=true;
     private Map map;
+    int mousex=0,mousey=0;
 
     public void init(){
         this.resize(WIDTH, HEIGHT);
         this.addKeyListener(this);
+        this.addMouseListener(this);
         img=createImage(WIDTH,HEIGHT);
         gfx=img.getGraphics();
         System.out.println("creating thread");
@@ -133,6 +135,8 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
 
 
     public void mouseReleased(MouseEvent e) {
+        System.out.println("clicked "+e.getX()+", "+e.getY()+" Block: "+map.getRealMouseX(e.getX())+", "+map.getRealMouseY(e.getY()));
+        map.leftClick(e.getX(),e.getY());
 
     }
 

@@ -8,6 +8,7 @@ public class Map implements Sprite {
     private Character p1;
     int length, height;
     int blockSize;
+    Color caveLayer=new Color(153, 153, 102);
 
     public Map(int size){
         switch (size){
@@ -57,11 +58,14 @@ public class Map implements Sprite {
                 cground--;
             }
         }
-        System.out.println("generating biomes");
+        System.out.println("generating biome map");
+        int cbiomelength=0;
         int cbiome=0;
         for (int x=0;x<length-1;x++){
             biomemap[x]=cbiome;
-            if (Math.random()*100<2){
+            cbiomelength++;
+            if (Math.random()*100<2&&cbiomelength>50){
+                cbiomelength=0;
                 System.out.println("change biome");
                 int newbiome=(int)(Math.random()*100);
                 if (newbiome<40){
@@ -74,12 +78,39 @@ public class Map implements Sprite {
             }
         }
         boolean adjacentHasTree=false;
+        //add biome features
+        System.out.println("Adding biome features");
         for (int x=0; x<length-1; x++) {
             if (biomemap[x] == 0) {
                 for (int y=0; y<height-1; y++){
                     if (map[x][y]==1){
                         map[x][y]=8;
                     }
+                }
+                if (Math.random() * 100 < 20&&!adjacentHasTree) {
+                    adjacentHasTree=true;
+                    System.out.println("generating tree at" + x);
+                    boolean hasGrass = false;
+                    int groundLevel = 0;
+                    for (int y = 0; y < height; y++) {
+                        if (map[x][y] == 8) {
+                            hasGrass = true;
+                            groundLevel = y;
+                            System.out.println("groundlevel: " + groundLevel);
+                            break;
+                        }
+                    }
+                    if (hasGrass) {//making cacti
+                        int treeHeight = (int) (5 * Math.random()) + 1;
+                        for (int y = groundLevel - 1; y >= groundLevel - treeHeight; y--) {
+                            System.out.println("putting bark at: (" + x + ", " + y + ")");
+                            if (y >= 0) {
+                                map[x][y] = 11;
+                            }
+                        }
+                    }
+                }else {
+                    adjacentHasTree=false;
                 }
             }else if (biomemap[x] == 1) {
                 if (Math.random() * 100 < 20&&!adjacentHasTree) {
@@ -198,7 +229,7 @@ public class Map implements Sprite {
         }else if(p1.getRealy()<height*.8){
             g.setColor(Color.cyan);
         }else {
-            g.setColor(Color.GRAY);
+            g.setColor(caveLayer);
         }
 
         g.fillRect(0,0,WIDTH,HEIGHT);
@@ -208,8 +239,14 @@ public class Map implements Sprite {
             }
         }
         p1.draw(g);
+    }
 
-
+    public void leftClick(int x, int y){
+        System.out.println("block clicked");
+        if (p1.selectedItemID==12){
+            System.out.println("breaking block");
+            blocks[getRealMouseX(x)][getRealMouseY(y)]=new Block(getRealMouseX(x),getRealMouseY(y),0,blockSize);
+        }
     }
 
     public boolean isNotStandable(int x, int y){
@@ -225,6 +262,15 @@ public class Map implements Sprite {
     public boolean isNotClimbable(int x, int y){
         if ( blocks[x][y].isNotClimbable()){ return true;
         }else { return false; }
+    }
+
+    public int getRealMouseX(int x){
+        int realx=(int)(p1.getRealx()-((WIDTH/2)/blockSize)+(x/blockSize));
+        return realx;
+    }
+    public int getRealMouseY(int y){
+        int realy=(int)(p1.getRealy()-((HEIGHT/2)/blockSize)+(y/blockSize));
+        return realy;
     }
 
 
