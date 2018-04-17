@@ -14,17 +14,17 @@ public class Map implements Sprite {
         switch (size){
             case 1:
                 length=1000;
-                height=100;
+                height=120;
                 blockSize=50;
                 break;
             case 2:
                 length=2000;
-                height=200;
+                height=400;
                 blockSize=40;
                 break;
             case 3:
                 length=3000;
-                height=300;
+                height=800;
                 blockSize=30;
                 break;
         }
@@ -32,16 +32,16 @@ public class Map implements Sprite {
         biomemap=new int[length];
         int[][] map=new int[length][height];
         blocks=new Block[length][height];
-        int cground=height/2;
+        int cground=height/4;
         for (int x=0; x<length;x++){
             for (int y=0; y<height; y++){
-                if (y>=cground){
-                    if (y<cground+2){
+                if (y>=cground){//at or below ground level
+                    if (y<cground+2){//grass layer
                         map[x][y]=1;
-                    }else {
-                        if (y<cground+(height/10)*2){
+                    }else {//sub grass
+                        if (y<cground+(height/10)*2){//dirt layer
                             map[x][y]=4;
-                        }else {
+                        }else {//rock layer
                             if (Math.random() * 100 < 20) {
                                 map[x][y] = 3;
                             } else {
@@ -269,7 +269,7 @@ public class Map implements Sprite {
         return realx;
     }
     public int getRealMouseY(int y){
-        int realy=(int)(p1.getRealy()-((HEIGHT/2)/blockSize)+(y/blockSize));
+        int realy=(int)(p1.getRealy()-((HEIGHT/2)/blockSize)+(y/blockSize)+1);
         return realy;
     }
 
