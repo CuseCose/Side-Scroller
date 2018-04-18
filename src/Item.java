@@ -11,7 +11,15 @@ public class Item {
     boolean isTool=false;
 
     public void draw(Graphics g){
-
+        if (isBlock){
+            g.setColor(color);
+            g.drawRect(20 + (60 * x), 50+(60*y), 40, 40);
+        }else {
+            if (exists) {
+                g.setColor(Color.black);
+                g.drawString(itemName, 20 + (60 * x) + 5, 50 + (60 * y) + 10);
+            }
+        }
     }
 
     public Item(int itemnum,int x,int y){

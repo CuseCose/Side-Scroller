@@ -115,8 +115,6 @@ public class Block implements Sprite {
         if (!complex&&exists){
             g.setColor(color);
             g.fillRect(xloc,yloc,blockSize,blockSize);
-            //g.setColor(Color.black);
-            //g.drawString(x+", "+y,xloc+5,yloc+20);
         }
     }
 

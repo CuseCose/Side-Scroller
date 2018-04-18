@@ -19,12 +19,12 @@ public class Map implements Sprite {
                 break;
             case 2:
                 length=2000;
-                height=400;
+                height=200;
                 blockSize=40;
                 break;
             case 3:
                 length=3000;
-                height=800;
+                height=300;
                 blockSize=30;
                 break;
         }
@@ -32,7 +32,7 @@ public class Map implements Sprite {
         biomemap=new int[length];
         int[][] map=new int[length][height];
         blocks=new Block[length][height];
-        int cground=height/4;
+        int cground=height/2;
         for (int x=0; x<length;x++){
             for (int y=0; y<height; y++){
                 if (y>=cground){//at or below ground level
@@ -53,7 +53,11 @@ public class Map implements Sprite {
             }
             int randChangeSize=(int)(Math.random()*100);
             if (randChangeSize<30){
-                cground++;
+                if (cground<=height*.8) {
+                    cground++;
+                }else {
+                    cground--;
+                }
             }else if (randChangeSize<60){
                 cground--;
             }

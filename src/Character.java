@@ -23,18 +23,21 @@ public class Character implements Sprite {
     private boolean isJumping=true;
     private boolean firstLaunch=true;
     public int mapLength,mapHeight;
+    boolean invOpen=false;
 
     int selectedItem=0;
     int selectedItemID;
+    Color invColor=new Color(204, 204, 179);
 
     public Character(){
         x=0;
-        y=0;
+        y=2000;
         inv=new Item[invHeight][invLength];
         firstLaunch=true;
         for (int invy=0;invy<invHeight-1;invy++){
             for (int invx=0;invx<invLength-1;invx++){
-                inv[y][x]=new Item(0,x,y);
+                System.out.println("creating item at inv slot "+invx+", "+invy);
+                inv[invy][invx]=new Item(0,invx,invy);
             }
         }
         inv[0][0]=new Item(12,0,0);
@@ -53,6 +56,20 @@ public class Character implements Sprite {
         g.fillRect(WIDTH/2, HEIGHT/2-25, width, height);
         g.drawString(x+", "+y,WIDTH/2-5, HEIGHT/2-30);
         g.drawString(realx+", "+realy,WIDTH/2-5, HEIGHT/2-45);
+        for (int invnum=0;invnum<invLength-1;invnum++){
+            if (!invOpen) {
+                if (invnum==selectedItem){
+                    g.setColor(invColor);
+                    g.fillRect(20 + (60 * invnum), 50, 40, 40);
+                }else {
+                    g.setColor(invColor);
+                    g.drawRect(20 + (60 * invnum), 50, 40, 40);
+                }
+
+
+                inv[0][invnum].draw(g);
+            }
+        }
         //g.drawString((realx+5)+", "+realy,WIDTH/2-5, HEIGHT/2-60);
 
     }
@@ -92,14 +109,16 @@ public class Character implements Sprite {
                 y += yvel;
                 realy = (double) map.height / 2 - ((double) y / map.blockSize);
             }else {
-                if(map.isNotClimbable((int)futureRealX,(int)futureRealY+1)&&map.isNotClimbable((int)(futureRealX+.4),(int)futureRealY+1)&&yvel<0){
+                if(map.isNotClimbable((int)futureRealX,(int)futureRealY+1)&&map.isNotClimbable((int)(futureRealX+.4),(int)futureRealY+1)){
                     y += yvel;
                     realy = (double) map.height / 2 - ((double) y / map.blockSize);
                 }
             }
         } else if (yvel > 0) {
             if(futureRealY>0&&futureRealY<map.height-1) {
-                y += yvel;
+                if (map.isPassable((int)futureRealX, (int)futureRealY)) {
+                    y += yvel;
+                }
             }
         }
         if((xvel<0&&map.isPassable((int)(futureRealX),((int)futureRealY)))||(xvel>0&&map.isPassable((int)(futureRealX+.4),((int)futureRealY)))) {
