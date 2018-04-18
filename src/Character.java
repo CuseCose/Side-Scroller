@@ -154,28 +154,28 @@ public class Character implements Sprite {
     public double getRealy() { return realy; }
 
     public int getLoadXMin(){
-        int loadx=(int)realx-50;
+        int loadx=(int)realx-25;
         if (loadx<0){
             loadx=0;
         }
         return loadx;
     }
     public int getLoadXMax(){
-        int loadx=(int) realx+50;
+        int loadx=(int) realx+25;
         if (loadx>mapLength-1){
             loadx=mapLength-1;
         }
         return loadx;
     }
     public int getLoadYMin(){
-        int loady=(int)realy-50;
+        int loady=(int)realy-20;
         if (loady<0){
             loady=0;
         }
         return loady;
     }
     public int getLoadYMax(){
-        int loady=(int)realy+50;
+        int loady=(int)realy+20;
         if (loady>mapHeight-1){
             loady=mapHeight-1;
         }
