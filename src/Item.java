@@ -9,11 +9,14 @@ public class Item {
     boolean isStackable;
     int x,y;
     boolean isTool=false;
+    int amt=0;
 
     public void draw(Graphics g){
+        g.setColor(Color.black);
+        g.drawString(amt+"", 20 + (60 * x) + 30, 50 + (60 * y) + 30);//show amount of an item
         if (isBlock){
             g.setColor(color);
-            g.drawRect(20 + (60 * x), 50+(60*y), 40, 40);
+            g.fillRect(20 + (60 * x)+10, 50+(60*y)+10, 20, 20);//draw block in inv
         }else {
             if (exists) {
                 g.setColor(Color.black);
@@ -22,17 +25,39 @@ public class Item {
         }
     }
 
+    public void changeAmt(boolean isIncreasing){
+        if (isIncreasing){
+            amt++;
+        }else {
+            amt--;
+        }
+        if (amt<=0){
+            itemName="null";
+            exists=false;
+            isBlock=false;
+            isTool=false;
+            amt=0;
+            itemID=0;
+        }
+    }
+
+    public void removeThis(){
+
+    }
+
     public Item(int itemnum,int x,int y){
         itemID=itemnum;
         this.x=x;
         this.y=y;
         exists=true;
         isTool=false;
+        amt=1;
         switch (itemID){
             case 0://nothing
                 itemName="null";
                 exists=false;
                 isBlock=false;
+                amt=0;
                 break;
             case 1://grass
                 itemName="Grass";

@@ -15,8 +15,8 @@ public class Character implements Sprite {
     private double friction=.9;
     private double gravity=.9;
     private boolean isClimbing=false;
-    private int invLength=10;
-    private int invHeight=2;
+    private int invLength=11;
+    private int invHeight=3;
 
     private int timer=0;
 
@@ -59,15 +59,27 @@ public class Character implements Sprite {
         for (int invnum=0;invnum<invLength-1;invnum++){
             if (!invOpen) {
                 if (invnum==selectedItem){
+                    //System.out.println("drawing "+invnum+"as selectedItem");
                     g.setColor(invColor);
                     g.fillRect(20 + (60 * invnum), 50, 40, 40);
                 }else {
                     g.setColor(invColor);
                     g.drawRect(20 + (60 * invnum), 50, 40, 40);
                 }
-
-
                 inv[0][invnum].draw(g);
+            }else {
+                for (int invy=0; invy<invHeight-1;invy++){
+                    if (invnum==selectedItem&&invy==0){
+                        //System.out.println("drawing "+invnum+"as selectedItem");
+                        g.setColor(invColor);
+                        g.fillRect(20 + (60 * invnum), 50, 40, 40);
+                    }else {
+                        g.setColor(invColor);
+                        g.drawRect(20 + (60 * invnum), 50+(60*invy), 40, 40);
+                    }
+                    inv[invy][invnum].draw(g);
+                }
+
             }
         }
         //g.drawString((realx+5)+", "+realy,WIDTH/2-5, HEIGHT/2-60);
@@ -128,11 +140,6 @@ public class Character implements Sprite {
             }
         }
 
-
-
-
-
-
     }
 
     public void jump(){
@@ -140,17 +147,48 @@ public class Character implements Sprite {
         yvel=20;
     }
 
+    public void addToInv(int itemID){
+        boolean hasItem=false;
+        for (int invy=0;invy<invHeight-1;invy++){
+            for (int invx=0; invx<invLength-1;invx++){
+                if (inv[invy][invx].itemID==itemID){
+                    inv[invy][invx].changeAmt(true);
+                    hasItem=true;
+                    invx=invLength;
+                    invy=invHeight;
+                }
+            }
+        }
+        if (!hasItem){
+            for (int invy=0;invy<invHeight-1;invy++){
+                for (int invx=0; invx<invLength-1;invx++){
+                    if (!inv[invy][invx].exists){
+                        inv[invy][invx]=new Item(itemID,invx,invy);
+                        invx=invLength;
+                        invy=invHeight;
+                    }
+                }
+            }
+        }
+
+    }
+
     public void setMovingLeft(boolean input){isMovingLeft=input;}
+
     public void setMovingRight(boolean input){isMovingRight=input;}
+
     public void setClimbing(boolean input){isClimbing=input;}
+
     public int getY() {
         return y;
     }
+
     public int getX() {
         return x;
     }
 
     public double getRealx() { return realx; }
+
     public double getRealy() { return realy; }
 
     public int getLoadXMin(){
@@ -160,6 +198,7 @@ public class Character implements Sprite {
         }
         return loadx;
     }
+
     public int getLoadXMax(){
         int loadx=(int) realx+25;
         if (loadx>mapLength-1){
@@ -167,6 +206,7 @@ public class Character implements Sprite {
         }
         return loadx;
     }
+
     public int getLoadYMin(){
         int loady=(int)realy-20;
         if (loady<0){
@@ -174,12 +214,42 @@ public class Character implements Sprite {
         }
         return loady;
     }
+
     public int getLoadYMax(){
         int loady=(int)realy+20;
         if (loady>mapHeight-1){
             loady=mapHeight-1;
         }
         return loady;
+    }
+
+    public void setSelectedItem(int newnum){
+        System.out.println("character class selected item= "+newnum);
+        selectedItem=newnum;
+    }
+
+    public void useSelectedItem(){
+        if (inv[0][selectedItem].isBlock){
+            inv[0][selectedItem].changeAmt(false);
+        }
+    }
+
+    public boolean selectedItemIsBlock(){
+        if (inv[0][selectedItem].isBlock){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public void openCloseInv(){
+        if (invOpen){
+            System.out.println("setting inv closed");
+            invOpen=false;
+        }else {
+            System.out.println("setting inv open");
+            invOpen=true;
+        }
     }
 
 }

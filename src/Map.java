@@ -245,11 +245,22 @@ public class Map implements Sprite {
         p1.draw(g);
     }
 
+    public double getPlayerRealy(){return p1.getRealy();}
+    public double getPlayerRealx(){return p1.getRealx();}
+
     public void leftClick(int x, int y){
         System.out.println("block clicked");
+        int clickx=getRealMouseX(x);
+        int clicky=getRealMouseY(y);
         if (p1.selectedItemID==12){
             System.out.println("breaking block");
-            blocks[getRealMouseX(x)][getRealMouseY(y)]=new Block(getRealMouseX(x),getRealMouseY(y),0,blockSize);
+            if (blocks[clickx][clicky].exists) {
+                p1.addToInv(blocks[clickx][clicky].getType());
+                blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), 0, blockSize);
+            }
+        }else if (p1.selectedItemIsBlock()){
+            blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), p1.selectedItemID, blockSize);
+            p1.useSelectedItem();
         }
     }
 
@@ -277,9 +288,14 @@ public class Map implements Sprite {
         return realy;
     }
 
+    public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}
+
+    public void openCloseInv(){p1.openCloseInv();}
+
 
     public void move() {
         p1.move(this);
+
     }
     public void setMovingRight(boolean input){p1.setMovingRight(input);}
     public void setMovingLeft(boolean input){p1.setMovingLeft(input);}

@@ -122,6 +122,10 @@ public class Block implements Sprite {
     public boolean isPassable() { return isPassable; }
     public boolean isNotClimbable() { return isNotClimbable; }
 
+    public int getType() {
+        return type;
+    }
+
     public void move(Map map){
 
     }

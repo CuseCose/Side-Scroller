@@ -98,6 +98,17 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
                 map.jump();
             }else if(e.getKeyCode()==KeyEvent.VK_W){
                 map.setClimbing(true);
+            }else if(e.getKeyCode()>47&&e.getKeyCode()<58){
+                System.out.println(e.getKeyCode());
+                if (e.getKeyCode()=='0'){
+                    System.out.println("selecting invnum 9");
+                    map.setSelectedItem(9);
+                }else {
+                    System.out.println("selecting invnum "+(e.getKeyCode()-49));
+                    map.setSelectedItem(e.getKeyCode()-49);
+                }
+            }else if (e.getKeyCode()==KeyEvent.VK_ESCAPE){
+                map.openCloseInv();
             }
         }
     }
