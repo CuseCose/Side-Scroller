@@ -12,6 +12,7 @@ import java.security.Key;
 
 public class Main extends Applet implements Runnable, KeyListener, MouseListener {
 
+
     private final int WIDTH=1280, HEIGHT=900;
     private Thread thread;
     private int screenNum=0;
@@ -19,7 +20,9 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
     Image img;
     private boolean firstLaunch=true;
     private Map map;
-    int mousex=0,mousey=0;
+    private Menu menu;
+
+
 
     public void init(){
         this.resize(WIDTH, HEIGHT);
@@ -27,13 +30,13 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
         this.addMouseListener(this);
         img=createImage(WIDTH,HEIGHT);
         gfx=img.getGraphics();
+        menu=new Menu(0);
         System.out.println("creating thread");
         thread=new Thread(this);
         System.out.println("thread created, starting thread");
         thread.start();
         System.out.println("thread started");
     }
-
 
 
     public void paint(Graphics g){
@@ -46,6 +49,7 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
             gfx.fillRect(0,0,WIDTH,HEIGHT);//background size
             gfx.setColor(Color.WHITE);
             gfx.drawString("Enter: New Map", (WIDTH/2)-200, (HEIGHT/2));
+            menu.draw(gfx);
 
 
         }else if(screenNum==1){
@@ -58,16 +62,14 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
         g.drawImage(img,0,0,this);
     }
 
+
     public void update(Graphics g){
         paint(g);
     }
 
-    public boolean txtcreated=false;
 
     public void run() {
-
         for (;;){
-
             if(screenNum==0){
             }else if(screenNum==1) {
                 map.move();
@@ -82,9 +84,8 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
         }
     }
 
-    //@Override
-    public void keyTyped(KeyEvent e) {
 
+    public void keyTyped(KeyEvent e) {
     }
 
 
@@ -109,6 +110,14 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
                 }
             }else if (e.getKeyCode()==KeyEvent.VK_ESCAPE){
                 map.openCloseInv();
+            }else if (map.isInvOpen()) {
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    map.changeSelected(false);
+                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    map.changeSelected(true);
+                }else if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                    map.craft();
+                }
             }
         }
     }
@@ -125,10 +134,20 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
                 map.setClimbing(false);
             }
         }else if(screenNum==0){
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                map=new Map(1);
-                screenNum=1;
-                System.out.println("pressed enter");
+            if (e.getKeyCode() == KeyEvent.VK_UP){
+                menu.changeSelectedButton(true);
+            }else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                menu.changeSelectedButton(false);
+            } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (menu.getSelectedButton()==0) {
+                    map = new Map(1);
+                    screenNum = 1;
+                    System.out.println("pressed enter");
+                }else if (menu.getSelectedButton()==1){
+
+                }else if (menu.getSelectedButton()==2){
+                    System.exit(0);
+                }
             }
 
         }
@@ -136,29 +155,24 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
 
 
     public void mouseClicked(MouseEvent e) {
-
     }
 
 
     public void mousePressed(MouseEvent e) {
-
     }
 
 
     public void mouseReleased(MouseEvent e) {
         System.out.println("clicked "+e.getX()+", "+e.getY()+" Block: "+map.getRealMouseX(e.getX())+", "+map.getRealMouseY(e.getY()));
         map.leftClick(e.getX(),e.getY());
-
     }
 
 
     public void mouseEntered(MouseEvent e) {
-
     }
 
 
     public void mouseExited(MouseEvent e) {
-
     }
 }
 

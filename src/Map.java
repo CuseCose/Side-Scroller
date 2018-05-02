@@ -5,7 +5,9 @@ public class Map implements Sprite {
 
     int[] biomemap;//biome map
     Block[][] blocks;//block block map
+    int[] groundlvlmap;//ground level map
     private Character p1;
+    private Background bak;
     int length, height;
     int blockSize;
     Color caveLayer=new Color(153, 153, 102);
@@ -20,20 +22,22 @@ public class Map implements Sprite {
             case 2:
                 length=2000;
                 height=200;
-                blockSize=40;
+                blockSize=50;
                 break;
             case 3:
                 length=3000;
                 height=300;
-                blockSize=30;
+                blockSize=50;
                 break;
         }
         System.out.println("generating map");
         biomemap=new int[length];
         int[][] map=new int[length][height];
         blocks=new Block[length][height];
+        groundlvlmap=new int[length];
         int cground=height/2;
         for (int x=0; x<length;x++){
+            groundlvlmap[x]=cground;
             for (int y=0; y<height; y++){
                 if (y>=cground){//at or below ground level
                     if (y<cground+2){//grass layer
@@ -210,6 +214,7 @@ public class Map implements Sprite {
             }
         }
         p1=new Character();
+        bak=new Background();
         for (int y=0; y<height; y++){
             for (int x=0; x<length; x++){
                 System.out.print(map[x][y]+" ");
@@ -223,18 +228,21 @@ public class Map implements Sprite {
 
     }
 
+
     public Map(String fileloc, String charfile){
 
     }
 
+
     public void draw(Graphics g) {
-        if (p1.getRealy()<(height*.1)){
+        /*if (p1.getRealy()<(height*.1)){
             g.setColor(Color.black);
         }else if(p1.getRealy()<height*.8){
             g.setColor(Color.cyan);
         }else {
             g.setColor(caveLayer);
-        }
+        }*/
+        bak.draw(g);
 
         g.fillRect(0,0,WIDTH,HEIGHT);
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
@@ -245,8 +253,6 @@ public class Map implements Sprite {
         p1.draw(g);
     }
 
-    public double getPlayerRealy(){return p1.getRealy();}
-    public double getPlayerRealx(){return p1.getRealx();}
 
     public void leftClick(int x, int y){
         System.out.println("block clicked");
@@ -259,53 +265,62 @@ public class Map implements Sprite {
                 blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), 0, blockSize);
             }
         }else if (p1.selectedItemIsBlock()){
-            blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), p1.selectedItemID, blockSize);
-            p1.useSelectedItem();
+            if (blocks[clickx][clicky].type==0) {
+                blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), p1.selectedItemID, blockSize);
+                p1.useSelectedItem();
+            }
         }
     }
+
 
     public boolean isNotStandable(int x, int y){
         if ( blocks[x][y].isNotStandable()){ return true;
         }else { return false; }
     }
 
+
     public boolean isPassable(int x, int y){
         if ( blocks[x][y].isPassable()){ return true;
         }else { return false; }
     }
+
 
     public boolean isNotClimbable(int x, int y){
         if ( blocks[x][y].isNotClimbable()){ return true;
         }else { return false; }
     }
 
+
     public int getRealMouseX(int x){
         int realx=(int)(p1.getRealx()-((WIDTH/2)/blockSize)+(x/blockSize));
         return realx;
     }
+
+
     public int getRealMouseY(int y){
         int realy=(int)(p1.getRealy()-((HEIGHT/2)/blockSize)+(y/blockSize)+1);
         return realy;
     }
 
-    public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}
-
-    public void openCloseInv(){p1.openCloseInv();}
-
-
     public void move() {
         p1.move(this);
-
+        bak.move(p1.getRealy(), p1.getRealx(), groundlvlmap, height);
     }
+
+    public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}
+    public void openCloseInv(){p1.openCloseInv();}
+    public void changeSelected(boolean isInc){ p1.changeSelected(isInc); }
+    public boolean isInvOpen(){return p1.isInvOpen();}
+    public void craft(){p1.craftSelected();}
     public void setMovingRight(boolean input){p1.setMovingRight(input);}
     public void setMovingLeft(boolean input){p1.setMovingLeft(input);}
     public void setClimbing(boolean input){p1.setClimbing(input);}
     public void jump(){p1.jump();}
-
     public int getY() {
         return 0;
     }
     public int getX() {
         return 0;
     }
+    public int[] getGroundlvlmap() { return groundlvlmap; }
 }

@@ -10,6 +10,11 @@ public class Item {
     int x,y;
     boolean isTool=false;
     int amt=0;
+    boolean isRecipe=false;
+    boolean isIngredient=false;
+    boolean isComplex=false;
+    Color color2;
+
 
     public void draw(Graphics g){
         g.setColor(Color.black);
@@ -17,6 +22,17 @@ public class Item {
         if (isBlock){
             g.setColor(color);
             g.fillRect(20 + (60 * x)+10, 50+(60*y)+10, 20, 20);//draw block in inv
+            if (isComplex){
+                if (itemID==13){
+                    g.setColor(color2);
+                    g.fillRect(20 + (60 * x)+10+5, 50+(60*y)+10, 10, 5);
+                }else if (itemID==14){
+                    for(int i=0; i<5; i++){
+                        g.setColor(color2);
+                        g.fillRect(20 + (60 * x)+10, 50+(60*y)+10+(i*4), 20, 2);
+                    }
+                }
+            }
         }else {
             if (exists) {
                 g.setColor(Color.black);
@@ -24,6 +40,33 @@ public class Item {
             }
         }
     }
+
+
+    public void draw(Graphics g, int x, int y) {
+        g.setColor(Color.black);
+        g.drawString(amt+"", x + 20, y + 30);//show amount of an item
+        if (isBlock){
+            g.setColor(color);
+            g.fillRect(x, y, 20, 20);//draw block in inv
+            if (isComplex){
+                if (itemID==13){
+                    g.setColor(color2);
+                    g.fillRect(x+5, y, 10, 5);
+                }else if (itemID==14){
+                    for(int i=0; i<5; i++){
+                        g.setColor(color2);
+                        g.fillRect(x, y+(i*4), 20, 2);
+                    }
+                }
+            }
+        }else {
+            if (exists) {
+                g.setColor(Color.black);
+                g.drawString(itemName, x, y);
+            }
+        }
+    }
+
 
     public void changeAmt(boolean isIncreasing){
         if (isIncreasing){
@@ -41,9 +84,45 @@ public class Item {
         }
     }
 
+
+    public void changeAmt(int amtchange){
+        amt=amt+amtchange;
+        if (amt<=0){
+            itemName="null";
+            exists=false;
+            isBlock=false;
+            isTool=false;
+            amt=0;
+            itemID=0;
+        }
+    }
+
+
     public void removeThis(){
 
     }
+
+
+    public Item(int itemnum){
+        itemID=itemnum;
+        exists=true;
+        isTool=false;
+        amt=1;
+        setItem();
+        isRecipe=true;
+    }
+
+
+    public Item(int itemnum, int amt){
+        itemID=itemnum;
+        exists=true;
+        isTool=false;
+        this.amt=amt;
+        setItem();
+        isRecipe=false;
+        isIngredient=true;
+    }
+
 
     public Item(int itemnum,int x,int y){
         itemID=itemnum;
@@ -52,6 +131,22 @@ public class Item {
         exists=true;
         isTool=false;
         amt=1;
+        setItem();
+    }
+
+
+    public Item(int itemnum,int x,int y, int amt){
+        itemID=itemnum;
+        this.x=x;
+        this.y=y;
+        exists=true;
+        isTool=false;
+        this.amt=amt;
+        setItem();
+    }
+
+
+    public void setItem(){
         switch (itemID){
             case 0://nothing
                 itemName="null";
@@ -137,8 +232,34 @@ public class Item {
                 isStackable=false;
                 color=new Color(0,120,3);
                 break;
+            case 13://table
+                isComplex=true;
+                itemName="CTable";
+                isBlock=true;
+                isStackable=true;
+                color=new Color(250,100,60);
+                color2=new Color(102,51,0);
+                break;
+            case 14://wood planks
+                isComplex=true;
+                itemName="WoodPlanks";
+                isBlock=true;
+                isStackable=true;
+                color=new Color(200,100,50);
+                color2=new Color(103,51,0);
+                break;
         }
     }
+
+
+    public boolean has(Item other){
+        if (amt>=other.amt&&itemID==other.itemID){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 
     public int getItemID(){return itemID;}
 }

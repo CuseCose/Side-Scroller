@@ -24,12 +24,13 @@ public class Character implements Sprite {
     private boolean firstLaunch=true;
     public int mapLength,mapHeight;
     boolean invOpen=false;
-
+    private RecipeList re;
     int selectedItem=0;
     int selectedItemID;
     Color invColor=new Color(204, 204, 179);
 
     public Character(){
+        re=new RecipeList();
         x=0;
         y=2000;
         inv=new Item[invHeight][invLength];
@@ -79,15 +80,15 @@ public class Character implements Sprite {
                     }
                     inv[invy][invnum].draw(g);
                 }
+                re.draw(g);
 
             }
         }
-        //g.drawString((realx+5)+", "+realy,WIDTH/2-5, HEIGHT/2-60);
-
     }
 
 
     public void move(Map map) {
+        re.updateAvailable(inv,invLength,invHeight);
         selectedItemID=inv[0][selectedItem].getItemID();
         if (firstLaunch){
             mapHeight=map.height;
@@ -139,13 +140,14 @@ public class Character implements Sprite {
                 x += xvel;
             }
         }
-
     }
+
 
     public void jump(){
         System.out.println("jump");
         yvel=20;
     }
+
 
     public void addToInv(int itemID){
         boolean hasItem=false;
@@ -170,26 +172,21 @@ public class Character implements Sprite {
                 }
             }
         }
-
     }
 
+
     public void setMovingLeft(boolean input){isMovingLeft=input;}
-
     public void setMovingRight(boolean input){isMovingRight=input;}
-
     public void setClimbing(boolean input){isClimbing=input;}
-
     public int getY() {
         return y;
     }
-
     public int getX() {
         return x;
     }
-
     public double getRealx() { return realx; }
-
     public double getRealy() { return realy; }
+
 
     public int getLoadXMin(){
         int loadx=(int)realx-25;
@@ -199,6 +196,7 @@ public class Character implements Sprite {
         return loadx;
     }
 
+
     public int getLoadXMax(){
         int loadx=(int) realx+25;
         if (loadx>mapLength-1){
@@ -206,6 +204,7 @@ public class Character implements Sprite {
         }
         return loadx;
     }
+
 
     public int getLoadYMin(){
         int loady=(int)realy-20;
@@ -215,6 +214,7 @@ public class Character implements Sprite {
         return loady;
     }
 
+
     public int getLoadYMax(){
         int loady=(int)realy+20;
         if (loady>mapHeight-1){
@@ -223,16 +223,19 @@ public class Character implements Sprite {
         return loady;
     }
 
+
     public void setSelectedItem(int newnum){
         System.out.println("character class selected item= "+newnum);
         selectedItem=newnum;
     }
+
 
     public void useSelectedItem(){
         if (inv[0][selectedItem].isBlock){
             inv[0][selectedItem].changeAmt(false);
         }
     }
+
 
     public boolean selectedItemIsBlock(){
         if (inv[0][selectedItem].isBlock){
@@ -241,6 +244,7 @@ public class Character implements Sprite {
             return false;
         }
     }
+
 
     public void openCloseInv(){
         if (invOpen){
@@ -252,4 +256,8 @@ public class Character implements Sprite {
         }
     }
 
+
+    public boolean isInvOpen() { return invOpen; }
+    public void craftSelected(){re.craftSelected(inv, invLength, invHeight);}
+    public void changeSelected(boolean isInc){ re.changeSelected(isInc); }
 }

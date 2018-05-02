@@ -2,13 +2,16 @@ import java.awt.*;
 
 public class Block implements Sprite {
 
+
     int x,y;
     int type;
     boolean isNotStandable, isNotClimbable, isPassable;
     Color color;
+    Color color2;
     boolean exists;
     boolean complex;
     int blockSize;
+
 
     public Block(){
         x=0;
@@ -102,40 +105,64 @@ public class Block implements Sprite {
                 isPassable=true;
                 color=new Color(0,120,3);
                 break;
+            case 13://table
+                complex=true;
+                isNotStandable=true;
+                isNotClimbable=false;
+                isPassable=true;
+                color=new Color(250,100,60);
+                color2=new Color(102,51,0);
+                break;
+            case 14://planks
+                complex=true;
+                isNotStandable=true;
+                isNotClimbable=true;
+                isPassable=true;
+                color=new Color(200,100,50);
+                color2=new Color(103,51,0);
+                break;
         }
-
-
     }
+
 
     public void draw(Graphics g) {
-
     }
+
 
     public void draw(Graphics g, int xloc, int yloc) {
         if (!complex&&exists){
             g.setColor(color);
             g.fillRect(xloc,yloc,blockSize,blockSize);
+        }else if (complex&&exists){
+            if (type==13){
+                g.setColor(color);
+                g.fillRect(xloc,yloc,blockSize,blockSize);
+                g.setColor(color2);
+                g.fillRect(xloc+(blockSize/4),yloc,blockSize/2,blockSize/5);
+            }else if (type==14){
+                g.setColor(color);
+                g.fillRect(xloc,yloc,blockSize,blockSize);
+                g.setColor(color2);
+                for (int i=0;i<5;i++) {
+                    g.fillRect(xloc , yloc+(i*(blockSize/5)), blockSize, blockSize / 10);
+                }
+            }
         }
     }
+
+
+    public void move(Map map){ }
+
 
     public boolean isNotStandable(){return isNotStandable;}
     public boolean isPassable() { return isPassable; }
     public boolean isNotClimbable() { return isNotClimbable; }
-
     public int getType() {
         return type;
     }
-
-    public void move(Map map){
-
-    }
-
-
     public int getY() {
         return x;
     }
-
-
     public int getX() {
         return y;
     }
