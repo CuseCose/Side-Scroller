@@ -244,7 +244,7 @@ public class Map implements Sprite {
         }*/
         bak.draw(g);
 
-        g.fillRect(0,0,WIDTH,HEIGHT);
+        //g.fillRect(0,0,WIDTH,HEIGHT);
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
             for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
                 blocks[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY());

@@ -19,6 +19,8 @@ public class Character implements Sprite {
     private int invHeight=3;
 
     private int timer=0;
+    //private int jumpTimer=0;
+    private boolean inJump=false;
 
     private boolean isJumping=true;
     private boolean firstLaunch=true;
@@ -125,6 +127,9 @@ public class Character implements Sprite {
                 if(map.isNotClimbable((int)futureRealX,(int)futureRealY+1)&&map.isNotClimbable((int)(futureRealX+.4),(int)futureRealY+1)){
                     y += yvel;
                     realy = (double) map.height / 2 - ((double) y / map.blockSize);
+                }else{
+                    inJump=false;
+                    //System.out.println("in jump set to false");
                 }
             }
         } else if (yvel > 0) {
@@ -133,6 +138,9 @@ public class Character implements Sprite {
                     y += yvel;
                 }
             }
+        }else if (yvel<0){
+            inJump=false;
+            //System.out.println("in jump set to false");
         }
         if((xvel<0&&map.isPassable((int)(futureRealX),((int)futureRealY)))||(xvel>0&&map.isPassable((int)(futureRealX+.4),((int)futureRealY)))) {
             if (futureRealX>0&&futureRealX<map.length-1) {
@@ -144,8 +152,11 @@ public class Character implements Sprite {
 
 
     public void jump(){
-        System.out.println("jump");
-        yvel=20;
+        if (!inJump) {
+            System.out.println("jump");
+            yvel = 20;
+            inJump=true;
+        }
     }
 
 

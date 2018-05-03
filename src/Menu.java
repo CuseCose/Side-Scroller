@@ -26,8 +26,10 @@ public class Menu implements Sprite{
     }
 
     public void draw(Graphics g){
-        g.setColor(menuColor);//background
-        g.fillRect(0,0,WIDTH,HEIGHT);//background size
+        if (menunum==0) {
+            g.setColor(menuColor);//background
+            g.fillRect(0, 0, WIDTH, HEIGHT);//background size
+        }
         for (int i=0; i<numbuttons; i++){
             if (selectedButton==i){
                 g.setColor(selectedButtonColor);

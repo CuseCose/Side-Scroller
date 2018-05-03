@@ -21,7 +21,11 @@ public class Background implements Sprite{
                 g.setColor(Color.black);
                 break;
             case 0:
-                g.setColor(Color.cyan);
+                if (time<=12) {
+                    g.setColor(Color.cyan);
+                }else {
+                    g.setColor(Color.black);
+                }
                 break;
             case -1:
                 g.setColor(dirtLayer);
@@ -31,9 +35,21 @@ public class Background implements Sprite{
                 break;
         }
         g.fillRect(0,0,WIDTH,HEIGHT);
+
+        if (playerLayer==1||playerLayer==0){
+            if (time<=12){
+                g.setColor(Color.yellow);
+                g.fillOval((int)(time*(WIDTH/10)-100), (int)(HEIGHT*.1), 100,100);
+            }else{
+                g.setColor(Color.lightGray);
+                g.fillOval((int)((time-12)*(WIDTH/10)-100), (int)(HEIGHT*.1), 100,100);
+            }
+        }
     }
 
     public void move(double p1y, double p1x, int[] groundmap, int mapheight){
+        time+=.01;
+        if (time>=24){time=0;}
         if (p1y<=groundmap[(int)p1x]+5){
             if (p1y<mapheight*.15){
                 playerLayer=1;//sky layer
