@@ -8,6 +8,7 @@ public class Background implements Sprite{
     Color dirtLayer=new Color(103,51,50);
     Color caveLayer=new Color(153, 153, 102);
 
+
     public Background(){
         time=12;
         playerLayer=0;
@@ -48,7 +49,7 @@ public class Background implements Sprite{
     }
 
     public void move(double p1y, double p1x, int[] groundmap, int mapheight){
-        time+=.01;
+        time+=.002;
         if (time>=24){time=0;}
         if (p1y<=groundmap[(int)p1x]+5){
             if (p1y<mapheight*.15){

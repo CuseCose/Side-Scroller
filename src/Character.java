@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.concurrent.Future;
 
 public class Character implements Sprite {
@@ -30,6 +31,7 @@ public class Character implements Sprite {
     int selectedItem=0;
     int selectedItemID;
     Color invColor=new Color(204, 204, 179);
+
 
     public Character(){
         re=new RecipeList();

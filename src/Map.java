@@ -12,6 +12,8 @@ public class Map implements Sprite {
     int blockSize;
     Color caveLayer=new Color(153, 153, 102);
 
+    ArrayList<NPC> npcs=new ArrayList<NPC>();
+
     public Map(int size){
         switch (size){
             case 1:
@@ -222,6 +224,7 @@ public class Map implements Sprite {
             }
             System.out.println("");
         }
+        npcs.add(new NPC());
     }
 
     public Map(String fileloc, int type){//type indicates if your using a old map and new char, or new map and old char
@@ -235,22 +238,17 @@ public class Map implements Sprite {
 
 
     public void draw(Graphics g) {
-        /*if (p1.getRealy()<(height*.1)){
-            g.setColor(Color.black);
-        }else if(p1.getRealy()<height*.8){
-            g.setColor(Color.cyan);
-        }else {
-            g.setColor(caveLayer);
-        }*/
         bak.draw(g);
-
-        //g.fillRect(0,0,WIDTH,HEIGHT);
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
             for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
                 blocks[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY());
             }
         }
+        for (int i=0; i<npcs.size(); i++){
+            npcs.get(i).draw(g, p1.getX(), p1.getY(), length);
+        }
         p1.draw(g);
+
     }
 
 
@@ -304,6 +302,9 @@ public class Map implements Sprite {
 
     public void move() {
         p1.move(this);
+        for (int i=0; i<npcs.size();i++){
+            npcs.get(i).move(this);
+        }
         bak.move(p1.getRealy(), p1.getRealx(), groundlvlmap, height);
     }
 
