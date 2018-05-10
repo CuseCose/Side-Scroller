@@ -225,6 +225,10 @@ public class Map implements Sprite {
             System.out.println("");
         }
         npcs.add(new NPC());
+        npcs.add(new NPC());
+        npcs.add(new NPC());
+        npcs.add(new NPC());
+        npcs.add(new NPC());
     }
 
     public Map(String fileloc, int type){//type indicates if your using a old map and new char, or new map and old char

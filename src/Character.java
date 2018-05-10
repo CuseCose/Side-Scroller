@@ -124,11 +124,11 @@ public class Character implements Sprite {
         if(map.isNotStandable((int)futureRealX,(int)futureRealY+1)&&map.isNotStandable((int)(futureRealX+.4),(int)futureRealY+1)&&yvel<0){
             if (!isClimbing) {
                 y += yvel;
-                realy = (double) map.height / 2 - ((double) y / map.blockSize);
+                //realy = (double) map.height / 2 - ((double) y / map.blockSize);
             }else {
                 if(map.isNotClimbable((int)futureRealX,(int)futureRealY+1)&&map.isNotClimbable((int)(futureRealX+.4),(int)futureRealY+1)){
                     y += yvel;
-                    realy = (double) map.height / 2 - ((double) y / map.blockSize);
+                    //realy = (double) map.height / 2 - ((double) y / map.blockSize);
                 }else{
                     inJump=false;
                     //System.out.println("in jump set to false");
@@ -146,10 +146,11 @@ public class Character implements Sprite {
         }
         if((xvel<0&&map.isPassable((int)(futureRealX),((int)futureRealY)))||(xvel>0&&map.isPassable((int)(futureRealX+.4),((int)futureRealY)))) {
             if (futureRealX>0&&futureRealX<map.length-1) {
-                realx = (double) map.length / 2 + ((double) x / map.blockSize);
                 x += xvel;
             }
         }
+        realy = (double) map.height / 2 - ((double) y / map.blockSize);
+        realx = (double) map.length / 2 + ((double) x / map.blockSize);
     }
 
 

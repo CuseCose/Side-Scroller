@@ -31,7 +31,8 @@ public class NPC implements Sprite {
 
     public NPC(){
         re=new RecipeList();
-        x=0;
+        int relativespawnloc=(int)(Math.random()*1000-500);
+        x=0+relativespawnloc;
         y=2000;
         firstLaunch=true;
 
@@ -43,13 +44,13 @@ public class NPC implements Sprite {
     }
 
     public void draw(Graphics g, double p1x, double p1y, int mapLength) {
-        g.setColor(Color.RED);
-        System.out.println("drawing npc, x="+x+"("+realx+") y="+y+"("+realy+")");
-        double drawx=((mapLength/2)*BLOCKSIZE)+x+p1x;
-        double drawy=(realy*BLOCKSIZE)-(p1y*BLOCKSIZE)+(HEIGHT/2);
+        g.setColor(Color.magenta);
+        //System.out.println("drawing npc, x="+x+"("+realx+") y="+y+"("+realy+")");
+        double drawx=(x-p1x)+WIDTH/2;
+        double drawy=(p1y-y)+HEIGHT/2-25;
         g.fillRect((int)drawx, (int)drawy, width, height);
-        /*g.drawString(x+", "+y,WIDTH/2-5, HEIGHT/2-30);
-        g.drawString(realx+", "+realy,WIDTH/2-5, HEIGHT/2-45);*/
+        g.drawString(x+", "+y,(int)drawx-5, (int)drawy-30);
+        g.drawString(realx+", "+realy,(int)drawx-5, (int)drawy-45);
     }
 
     public void move(Map map) {
@@ -60,7 +61,10 @@ public class NPC implements Sprite {
         }
         timer++;
         if (timer==50){timer=0;}
-        if (timer==19){ System.out.println("npc is moving left: "+isMovingLeft+" is moving right: "+isMovingRight+" x velocity: "+xvel+" y velocity: "+yvel);}
+        if (timer==49){
+            int dice=(int)(Math.random()*100);
+            System.out.println("npc is moving left: "+isMovingLeft+" is moving right: "+isMovingRight+" x velocity: "+xvel+" y velocity: "+yvel);
+        }
         if (isMovingLeft){
             if(xvel>-10){
                 xvel--;
@@ -110,6 +114,8 @@ public class NPC implements Sprite {
                 x += xvel;
             }
         }
+        realy = (double) map.height / 2 - ((double) y / map.blockSize);
+        realx = (double) map.length / 2 + ((double) x / map.blockSize);
     }
 
 
