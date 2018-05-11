@@ -322,10 +322,10 @@ public class Map implements Sprite {
     public void setClimbing(boolean input){p1.setClimbing(input);}
     public void jump(){p1.jump();}
     public int getY() {
-        return 0;
+        return p1.getRealy();
     }
     public int getX() {
-        return 0;
+        return p1.getRealx();
     }
     public int[] getGroundlvlmap() { return groundlvlmap; }
 }
