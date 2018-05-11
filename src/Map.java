@@ -311,7 +311,7 @@ public class Map implements Sprite {
         }
         bak.move(p1.getRealy(), p1.getRealx(), groundlvlmap, height);
     }
-
+//k
     public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}
     public void openCloseInv(){p1.openCloseInv();}
     public void changeSelected(boolean isInc){ p1.changeSelected(isInc); }
