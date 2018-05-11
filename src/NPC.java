@@ -27,6 +27,7 @@ public class NPC implements Sprite {
     int selectedItem=0;
     int selectedItemID;
     Color invColor=new Color(204, 204, 179);
+    private boolean aggro=false;
 
 
     public NPC(){
@@ -60,18 +61,47 @@ public class NPC implements Sprite {
             realx = (double) map.length / 2 + ((double) x / map.blockSize);
         }
         timer++;
+        if(!aggro&&realx-map.getX()<10&&map.getX()>-10){
+          aggro=true;
+        }
+        if(aggro){
+          if(map.getX()>realx){
+            isMovingRight=true;
+            isMovingLeft=false;
+          }else{
+            isMovingRight=false;
+            isMovingLeft=true;
+          }
+          if((int)(Math.random()*100)<5){
+            jump();
+          }
+        }else{
+          int dice=(int)(Math.random()*100);
+          if(dice<5){
+            jump();
+          }else if(dice<10){
+            isMovingRight=false;
+            isMovingLeft=true;
+          else if(dice<15){
+            isMovingRight=true;
+            isMovingLeft=false;
+          }else if(dice<20){
+            isMovingRight=false;
+            isMovingLeft=false;
+          }
+        }
         if (timer==50){timer=0;}
         if (timer==49){
-            int dice=(int)(Math.random()*100);
+            //int dice=(int)(Math.random()*100);
             System.out.println("npc is moving left: "+isMovingLeft+" is moving right: "+isMovingRight+" x velocity: "+xvel+" y velocity: "+yvel);
         }
         if (isMovingLeft){
-            if(xvel>-10){
+            if(xvel>-5){
                 xvel--;
             }
         }
         if (isMovingRight){
-            if(xvel<10){
+            if(xvel<5){
                 xvel++;
             }
         }
