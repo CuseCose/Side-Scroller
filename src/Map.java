@@ -215,7 +215,7 @@ public class Map implements Sprite {
                 x+=20;
             }
         }
-        p1=new Character();
+        p1=new Character(this);
         bak=new Background();
         for (int y=0; y<height; y++){
             for (int x=0; x<length; x++){
@@ -224,11 +224,11 @@ public class Map implements Sprite {
             }
             System.out.println("");
         }
-        npcs.add(new NPC());
-        npcs.add(new NPC());
-        npcs.add(new NPC());
-        npcs.add(new NPC());
-        npcs.add(new NPC());
+        npcs.add(new NPC(this));
+        npcs.add(new NPC(this));
+        npcs.add(new NPC(this));
+        npcs.add(new NPC(this));
+        npcs.add(new NPC(this));
     }
 
     public Map(String fileloc, int type){//type indicates if your using a old map and new char, or new map and old char
@@ -311,7 +311,7 @@ public class Map implements Sprite {
         }
         bak.move(p1.getRealy(), p1.getRealx(), groundlvlmap, height);
     }
-//k
+
     public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}
     public void openCloseInv(){p1.openCloseInv();}
     public void changeSelected(boolean isInc){ p1.changeSelected(isInc); }
@@ -321,11 +321,9 @@ public class Map implements Sprite {
     public void setMovingLeft(boolean input){p1.setMovingLeft(input);}
     public void setClimbing(boolean input){p1.setClimbing(input);}
     public void jump(){p1.jump();}
-    public int getY() {
-        return p1.getRealy();
-    }
+    public int getY() { return (int)p1.getRealy(); }
     public int getX() {
-        return p1.getRealx();
+        return (int)p1.getRealx();
     }
     public int[] getGroundlvlmap() { return groundlvlmap; }
 }

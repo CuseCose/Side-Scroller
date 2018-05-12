@@ -33,9 +33,10 @@ public class Character implements Sprite {
     Color invColor=new Color(204, 204, 179);
 
 
-    public Character(){
+    public Character(Map m){
         re=new RecipeList();
         x=0;
+
         y=2000;
         inv=new Item[invHeight][invLength];
         firstLaunch=true;
@@ -46,7 +47,10 @@ public class Character implements Sprite {
             }
         }
         inv[0][0]=new Item(12,0,0);
-
+        //realy = (double) m.height / 2 - ((double) y / m.blockSize);
+        realx = (double) m.length / 2 + ((double) x / m.blockSize);
+        realy=m.groundlvlmap[(int)realx]-5;
+        y=-(int)(realy-((double)m.height/2))*m.blockSize;
 
 
 

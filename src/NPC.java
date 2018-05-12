@@ -30,12 +30,16 @@ public class NPC implements Sprite {
     private boolean aggro=false;
 
 
-    public NPC(){
+    public NPC(Map m){
         re=new RecipeList();
-        int relativespawnloc=(int)(Math.random()*1000-500);
+        int relativespawnloc=(int)(Math.random()*4000-2000);
         x=0+relativespawnloc;
         y=2000;
         firstLaunch=true;
+        realx = (double) m.length / 2 + ((double) x / m.blockSize);
+        realy=m.groundlvlmap[(int)realx]-5;
+        y=-(int)(realy-((double)m.height/2))*m.blockSize;
+
 
     }
 
@@ -45,7 +49,11 @@ public class NPC implements Sprite {
     }
 
     public void draw(Graphics g, double p1x, double p1y, int mapLength) {
-        g.setColor(Color.magenta);
+        if (aggro) {
+            g.setColor(Color.red);
+        }else {
+            g.setColor(Color.BLUE);
+        }
         //System.out.println("drawing npc, x="+x+"("+realx+") y="+y+"("+realy+")");
         double drawx=(x-p1x)+WIDTH/2;
         double drawy=(p1y-y)+HEIGHT/2-25;
@@ -59,40 +67,45 @@ public class NPC implements Sprite {
             mapHeight=map.height;
             mapLength=map.length;
             realx = (double) map.length / 2 + ((double) x / map.blockSize);
+            aggro=false;
+            firstLaunch=false;
         }
-        timer++;
-        if(!aggro&&realx-map.getX()<10&&map.getX()>-10){
-          aggro=true;
+        if(!aggro&&realx-map.getX()<6&&realx-map.getX()>-6){
+            aggro=true;
         }
         if(aggro){
-          if(map.getX()>realx){
-            isMovingRight=true;
-            isMovingLeft=false;
-          }else{
-            isMovingRight=false;
-            isMovingLeft=true;
-          }
-          if((int)(Math.random()*100)<5){
-            jump();
-          }
+            if(map.getX()>realx){
+                isMovingRight=true;
+                isMovingLeft=false;
+            }else{
+                isMovingRight=false;
+                isMovingLeft=true;
+            }
+            if((int)(Math.random()*100)<3){
+                jump();
+            }
+            if (realx-map.getX()>20||realx-map.getX()<-20){
+                aggro=false;
+            }
         }else{
-          int dice=(int)(Math.random()*100);
-          if(dice<5){
-            jump();
-          }else if(dice<10){
-            isMovingRight=false;
-            isMovingLeft=true;
-          else if(dice<15){
-            isMovingRight=true;
-            isMovingLeft=false;
-          }else if(dice<20){
-            isMovingRight=false;
-            isMovingLeft=false;
-          }
+            int dice=(int)(Math.random()*100);
+            if(dice<3){
+                jump();
+            }else if(dice<6) {
+                isMovingRight = false;
+                isMovingLeft = true;
+            }else if(dice<9){
+                isMovingRight=true;
+                isMovingLeft=false;
+            }else if(dice<12){
+                isMovingRight=false;
+                isMovingLeft=false;
+            }
         }
+        timer++;
         if (timer==50){timer=0;}
         if (timer==49){
-            //int dice=(int)(Math.random()*100);
+            int dice=(int)(Math.random()*100);
             System.out.println("npc is moving left: "+isMovingLeft+" is moving right: "+isMovingRight+" x velocity: "+xvel+" y velocity: "+yvel);
         }
         if (isMovingLeft){
@@ -118,11 +131,11 @@ public class NPC implements Sprite {
         if(map.isNotStandable((int)futureRealX,(int)futureRealY+1)&&map.isNotStandable((int)(futureRealX+.4),(int)futureRealY+1)&&yvel<0){
             if (!isClimbing) {
                 y += yvel;
-                realy = (double) map.height / 2 - ((double) y / map.blockSize);
+                //realy = (double) map.height / 2 - ((double) y / map.blockSize);
             }else {
                 if(map.isNotClimbable((int)futureRealX,(int)futureRealY+1)&&map.isNotClimbable((int)(futureRealX+.4),(int)futureRealY+1)){
                     y += yvel;
-                    realy = (double) map.height / 2 - ((double) y / map.blockSize);
+                    //realy = (double) map.height / 2 - ((double) y / map.blockSize);
                 }else{
                     inJump=false;
                     //System.out.println("in jump set to false");
@@ -140,7 +153,7 @@ public class NPC implements Sprite {
         }
         if((xvel<0&&map.isPassable((int)(futureRealX),((int)futureRealY)))||(xvel>0&&map.isPassable((int)(futureRealX+.4),((int)futureRealY)))) {
             if (futureRealX>0&&futureRealX<map.length-1) {
-                realx = (double) map.length / 2 + ((double) x / map.blockSize);
+                //realx = (double) map.length / 2 + ((double) x / map.blockSize);
                 x += xvel;
             }
         }
