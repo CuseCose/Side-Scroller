@@ -95,6 +95,10 @@ public class Character implements Sprite {
 
             }
         }
+        g.setColor(Color.WHITE);
+        g.fillRect(20,15,maxhp,20);
+        g.setColor(Color.red);
+        g.fillRect(20, 15, hp, 20);
     }
 
 

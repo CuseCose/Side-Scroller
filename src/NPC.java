@@ -26,7 +26,6 @@ public class NPC implements Sprite {
     private boolean firstLaunch=true;
     public int mapLength,mapHeight;
     boolean invOpen=false;
-    private RecipeList re;
     int selectedItem=0;
     int selectedItemID;
     Color invColor=new Color(204, 204, 179);
@@ -34,7 +33,6 @@ public class NPC implements Sprite {
 
 
     public NPC(Map m){
-        re=new RecipeList();
         int relativespawnloc=(int)(Math.random()*4000-2000);
         if (relativespawnloc>0){
             relativespawnloc+=1000;
@@ -42,7 +40,6 @@ public class NPC implements Sprite {
             relativespawnloc-=1000;
         }
         x=((m.getX()-(m.length/2))*BLOCKSIZE)+relativespawnloc;
-
         y=2000;
         firstLaunch=true;
         realx = (double) m.length / 2 + ((double) x / m.blockSize);
@@ -75,8 +72,12 @@ public class NPC implements Sprite {
         double drawx=(x-p1x)+WIDTH/2;
         double drawy=(p1y-y)+HEIGHT/2-25;
         g.fillRect((int)drawx, (int)drawy, width, height);
-        g.drawString(x+", "+y,(int)drawx-5, (int)drawy-30);
-        g.drawString(realx+", "+realy,(int)drawx-5, (int)drawy-45);
+        g.drawString(x+", "+y,(int)drawx-5, (int)drawy-35);
+        g.drawString(realx+", "+realy,(int)drawx-5, (int)drawy-50);
+        g.setColor(Color.WHITE);
+        g.fillRect((int)drawx-(maxhp/2)+(width/2), (int)drawy-30, maxhp, 20);
+        g.setColor(Color.red);
+        g.fillRect((int)drawx-(maxhp/2)+(width/2), (int)drawy-30, hp, 20);
     }
 
     public void move(Map map) {

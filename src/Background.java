@@ -10,7 +10,7 @@ public class Background implements Sprite{
 
 
     public Background(){
-        time=6;
+        time=12;
         playerLayer=0;
     }
 
