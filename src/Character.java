@@ -9,6 +9,9 @@ public class Character implements Sprite {
     private double realx;
     private double realy;
 
+    private int hp;
+    private int maxhp;
+
     private int height=80, width=20;
     private boolean isMovingRight;
     private boolean isMovingLeft;
@@ -36,7 +39,6 @@ public class Character implements Sprite {
     public Character(Map m){
         re=new RecipeList();
         x=0;
-
         y=2000;
         inv=new Item[invHeight][invLength];
         firstLaunch=true;
@@ -47,10 +49,11 @@ public class Character implements Sprite {
             }
         }
         inv[0][0]=new Item(12,0,0);
-        //realy = (double) m.height / 2 - ((double) y / m.blockSize);
         realx = (double) m.length / 2 + ((double) x / m.blockSize);
         realy=m.groundlvlmap[(int)realx]-5;
         y=-(int)(realy-((double)m.height/2))*m.blockSize;
+        hp=100;
+        maxhp=100;
 
 
 
@@ -104,7 +107,12 @@ public class Character implements Sprite {
         }
         timer++;
         if (timer==50){timer=0;}
-        if (timer==19){ System.out.println("is moving left: "+isMovingLeft+" is moving right: "+isMovingRight+" x velocity: "+xvel+" y velocity: "+yvel);}
+        if (timer==19){
+            if (hp<maxhp){
+                hp++;
+            }
+            System.out.println("is moving left: "+isMovingLeft+" is moving right: "+isMovingRight+" x velocity: "+xvel+" y velocity: "+yvel);
+        }
         if (isMovingLeft){
             if(xvel>-10){
                 xvel--;

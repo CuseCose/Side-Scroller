@@ -10,7 +10,7 @@ public class Background implements Sprite{
 
 
     public Background(){
-        time=12;
+        time=6;
         playerLayer=0;
     }
 
@@ -66,6 +66,14 @@ public class Background implements Sprite{
         }
     }
 
+
+    public double getTime(){return time;}
+
+    public boolean isDay(){
+        if (time<=12){
+            return true;
+        }else {return false;}
+    }
 
     public int getY() {
         return 0;

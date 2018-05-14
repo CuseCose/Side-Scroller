@@ -12,7 +12,7 @@ public class Map implements Sprite {
     int blockSize;
     Color caveLayer=new Color(153, 153, 102);
 
-    ArrayList<NPC> npcs=new ArrayList<NPC>();
+    ArrayList<NPC> en=new ArrayList<NPC>();
 
     public Map(int size){
         switch (size){
@@ -224,11 +224,12 @@ public class Map implements Sprite {
             }
             System.out.println("");
         }
+        /*npcs.add(new NPC(this));
         npcs.add(new NPC(this));
         npcs.add(new NPC(this));
         npcs.add(new NPC(this));
         npcs.add(new NPC(this));
-        npcs.add(new NPC(this));
+        */
     }
 
     public Map(String fileloc, int type){//type indicates if your using a old map and new char, or new map and old char
@@ -248,8 +249,8 @@ public class Map implements Sprite {
                 blocks[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY());
             }
         }
-        for (int i=0; i<npcs.size(); i++){
-            npcs.get(i).draw(g, p1.getX(), p1.getY(), length);
+        for (int i=0; i<en.size(); i++){
+            en.get(i).draw(g, p1.getX(), p1.getY(), length);
         }
         p1.draw(g);
 
@@ -304,12 +305,41 @@ public class Map implements Sprite {
         return realy;
     }
 
+    int timer=0;
+
     public void move() {
         p1.move(this);
-        for (int i=0; i<npcs.size();i++){
-            npcs.get(i).move(this);
+        for (int i=0; i<en.size();i++){
+            en.get(i).move(this);
         }
         bak.move(p1.getRealy(), p1.getRealx(), groundlvlmap, height);
+        if (timer<10){
+            timer++;
+        }else {
+            timer=0;
+        }
+        if (timer==5) {
+            if (!bak.isDay()) {
+                int dice = (int) (Math.random() * 100);
+                int dice2 = (int) (Math.random() * 100);
+                if (dice < 10 && dice2 < 20) {
+                    en.add(new NPC(this));
+                    System.out.println("spawned enemy");
+                }
+            }else {
+                if (en.size()>0) {
+                    int dice = (int) (Math.random() * 100);
+                    if (dice < 5) {
+                        int dice3 = (int) (Math.random() * en.size());
+                        System.out.println("trying to remove enemy");
+                        if (en.get(dice3).isOffScreen(this)){
+                            en.remove(dice3);
+                            System.out.println("removed");
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}

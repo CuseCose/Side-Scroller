@@ -5,6 +5,9 @@ public class NPC implements Sprite {
     private double realx;
     private double realy;
 
+    private int hp;
+    private int maxhp;
+
     private int height=80, width=20;
     private boolean isMovingRight;
     private boolean isMovingLeft;
@@ -33,16 +36,30 @@ public class NPC implements Sprite {
     public NPC(Map m){
         re=new RecipeList();
         int relativespawnloc=(int)(Math.random()*4000-2000);
-        x=0+relativespawnloc;
+        if (relativespawnloc>0){
+            relativespawnloc+=1000;
+        }else {
+            relativespawnloc-=1000;
+        }
+        x=((m.getX()-(m.length/2))*BLOCKSIZE)+relativespawnloc;
+
         y=2000;
         firstLaunch=true;
         realx = (double) m.length / 2 + ((double) x / m.blockSize);
         realy=m.groundlvlmap[(int)realx]-5;
         y=-(int)(realy-((double)m.height/2))*m.blockSize;
-
+        hp=100;
+        maxhp=100;
 
     }
 
+    public boolean isOffScreen(Map m){
+        if ((m.getX()-realx)*BLOCKSIZE>1000||(m.getX()-realx)*BLOCKSIZE<-1000){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 
     public void draw(Graphics g) {
