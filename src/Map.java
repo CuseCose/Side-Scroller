@@ -329,7 +329,7 @@ public class Map implements Sprite {
             }else {
                 if (en.size()>0) {
                     int dice = (int) (Math.random() * 100);
-                    if (dice < 5) {
+                    if (dice < 10) {
                         int dice3 = (int) (Math.random() * en.size());
                         System.out.println("trying to remove enemy");
                         if (en.get(dice3).isOffScreen(this)){

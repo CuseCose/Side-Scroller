@@ -48,6 +48,11 @@ public class Background implements Sprite{
         }
     }
 
+
+    public void move() {
+    }
+
+
     public void move(double p1y, double p1x, int[] groundmap, int mapheight){
         time+=.002;
         if (time>=24){time=0;}
