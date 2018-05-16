@@ -42,6 +42,11 @@ public class Menu implements Sprite{
         }
     }
 
+
+    public void move() {
+
+    }
+
     public int getSelectedButton() { return selectedButton; }
 
     public void changeSelectedButton(boolean up){

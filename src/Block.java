@@ -129,6 +129,10 @@ public class Block implements Sprite {
     }
 
 
+    public void move() {
+    }
+
+
     public void draw(Graphics g, int xloc, int yloc) {
         if (!complex&&exists){
             g.setColor(color);
