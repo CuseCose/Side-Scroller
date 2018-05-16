@@ -189,6 +189,8 @@ public class Item implements Sprite{
                 isBlock=true;
                 color=Color.GRAY;
                 isStackable=true;
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"grey rock.png");
                 break;
             case 3://black rock
                 isBlock=true;
@@ -196,6 +198,8 @@ public class Item implements Sprite{
                 isStackable=true;
                 color=Color.BLACK;
                 isStackable=true;
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"black rock.png");
                 break;
             case 4://dirt
                 itemName="Dirt";

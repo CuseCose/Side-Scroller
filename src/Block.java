@@ -56,12 +56,16 @@ public class Block implements Sprite {
                 isNotClimbable=false;
                 isPassable=false;
                 color=Color.GRAY;
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"grey rock.png");
                 break;
             case 3://black rock
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
                 color=Color.BLACK;
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"black rock.png");
                 break;
             case 4://dirt
                 isNotStandable=false;
