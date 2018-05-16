@@ -50,10 +50,6 @@ public class RecipeList implements Sprite{
     }
 
 
-    public void move() {
-    }
-
-
     public void changeSelected(boolean inc){
         if (inc){
             if (selectedItemLoc<availableRecipes.length-1){

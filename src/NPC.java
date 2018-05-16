@@ -62,9 +62,7 @@ public class NPC implements Sprite {
     public void draw(Graphics g) {
     }
 
-    public void move() {
 
-    }
 
     public void draw(Graphics g, double p1x, double p1y, int mapLength) {
         if (aggro) {

@@ -101,9 +101,6 @@ public class Character implements Sprite {
         g.fillRect(20, 15, hp, 20);
     }
 
-    public void move() {
-
-    }
 
 
     public void move(Map map) {
