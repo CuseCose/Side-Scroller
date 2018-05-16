@@ -6,11 +6,14 @@ public class Block implements Sprite {
     int x,y;
     int type;
     boolean isNotStandable, isNotClimbable, isPassable;
-    Color color;
-    Color color2;
+    private Color color;
+    private Color color2;
     boolean exists;
     boolean complex;
     int blockSize;
+    private Image blockImg;
+    private boolean hasImg;
+    private Toolkit tk = Toolkit.getDefaultToolkit();
 
 
     public Block(){
@@ -31,6 +34,7 @@ public class Block implements Sprite {
         this.type=type;
         exists=true;
         complex=false;
+        hasImg=false;
         this.blockSize=blockSize;
         switch (type){
             case 0://nothing
@@ -44,6 +48,8 @@ public class Block implements Sprite {
                 isNotClimbable=false;
                 isPassable=false;
                 color=Color.green;
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"grass.png");
                 break;
             case 2://grey rock
                 isNotStandable=false;
@@ -62,18 +68,24 @@ public class Block implements Sprite {
                 isNotClimbable=false;
                 isPassable=false;
                 color=new Color(102,51,0);
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"dirt.png");
                 break;
             case 5://wood
                 isNotStandable=true;
                 isNotClimbable=false;
                 isPassable=true;
                 color=new Color(153,102,51);
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"wood.png");
                 break;
             case 6://leaves
                 isNotStandable=true;
                 isNotClimbable=false;
                 isPassable=true;
                 color=new Color(0, 153, 51);
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"leaves.png");
                 break;
             case 7://clouds
                 isNotStandable=false;
@@ -131,23 +143,27 @@ public class Block implements Sprite {
 
 
     public void draw(Graphics g, int xloc, int yloc) {
-        if (!complex&&exists){
-            g.setColor(color);
-            g.fillRect(xloc,yloc,blockSize,blockSize);
-        }else if (complex&&exists){
-            if (type==13){
+        if (!hasImg) {
+            if (!complex && exists) {
                 g.setColor(color);
-                g.fillRect(xloc,yloc,blockSize,blockSize);
-                g.setColor(color2);
-                g.fillRect(xloc+(blockSize/4),yloc,blockSize/2,blockSize/5);
-            }else if (type==14){
-                g.setColor(color);
-                g.fillRect(xloc,yloc,blockSize,blockSize);
-                g.setColor(color2);
-                for (int i=0;i<5;i++) {
-                    g.fillRect(xloc , yloc+(i*(blockSize/5)), blockSize, blockSize / 10);
+                g.fillRect(xloc, yloc, blockSize, blockSize);
+            } else if (complex && exists) {
+                if (type == 13) {
+                    g.setColor(color);
+                    g.fillRect(xloc, yloc, blockSize, blockSize);
+                    g.setColor(color2);
+                    g.fillRect(xloc + (blockSize / 4), yloc, blockSize / 2, blockSize / 5);
+                } else if (type == 14) {
+                    g.setColor(color);
+                    g.fillRect(xloc, yloc, blockSize, blockSize);
+                    g.setColor(color2);
+                    for (int i = 0; i < 5; i++) {
+                        g.fillRect(xloc, yloc + (i * (blockSize / 5)), blockSize, blockSize / 10);
+                    }
                 }
             }
+        }else {
+            g.drawImage(blockImg,xloc,yloc,blockSize,blockSize, null);
         }
     }
 

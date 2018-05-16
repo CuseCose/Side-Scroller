@@ -42,7 +42,7 @@ public class Map implements Sprite {
             groundlvlmap[x]=cground;
             for (int y=0; y<height; y++){
                 if (y>=cground){//at or below ground level
-                    if (y<cground+2){//grass layer
+                    if (y<cground+1){//grass layer
                         map[x][y]=1;
                     }else {//sub grass
                         if (y<cground+(height/10)*2){//dirt layer

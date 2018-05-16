@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Item {
+public class Item implements Sprite{
     int itemID;
     boolean isBlock;
     String itemName;
@@ -14,56 +14,72 @@ public class Item {
     boolean isIngredient=false;
     boolean isComplex=false;
     Color color2;
+    private boolean hasImg;
+    private Image img;
+
 
 
     public void draw(Graphics g){
-        g.setColor(Color.black);
-        g.drawString(amt+"", 20 + (60 * x) + 30, 50 + (60 * y) + 30);//show amount of an item
-        if (isBlock){
-            g.setColor(color);
-            g.fillRect(20 + (60 * x)+10, 50+(60*y)+10, 20, 20);//draw block in inv
-            if (isComplex){
-                if (itemID==13){
-                    g.setColor(color2);
-                    g.fillRect(20 + (60 * x)+10+5, 50+(60*y)+10, 10, 5);
-                }else if (itemID==14){
-                    for(int i=0; i<5; i++){
+        g.setColor(invColor);
+        g.drawString(amt + "", 20 + (60 * x) + 30, 50 + (60 * y) + 30);//show amount of an item
+        if (!hasImg) {
+            if (isBlock) {
+                g.setColor(color);
+                g.fillRect(20 + (60 * x) + 10, 50 + (60 * y) + 10, 20, 20);//draw block in inv
+                if (isComplex) {
+                    if (itemID == 13) {
                         g.setColor(color2);
-                        g.fillRect(20 + (60 * x)+10, 50+(60*y)+10+(i*4), 20, 2);
+                        g.fillRect(20 + (60 * x) + 10 + 5, 50 + (60 * y) + 10, 10, 5);
+                    } else if (itemID == 14) {
+                        for (int i = 0; i < 5; i++) {
+                            g.setColor(color2);
+                            g.fillRect(20 + (60 * x) + 10, 50 + (60 * y) + 10 + (i * 4), 20, 2);
+                        }
                     }
+                }
+            } else {
+                if (exists) {
+                    g.setColor(Color.black);
+                    g.drawString(itemName, 20 + (60 * x) + 5, 50 + (60 * y) + 10);
                 }
             }
         }else {
-            if (exists) {
-                g.setColor(Color.black);
-                g.drawString(itemName, 20 + (60 * x) + 5, 50 + (60 * y) + 10);
-            }
+            g.drawImage(img,20 + (60 * x)+10, 50+(60*y)+10, 20, 20, null);//draw block in inv
         }
     }
 
 
+    public int getY() { return 0; }
+
+    public int getX() { return 0; }
+
+
     public void draw(Graphics g, int x, int y) {
-        g.setColor(Color.black);
+        g.setColor(invColor);
         g.drawString(amt+"", x + 20, y + 30);//show amount of an item
-        if (isBlock){
-            g.setColor(color);
-            g.fillRect(x, y, 20, 20);//draw block in inv
-            if (isComplex){
-                if (itemID==13){
-                    g.setColor(color2);
-                    g.fillRect(x+5, y, 10, 5);
-                }else if (itemID==14){
-                    for(int i=0; i<5; i++){
+        if (!hasImg) {
+            if (isBlock) {
+                g.setColor(color);
+                g.fillRect(x, y, 20, 20);//draw block in inv
+                if (isComplex) {
+                    if (itemID == 13) {
                         g.setColor(color2);
-                        g.fillRect(x, y+(i*4), 20, 2);
+                        g.fillRect(x + 5, y, 10, 5);
+                    } else if (itemID == 14) {
+                        for (int i = 0; i < 5; i++) {
+                            g.setColor(color2);
+                            g.fillRect(x, y + (i * 4), 20, 2);
+                        }
                     }
+                }
+            } else {
+                if (exists) {
+                    g.setColor(Color.black);
+                    g.drawString(itemName, x, y);
                 }
             }
         }else {
-            if (exists) {
-                g.setColor(Color.black);
-                g.drawString(itemName, x, y);
-            }
+            g.drawImage(img,20 + (60 * x)+10, 50+(60*y)+10, 20, 20, null);//draw block in inv
         }
     }
 
@@ -108,6 +124,7 @@ public class Item {
         exists=true;
         isTool=false;
         amt=1;
+        hasImg=false;
         setItem();
         isRecipe=true;
     }
@@ -118,6 +135,7 @@ public class Item {
         exists=true;
         isTool=false;
         this.amt=amt;
+        hasImg=false;
         setItem();
         isRecipe=false;
         isIngredient=true;
@@ -131,6 +149,7 @@ public class Item {
         exists=true;
         isTool=false;
         amt=1;
+        hasImg=false;
         setItem();
     }
 
@@ -141,6 +160,7 @@ public class Item {
         this.y=y;
         exists=true;
         isTool=false;
+        hasImg=false;
         this.amt=amt;
         setItem();
     }
@@ -160,6 +180,8 @@ public class Item {
                 isBlock=true;
                 isStackable=true;
                 color=Color.green;
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"grass.png");
                 break;
             case 2://grey rock
                 itemName="Grey Rock";
@@ -181,6 +203,8 @@ public class Item {
                 isStackable=true;
                 isStackable=true;
                 color=new Color(102,51,0);
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"dirt.png");
                 break;
             case 5://wood
                 itemName="Wood";
@@ -188,12 +212,16 @@ public class Item {
                 isStackable=true;
                 isStackable=true;
                 color=new Color(153,102,51);
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"wood.png");
                 break;
             case 6://leaves
                 itemName="leaves";
                 isBlock=true;
                 isStackable=true;
                 color=new Color(0, 153, 51);
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"leaves.png");
                 break;
             case 7://clouds
                 itemName="Cloud";

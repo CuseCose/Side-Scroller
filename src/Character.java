@@ -33,7 +33,6 @@ public class Character implements Sprite {
     private RecipeList re;
     int selectedItem=0;
     int selectedItemID;
-    Color invColor=new Color(204, 204, 179);
 
 
     public Character(Map m){
@@ -220,7 +219,7 @@ public class Character implements Sprite {
 
 
     public int getLoadXMin(){
-        int loadx=(int)realx-25;
+        int loadx=(int)realx-15;
         if (loadx<0){
             loadx=0;
         }
@@ -229,7 +228,7 @@ public class Character implements Sprite {
 
 
     public int getLoadXMax(){
-        int loadx=(int) realx+25;
+        int loadx=(int) realx+15;
         if (loadx>mapLength-1){
             loadx=mapLength-1;
         }
@@ -238,7 +237,7 @@ public class Character implements Sprite {
 
 
     public int getLoadYMin(){
-        int loady=(int)realy-20;
+        int loady=(int)realy-10;
         if (loady<0){
             loady=0;
         }
@@ -247,7 +246,7 @@ public class Character implements Sprite {
 
 
     public int getLoadYMax(){
-        int loady=(int)realy+20;
+        int loady=(int)realy+10;
         if (loady>mapHeight-1){
             loady=mapHeight-1;
         }
