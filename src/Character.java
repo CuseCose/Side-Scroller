@@ -65,8 +65,8 @@ public class Character implements Sprite {
     public void draw(Graphics g) {
         g.setColor(Color.RED);
         g.fillRect(WIDTH/2, HEIGHT/2-25, width, height);
-        g.drawString(x+", "+y,WIDTH/2-5, HEIGHT/2-30);
-        g.drawString(realx+", "+realy,WIDTH/2-5, HEIGHT/2-45);
+        g.drawString(x+", "+y,20, HEIGHT-30);
+        g.drawString(realx+", "+realy,20, HEIGHT-45);
         for (int invnum=0;invnum<invLength-1;invnum++){
             if (!invOpen) {
                 if (invnum==selectedItem){
