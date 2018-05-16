@@ -95,6 +95,9 @@ public class Map implements Sprite {
                 for (int y=0; y<height-1; y++){
                     if (map[x][y]==1){
                         map[x][y]=8;
+                        for (int i=1;i<10; i++){
+                            map[x][y+i]=8;
+                        }
                     }
                 }
                 if (Math.random() * 100 < 20&&!adjacentHasTree) {

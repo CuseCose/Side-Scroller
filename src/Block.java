@@ -102,6 +102,8 @@ public class Block implements Sprite {
                 isNotClimbable=false;
                 isPassable=false;
                 color=Color.yellow;
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"sand.png");
                 break;
             case 9://snow
                 isNotStandable=false;
