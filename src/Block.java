@@ -28,14 +28,14 @@ public class Block implements Sprite {
     }
 
 
-    public Block(int x, int y, int type, int blockSize){
+    public Block(int x, int y, int type){
         this.x=x;
         this.y=y;
         this.type=type;
         exists=true;
         complex=false;
         hasImg=false;
-        this.blockSize=blockSize;
+        this.blockSize=BLOCKSIZE;
         switch (type){
             case 0://nothing
                 exists=false;

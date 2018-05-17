@@ -33,18 +33,21 @@ public class NPC implements Sprite {
 
 
     public NPC(Map m){
-        int relativespawnloc=(int)(Math.random()*4000-2000);
-        if (relativespawnloc>0){
-            relativespawnloc+=1000;
-        }else {
-            relativespawnloc-=1000;
+        realx=0;
+        while (realx<=0) {
+            int relativespawnloc = (int) (Math.random() * 4000 - 2000);
+            if (relativespawnloc > 0) {
+                relativespawnloc += 1000;
+            } else {
+                relativespawnloc -= 1000;
+            }
+            x = ((m.getX() - (m.length / 2)) * BLOCKSIZE) + relativespawnloc;
+            y = 2000;
+            firstLaunch = true;
+            realx = (double) m.length / 2 + ((double) x / m.blockSize);
+            realy = m.groundlvlmap[(int) realx] - 5;
+            y = -(int) (realy - ((double) m.height / 2)) * m.blockSize;
         }
-        x=((m.getX()-(m.length/2))*BLOCKSIZE)+relativespawnloc;
-        y=2000;
-        firstLaunch=true;
-        realx = (double) m.length / 2 + ((double) x / m.blockSize);
-        realy=m.groundlvlmap[(int)realx]-5;
-        y=-(int)(realy-((double)m.height/2))*m.blockSize;
         hp=100;
         maxhp=100;
 

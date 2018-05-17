@@ -50,7 +50,7 @@ public class Background implements Sprite{
 
 
 
-    public void move(double p1y, double p1x, int[] groundmap, int mapheight){
+    public void move(double p1y, double p1x, int[] groundmap, int mapheight, int[] biomemap){
         time+=.002;
         if (time>=24){time=0;}
         if (p1y<=groundmap[(int)p1x]+5){
