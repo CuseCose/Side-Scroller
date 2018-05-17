@@ -10,7 +10,7 @@ public class MapGen {
     public MapGen(int size){
         switch (size){
             case 1:
-                length=2000;
+                length=500;
                 height=500;
                 break;
         }
@@ -70,6 +70,7 @@ public class MapGen {
             }
         }
         generateBiomes();
+        addCaves();
         generateClouds();
     }
 
@@ -252,6 +253,70 @@ public class MapGen {
                     }
                 }
                 x+=20;
+            }
+        }
+    }
+
+    public void addCaves(){
+        for (int x=0; x<length-10;x++){
+            int dice=(int)(100.0*Math.random());
+            if (dice<5){
+                System.out.println("CREATING CAVE BOIS");
+                int yloc=(int)((double)(height-groundlvlmap[x]-20)*Math.random())+groundlvlmap[x]+20;
+                int cavelength=(int)(Math.random()*400);
+                int cavegirth=(int)(Math.random()*8);
+                int cavey=yloc;
+                int cavex=x;
+                boolean goingRight=true;
+                boolean goingLeft=false;
+                for (int i=0; i<cavelength; i++){
+                    for (int ccavex=(cavex)-(cavegirth/2); ccavex<cavex+(cavegirth/2);ccavex++){
+                        for (int ccavey=(cavey)-(cavegirth/2); ccavey<cavey+(cavegirth/2);ccavey++){
+                            if (ccavex>0&&ccavex<length-1&&ccavey>0&&ccavey<height-1){
+                                System.out.println("making cave at "+ccavex+", "+ccavey);
+                                map[ccavex][ccavey]=0;
+                            }
+                        }
+                    }
+                    int wormdice=(int)(Math.random()*100);
+
+                    if (wormdice<25){
+                        cavex--;
+                        if (cavegirth<8) {
+                            cavegirth++;
+                        }
+                    }else if (wormdice<50){
+                        cavex++;
+                        if (cavegirth>2) {
+                            cavegirth--;
+                        }
+                    }else if (wormdice<75){
+                        cavey--;
+                        if (cavegirth>3) {
+                            cavegirth -= 2;
+                        }
+                    }else {
+                        cavey++;
+                        if (cavegirth<8) {
+                            cavegirth += 2;
+                        }
+                    }
+                    if (goingLeft){
+                        cavex-=3;
+                    }else {
+                        cavex+=3;
+                    }
+                    if (wormdice<2){
+                        int dice34=(int)(Math.random()*100);
+                        if (dice34<50){
+                            goingLeft=true;
+                            goingRight=false;
+                        }else{
+                            goingLeft=false;
+                            goingRight=true;
+                        }
+                    }
+                }
             }
         }
     }
