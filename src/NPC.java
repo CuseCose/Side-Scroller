@@ -34,7 +34,7 @@ public class NPC implements Sprite {
 
     public NPC(Map m){
         realx=0;
-        while (realx<=0) {
+        while (realx<=0&&realx>=m.length) {
             int relativespawnloc = (int) (Math.random() * 4000 - 2000);
             if (relativespawnloc > 0) {
                 relativespawnloc += 1000;

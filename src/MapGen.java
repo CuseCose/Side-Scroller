@@ -10,16 +10,8 @@ public class MapGen {
     public MapGen(int size){
         switch (size){
             case 1:
-                length=1000;
-                height=120;
-                break;
-            case 2:
                 length=2000;
-                height=200;
-                break;
-            case 3:
-                length=3000;
-                height=300;
+                height=500;
                 break;
         }
         System.out.println("generating map");
@@ -27,7 +19,7 @@ public class MapGen {
         map=new int[length][height];
         blocks=new Block[length][height];
         groundlvlmap=new int[length];
-        int cground=height/2;
+        int cground=height/4;
         for (int x=0; x<length;x++){
             groundlvlmap[x]=cground;
             for (int y=0; y<height; y++){
@@ -35,7 +27,7 @@ public class MapGen {
                     if (y<cground+1){//grass layer
                         map[x][y]=1;
                     }else {//sub grass
-                        if (y<cground+(height/10)){//dirt layer
+                        if (y<cground+15){//dirt layer
                             map[x][y]=4;
                         }else {//rock layer
                             if (Math.random() * 100 < 20) {
@@ -50,24 +42,39 @@ public class MapGen {
             int randChangeSize=(int)(Math.random()*100);
             int dice=(int)(Math.random()*100);
             if (randChangeSize<30){
-                if (cground<=height*.8) {
+                if (cground<=height*.5) {
                     cground++;
-                    if (dice<10){
+                    if (dice<5){
                         cground++;
+                        if (dice<2){
+                            cground=cground+5;
+                        }
                     }
                 }else {
                     cground--;
-                    if (dice<10){
-                        cground++;
+                    if (dice<5){
+                        cground--;
+                        if (dice<2){
+                            cground=cground-5;
+                        }
                     }
                 }
             }else if (randChangeSize<60){
                 cground--;
                 if (dice<10){
                     cground--;
+                    if (dice<2){
+                        cground=cground-5;
+                    }
                 }
             }
         }
+        generateBiomes();
+        generateClouds();
+    }
+
+
+    public void generateBiomes(){
         System.out.println("generating biome map");
         int cbiomelength=0;
         int cbiome=0;
@@ -226,6 +233,10 @@ public class MapGen {
                 }
             }
         }
+
+    }
+
+    public void generateClouds(){
         System.out.println("generating clouds");
         for (int x=3; x<length-10; x++){
             if (Math.random()*100<20){
@@ -243,7 +254,6 @@ public class MapGen {
                 x+=20;
             }
         }
-
     }
 
     public Block[][] getBlocks() { return blocks; }

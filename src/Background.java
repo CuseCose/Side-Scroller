@@ -2,16 +2,19 @@ import java.awt.*;
 
 public class Background implements Sprite{
 
-    Color background;
+
     double time;
     int playerLayer;
     Color dirtLayer=new Color(103,51,50);
     Color caveLayer=new Color(153, 153, 102);
+    Image moon;
+
 
 
     public Background(){
         time=12;
         playerLayer=0;
+        moon=tk.getImage(DOCPATH+"moon.png");
     }
 
 
@@ -42,8 +45,11 @@ public class Background implements Sprite{
                 g.setColor(Color.yellow);
                 g.fillOval((int)(time*(WIDTH/10)-100), (int)(HEIGHT*.1), 100,100);
             }else{
+                /*
                 g.setColor(Color.lightGray);
                 g.fillOval((int)((time-12)*(WIDTH/10)-100), (int)(HEIGHT*.1), 100,100);
+                */
+                g.drawImage(moon,(int)((time-12)*(WIDTH/10)-100), (int)(HEIGHT*.1), 100,100, null);
             }
         }
     }
@@ -54,7 +60,7 @@ public class Background implements Sprite{
         time+=.002;
         if (time>=24){time=0;}
         if (p1y<=groundmap[(int)p1x]+5){
-            if (p1y<mapheight*.15){
+            if (p1y<mapheight*.1){
                 playerLayer=1;//sky layer
             }else {
                 playerLayer=0;//ground level

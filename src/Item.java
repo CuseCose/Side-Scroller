@@ -254,12 +254,15 @@ public class Item implements Sprite{
                 isBlock=true;
                 isStackable=true;
                 color=Color.white;
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"snowy leaves.png");
                 break;
             case 11://cactus
                 itemName="Cactus";
                 isBlock=true;
                 isStackable=true;
-                color=new Color(0,120,3);
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"cactus.png");
                 break;
             case 12://pickaxe
                 itemName="pickaxe";
