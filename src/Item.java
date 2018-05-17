@@ -246,6 +246,8 @@ public class Item implements Sprite{
                 isBlock=true;
                 color=Color.white;
                 isStackable=true;
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"snow.png");
                 break;
             case 10://snowy leaves
                 itemName="Snowy Leaves";

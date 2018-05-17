@@ -95,7 +95,32 @@ public class Map implements Sprite {
                 for (int y=0; y<height-1; y++){
                     if (map[x][y]==1){
                         map[x][y]=8;
-                        for (int i=1;i<10; i++){
+                        int dtbe=0;
+                        boolean dtbefound=false;
+                        while (!dtbefound){
+                            if (dtbe>20){
+                                dtbefound=true;
+                            }else {
+                                if (x-dtbe>0){
+                                    if (biomemap[x-dtbe]==0&&biomemap[x+dtbe]==0){
+                                        dtbe++;
+                                    }else {
+                                        dtbefound=true;
+                                    }
+                                }else {
+                                    if (biomemap[x+dtbe]==0){
+                                        dtbe++;
+                                    }else {
+                                        dtbefound = true;
+                                        System.out.println(dtbe+" blocks from next biome");
+                                    }
+                                }
+                            }
+
+                        }
+                        dtbe=(int)((double)dtbe*(Math.random()+1.0));
+                        for (int i=1;i<1+dtbe; i++){
+                            System.out.println("Placing sand");
                             map[x][y+i]=8;
                         }
                     }
