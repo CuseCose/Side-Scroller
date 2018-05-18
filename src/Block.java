@@ -1,22 +1,22 @@
 import java.awt.*;
 
-public class Block implements Sprite {
+public class Block extends Item implements Sprite {
 
 
     int x,y;
-    int type;
+    /*int itemID;
     boolean isNotStandable, isNotClimbable, isPassable;
     private Color color;
     private Color color2;
     boolean exists;
     boolean complex;
     int blockSize;
-    private Image blockImg;
+    private Image img;
     private boolean hasImg;
     private Toolkit tk = Toolkit.getDefaultToolkit();
+    */
 
-
-    public Block(){
+    /*public Block(){
         x=0;
         y=0;
         exists=false;
@@ -25,18 +25,18 @@ public class Block implements Sprite {
         isNotClimbable=true;
         isPassable=true;
         blockSize=50;
-    }
+    }*/
 
 
     public Block(int x, int y, int type){
+        super(type);
         this.x=x;
         this.y=y;
-        this.type=type;
-        exists=true;
+        /*exists=true;
         complex=false;
         hasImg=false;
-        this.blockSize=BLOCKSIZE;
-        switch (type){
+        this.blockSize=BLOCKSIZE;/*
+        /*switch (itemID){
             case 0://nothing
                 exists=false;
                 isNotStandable=true;
@@ -49,7 +49,7 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=Color.green;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"grass.png");
+                img=tk.getImage(DOCPATH+"grass.png");
                 break;
             case 2://grey rock
                 isNotStandable=false;
@@ -57,7 +57,7 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=Color.GRAY;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"grey rock.png");
+                img=tk.getImage(DOCPATH+"grey rock.png");
                 break;
             case 3://black rock
                 isNotStandable=false;
@@ -65,7 +65,7 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=Color.BLACK;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"black rock.png");
+                img=tk.getImage(DOCPATH+"black rock.png");
                 break;
             case 4://dirt
                 isNotStandable=false;
@@ -73,7 +73,7 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=new Color(102,51,0);
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"dirt.png");
+                img=tk.getImage(DOCPATH+"dirt.png");
                 break;
             case 5://wood
                 isNotStandable=true;
@@ -81,7 +81,7 @@ public class Block implements Sprite {
                 isPassable=true;
                 color=new Color(153,102,51);
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"wood.png");
+                img=tk.getImage(DOCPATH+"wood.png");
                 break;
             case 6://leaves
                 isNotStandable=true;
@@ -89,7 +89,7 @@ public class Block implements Sprite {
                 isPassable=true;
                 color=new Color(0, 153, 51);
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"leaves.png");
+                img=tk.getImage(DOCPATH+"leaves.png");
                 break;
             case 7://clouds
                 isNotStandable=false;
@@ -103,7 +103,7 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=Color.yellow;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"sand.png");
+                img=tk.getImage(DOCPATH+"sand.png");
                 break;
             case 9://snow
                 isNotStandable=false;
@@ -111,7 +111,7 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=Color.white;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"snow.png");
+                img=tk.getImage(DOCPATH+"snow.png");
                 break;
             case 10://snowy leaves
                 isNotStandable=true;
@@ -119,7 +119,7 @@ public class Block implements Sprite {
                 isPassable=true;
                 color=Color.white;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"snowy leaves.png");
+                img=tk.getImage(DOCPATH+"snowy leaves.png");
                 break;
             case 11://cactus
                 isNotStandable=true;
@@ -127,7 +127,7 @@ public class Block implements Sprite {
                 isPassable=true;
                 color=new Color(0,120,3);
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"cactus.png");
+                img=tk.getImage(DOCPATH+"cactus.png");
                 break;
             case 13://table
                 complex=true;
@@ -151,7 +151,7 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=Color.GRAY;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"iron ore.png");
+                img=tk.getImage(DOCPATH+"iron ore.png");
                 break;
             case 16://coal
                 isNotStandable=false;
@@ -159,7 +159,7 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=Color.GRAY;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"coal ore.png");
+                img=tk.getImage(DOCPATH+"coal ore.png");
                 break;
             case 17://copper ore
                 isNotStandable=false;
@@ -167,9 +167,9 @@ public class Block implements Sprite {
                 isPassable=false;
                 color=Color.GRAY;
                 hasImg=true;
-                blockImg=tk.getImage(DOCPATH+"copper ore.png");
+                img=tk.getImage(DOCPATH+"copper ore.png");
                 break;
-        }
+        }*/
     }
 
 
@@ -184,12 +184,12 @@ public class Block implements Sprite {
                 g.setColor(color);
                 g.fillRect(xloc, yloc, blockSize, blockSize);
             } else if (complex && exists) {
-                if (type == 13) {
+                if (itemID == 13) {
                     g.setColor(color);
                     g.fillRect(xloc, yloc, blockSize, blockSize);
                     g.setColor(color2);
                     g.fillRect(xloc + (blockSize / 4), yloc, blockSize / 2, blockSize / 5);
-                } else if (type == 14) {
+                } else if (itemID == 14) {
                     g.setColor(color);
                     g.fillRect(xloc, yloc, blockSize, blockSize);
                     g.setColor(color2);
@@ -199,7 +199,7 @@ public class Block implements Sprite {
                 }
             }
         }else {
-            g.drawImage(blockImg,xloc,yloc,blockSize,blockSize, null);
+            g.drawImage(img,xloc,yloc,blockSize,blockSize, null);
         }
     }
 
@@ -210,8 +210,8 @@ public class Block implements Sprite {
     public boolean isNotStandable(){return isNotStandable;}
     public boolean isPassable() { return isPassable; }
     public boolean isNotClimbable() { return isNotClimbable; }
-    public int getType() {
-        return type;
+    public int getitemID() {
+        return itemID;
     }
     public int getY() {
         return x;

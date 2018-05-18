@@ -1,10 +1,8 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.concurrent.Future;
 
 public class Character implements Sprite {
 
-    private Item[][] inv;
+    private InvItem[][] inv;
     private int x, y;
     private double realx;
     private double realy;
@@ -39,15 +37,15 @@ public class Character implements Sprite {
         re=new RecipeList();
         x=0;
         y=2000;
-        inv=new Item[invHeight][invLength];
+        inv=new InvItem[invHeight][invLength];
         firstLaunch=true;
         for (int invy=0;invy<invHeight-1;invy++){
             for (int invx=0;invx<invLength-1;invx++){
                 System.out.println("creating item at inv slot "+invx+", "+invy);
-                inv[invy][invx]=new Item(0,invx,invy);
+                inv[invy][invx]=new InvItem(0,invx,invy);
             }
         }
-        inv[0][0]=new Item(12,0,0);
+        inv[0][0]=new InvItem(12,0,0);
         realx = (double) m.length / 2 + ((double) x / m.blockSize);
         realy=m.groundlvlmap[(int)realx]-5;
         y=-(int)(realy-((double)m.height/2))*m.blockSize;
@@ -195,7 +193,7 @@ public class Character implements Sprite {
             for (int invy=0;invy<invHeight-1;invy++){
                 for (int invx=0; invx<invLength-1;invx++){
                     if (!inv[invy][invx].exists){
-                        inv[invy][invx]=new Item(itemID,invx,invy);
+                        inv[invy][invx]=new InvItem(itemID,invx,invy);
                         invx=invLength;
                         invy=invHeight;
                     }

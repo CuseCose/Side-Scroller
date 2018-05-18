@@ -15,7 +15,7 @@ public class RecipeList implements Sprite{
     }
 
 
-    public void updateAvailable(Item[][]inv, int invLength, int invHeight){
+    public void updateAvailable(InvItem[][]inv, int invLength, int invHeight){
         Recipe[] newAvailable;
         int numRecipesAvailable=0;
         for (int i=0;i<=maxItemId;i++){
@@ -63,7 +63,7 @@ public class RecipeList implements Sprite{
     }
 
 
-    public void craftSelected(Item[][] inv, int invLength, int invHeight){
+    public void craftSelected(InvItem[][] inv, int invLength, int invHeight){
         availableRecipes[selectedItemLoc].craftRecipe(inv, invLength, invHeight);
     }
 

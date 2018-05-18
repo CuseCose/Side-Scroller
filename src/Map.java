@@ -28,7 +28,7 @@ public class Map implements Sprite {
             biomemap[x]=mg.getBiomemap()[x];
             for (int y=0; y<height; y++){
                 blocks[x][y]=new Block(x, y, mg.getMap()[x][y]);
-                //System.out.println("Making block "+x+". "+y);
+                System.out.println("Making block "+x+". "+y);
             }
         }
 
@@ -69,11 +69,11 @@ public class Map implements Sprite {
         if (p1.selectedItemID==12){
             System.out.println("breaking block");
             if (blocks[clickx][clicky].exists) {
-                p1.addToInv(blocks[clickx][clicky].getType());
+                p1.addToInv(blocks[clickx][clicky].getitemID());
                 blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), 0);
             }
         }else if (p1.selectedItemIsBlock()){
-            if (blocks[clickx][clicky].type==0) {
+            if (blocks[clickx][clicky].getitemID()==0) {
                 blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), p1.selectedItemID);
                 p1.useSelectedItem();
             }

@@ -5,9 +5,9 @@ public class Recipe {
     boolean tableNeeded;
     boolean anvilNeeded;
     boolean craftable=false;
-    Item[] neededItems;
+    InvItem[] neededInvItems;
     int productID;
-    Item product;
+    InvItem product;
     Color invColor=new Color(204, 204, 179);
     int numproducts=1;
 
@@ -15,7 +15,7 @@ public class Recipe {
 
     public Recipe(int productID){
         this.productID=productID;
-        product=new Item(productID);
+        product=new InvItem(productID);
         boolean furnaceNeeded=false;
         boolean tableNeeded=false;
         boolean anvilNeeded=false;
@@ -23,13 +23,13 @@ public class Recipe {
             case 13://crafting table
                 System.out.println("crafting table recipe created");
                 craftable=true;
-                neededItems=new Item[1];
+                neededInvItems =new InvItem[1];
                 addToNeededItems(5,4, 0);
                 break;
             case 14://wood planks
                 System.out.println("wood planks recipe created");
                 craftable=true;
-                neededItems=new Item[1];
+                neededInvItems =new InvItem[1];
                 addToNeededItems(5,4, 0);
                 numproducts=16;
                 break;
@@ -42,20 +42,20 @@ public class Recipe {
 
 
     public void addToNeededItems(int itemID, int amt, int itemnumonrecipe){
-        neededItems[itemnumonrecipe]=new Item(itemID, amt);
+        neededInvItems[itemnumonrecipe]=new InvItem(itemID, amt);
     }
 
 
-    public boolean canCraft(Item[][] inv, int invLength, int invHeight){
+    public boolean canCraft(InvItem[][] inv, int invLength, int invHeight){
         if(craftable) {
-            boolean[] hasItem = new boolean[neededItems.length];
+            boolean[] hasItem = new boolean[neededInvItems.length];
             for (int i = 0; i < hasItem.length; i++) {
                 hasItem[i] = false;
             }
             for (int invy = 0; invy < invHeight-1; invy++) {
                 for (int invx = 0; invx < invLength-1; invx++) {
-                    for (int i = 0; i < neededItems.length; i++) {
-                        if (inv[invy][invx].has(neededItems[i])) {
+                    for (int i = 0; i < neededInvItems.length; i++) {
+                        if (inv[invy][invx].has(neededInvItems[i])) {
                             hasItem[i] = true;
                         }
                     }
@@ -87,21 +87,21 @@ public class Recipe {
             g.drawRect(x - 10, y - 10, 40, 40);
         }
         product.draw(g, x, y);
-        for (int i=0; i<neededItems.length; i++){
+        for (int i = 0; i< neededInvItems.length; i++){
             g.setColor(invColor);
             g.drawRect(x+50+(60*i), y-10, 40, 40);
-            neededItems[i].draw(g, x+60+(60*i), y);
+            neededInvItems[i].draw(g, x+60+(60*i), y);
         }
     }
 
 
-    public void craftRecipe(Item[][] inv, int invLength, int invHeight){
-        boolean[] removedItem=new boolean[neededItems.length];
+    public void craftRecipe(InvItem[][] inv, int invLength, int invHeight){
+        boolean[] removedItem=new boolean[neededInvItems.length];
         for (int invy=0; invy<invHeight-1;invy++){
             for (int invx=0;invx<invLength-1;invx++){
-                for (int i=0; i<neededItems.length;i++){
-                    if (inv[invy][invx].has(neededItems[i])&&!removedItem[i]){
-                        inv[invy][invx].changeAmt(0-neededItems[i].amt);
+                for (int i = 0; i< neededInvItems.length; i++){
+                    if (inv[invy][invx].has(neededInvItems[i])&&!removedItem[i]){
+                        inv[invy][invx].changeAmt(0- neededInvItems[i].amt);
                         removedItem[i]=true;
                     }
                 }
@@ -124,7 +124,7 @@ public class Recipe {
             for (int invy=0;invy<invHeight-1;invy++){
                 for (int invx=0; invx<invLength-1;invx++){
                     if (!inv[invy][invx].exists){
-                        inv[invy][invx]=new Item(productID,invx,invy, numproducts);
+                        inv[invy][invx]=new InvItem(productID,invx,invy, numproducts);
                         invx=invLength;
                         invy=invHeight;
                     }
