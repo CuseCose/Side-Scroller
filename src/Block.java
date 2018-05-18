@@ -145,6 +145,30 @@ public class Block implements Sprite {
                 color=new Color(200,100,50);
                 color2=new Color(103,51,0);
                 break;
+            case 15://iron ore
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
+                color=Color.GRAY;
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"iron ore.png");
+                break;
+            case 16://coal
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
+                color=Color.GRAY;
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"coal ore.png");
+                break;
+            case 17://copper ore
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
+                color=Color.GRAY;
+                hasImg=true;
+                blockImg=tk.getImage(DOCPATH+"copper ore.png");
+                break;
         }
     }
 

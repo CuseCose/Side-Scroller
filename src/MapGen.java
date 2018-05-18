@@ -6,7 +6,6 @@ public class MapGen {
     int length, height;
     int[][] map;
 
-
     public MapGen(int size){
         switch (size){
             case 1:
@@ -70,6 +69,7 @@ public class MapGen {
             }
         }
         generateBiomes();
+        addOres();
         addCaves();
         generateClouds();
     }
@@ -256,6 +256,36 @@ public class MapGen {
             }
         }
     }
+
+    public void addOres(){
+        System.out.println("adding ores");
+        for (int x=0; x<length-3;x++){
+            for (int y=groundlvlmap[x]+7; y<height; y++){
+                int dice=(int)((double)Math.random()*200);
+                if (dice<5){
+                    int dice2=(int)((double)Math.random()*100);
+                    int cgen=0;
+                    if (dice2<50){
+                        cgen=17;
+                    }else if (dice2<75){
+                        cgen=16;
+                    }else{
+                        cgen=15;
+                    }
+                    int chunksize=(int)(Math.random()*4);
+                    for(int i=0;i<chunksize;i++){
+                        for (int i2=0;i2<chunksize;i2++){
+                            if(x+i<length&&y+i2<height) {
+                                map[x + i][y + i2] = cgen;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
 
     public void addCaves(){
         for (int x=0; x<length-10;x++){

@@ -287,6 +287,33 @@ public class Item implements Sprite{
                 color=new Color(200,100,50);
                 color2=new Color(103,51,0);
                 break;
+            case 15://iron ore
+                isBlock=true;
+                itemName="Iron Ore";
+                isStackable=true;
+                color=Color.BLACK;
+                isStackable=true;
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"iron ore.png");
+                break;
+            case 16://coal
+                isBlock=true;
+                itemName="Coal";
+                isStackable=true;
+                color=Color.BLACK;
+                isStackable=true;
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"coal ore.png");
+                break;
+            case 17://copper ore
+                isBlock=true;
+                itemName="Copper Ore";
+                isStackable=true;
+                color=Color.BLACK;
+                isStackable=true;
+                hasImg=true;
+                img=tk.getImage(DOCPATH+"copper ore.png");
+                break;
         }
     }
 
