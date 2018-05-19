@@ -9,7 +9,7 @@ public class MapGen {
     public MapGen(int size){
         switch (size){
             case 1:
-                length=1000;
+                length=2000;
                 height=500;
                 break;
         }
@@ -26,7 +26,7 @@ public class MapGen {
                     if (y<cground+1){//grass layer
                         map[x][y]=1;
                     }else {//sub grass
-                        if (y<cground+15){//dirt layer
+                        if (y<cground+15+(Math.random()*4)){//dirt layer
                             map[x][y]=4;
                         }else {//rock layer
                             if (Math.random() * 100 < 20) {
@@ -234,6 +234,10 @@ public class MapGen {
                 }
             }
         }
+
+    }
+
+    public void addTree(int type, int x, int y){
 
     }
 

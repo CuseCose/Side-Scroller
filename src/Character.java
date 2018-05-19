@@ -111,42 +111,28 @@ public class Character implements Sprite {
         timer++;
         if (timer==50){timer=0;}
         if (timer==19){
-            if (hp<maxhp){
-                hp++;
-            }
+            if (hp<maxhp){ hp++; }
             System.out.println("is moving left: "+isMovingLeft+" is moving right: "+isMovingRight+" x velocity: "+xvel+" y velocity: "+yvel);
         }
-        if (isMovingLeft){
-            if(xvel>-(BLOCKSIZE*.2)){
-                xvel-=BLOCKSIZE*.05;
-            }
-        }
-        if (isMovingRight){
-            if(xvel<(BLOCKSIZE*.2)){
-                xvel+=BLOCKSIZE*.05;
-            }
-        }
-        if (!isMovingLeft&&!isMovingRight){
-            xvel=(int)(xvel*friction);
-        }
-        if (yvel>-(BLOCKSIZE*.4)){
-            yvel-=(BLOCKSIZE*.025);
-        }
+
+
+        if (isMovingLeft){ if(xvel>-(BLOCKSIZE*.2)){ xvel-=BLOCKSIZE*.05; } }
+        if (isMovingRight){ if(xvel<(BLOCKSIZE*.2)){ xvel+=BLOCKSIZE*.05; } }
+        if (!isMovingLeft&&!isMovingRight){ xvel=(int)(xvel*friction); }
+        if (yvel>-(BLOCKSIZE*.4)){ yvel-=(BLOCKSIZE*.025); }
+
         double futureX=x+xvel;
-        double futureRealX=(double)map.length/2+((double)futureX/map.blockSize);
+        double futureRealX=(double)map.length/2+(futureX/map.blockSize);
         double futureY=y+yvel;
-        double futureRealY=(double)map.height/2-((double)futureY/map.blockSize);
+        double futureRealY=(double)map.height/2-(futureY/map.blockSize);
         if(map.isNotStandable((int)futureRealX,(int)futureRealY+1)&&map.isNotStandable((int)(futureRealX+.5),(int)futureRealY+1)&&yvel<0){
             if (!isClimbing) {
                 y += yvel;
-                //realy = (double) map.height / 2 - ((double) y / map.blockSize);
             }else {
                 if(map.isNotClimbable((int)futureRealX,(int)futureRealY+1)&&map.isNotClimbable((int)(futureRealX+.5),(int)futureRealY+1)){
                     y += yvel;
-                    //realy = (double) map.height / 2 - ((double) y / map.blockSize);
                 }else{
                     inJump=false;
-                    //System.out.println("in jump set to false");
                 }
             }
         } else if (yvel > 0) {
@@ -155,9 +141,9 @@ public class Character implements Sprite {
                     y += yvel;
                 }
             }
-        }else if (yvel<0){
+        }else if (yvel<0){//touching ground
             inJump=false;
-            //System.out.println("in jump set to false");
+
         }
         if((xvel<0&&map.isPassable((int)(futureRealX),((int)futureRealY)))||(xvel>0&&map.isPassable((int)(futureRealX+.5),((int)futureRealY)))) {
             if (futureRealX>0&&futureRealX<map.length-1) {
@@ -218,7 +204,7 @@ public class Character implements Sprite {
 
 
     public int getLoadXMin(){
-        int loadx=(int)realx-(((WIDTH/2)/BLOCKSIZE)+5);
+        int loadx=(int)realx-(((WIDTH/2)/BLOCKSIZE)+2);
         if (loadx<0){
             loadx=0;
         }
@@ -227,7 +213,7 @@ public class Character implements Sprite {
 
 
     public int getLoadXMax(){
-        int loadx=(int) realx+(((WIDTH/2)/BLOCKSIZE)+5);
+        int loadx=(int) realx+(((WIDTH/2)/BLOCKSIZE)+2);
         if (loadx>mapLength-1){
             loadx=mapLength-1;
         }
@@ -236,7 +222,7 @@ public class Character implements Sprite {
 
 
     public int getLoadYMin(){
-        int loady=(int)realy-(((HEIGHT/2)/BLOCKSIZE)+5);
+        int loady=(int)realy-(((HEIGHT/2)/BLOCKSIZE)+2);
         if (loady<0){
             loady=0;
         }
@@ -245,7 +231,7 @@ public class Character implements Sprite {
 
 
     public int getLoadYMax(){
-        int loady=(int)realy+(((HEIGHT/2)/BLOCKSIZE)+5);
+        int loady=(int)realy+(((HEIGHT/2)/BLOCKSIZE)+2);
         if (loady>mapHeight-1){
             loady=mapHeight-1;
         }
