@@ -46,7 +46,7 @@ public class MapGen {
                     if (dice<5){
                         cground++;
                         if (dice<2){
-                            cground=cground+5;
+                            cground=cground+(int)(10*Math.random());
                         }
                     }
                 }else {
@@ -54,7 +54,7 @@ public class MapGen {
                     if (dice<5){
                         cground--;
                         if (dice<2){
-                            cground=cground-5;
+                            cground=cground-(int)(10*Math.random());;
                         }
                     }
                 }
@@ -292,7 +292,7 @@ public class MapGen {
             int dice=(int)(100.0*Math.random());
             if (dice<5){
                 //System.out.println("CREATING CAVE BOIS");
-                int yloc=(int)((double)(height-groundlvlmap[x]-20)*Math.random())+groundlvlmap[x]+20;
+                int yloc=(int)((double)(height-groundlvlmap[x]-70)*Math.random())+groundlvlmap[x]+70;
                 int cavelength=(int)(Math.random()*400);
                 int cavegirth=(int)(Math.random()*8);
                 int cavey=yloc;

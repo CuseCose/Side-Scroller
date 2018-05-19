@@ -23,29 +23,31 @@ public class InvItem extends Item implements Sprite {
     public void draw(Graphics g){
         g.setColor(invColor);
         g.drawString(amt + "", 20 + (60 * x) + 30, 50 + (60 * y) + 30);//show amount of an item
-        if (!hasImg) {
-            if (isBlock) {
-                g.setColor(color);
-                g.fillRect(20 + (60 * x) + 10, 50 + (60 * y) + 10, 20, 20);//draw block in inv
-                if (isComplex) {
-                    if (itemID == 13) {
-                        g.setColor(color2);
-                        g.fillRect(20 + (60 * x) + 10 + 5, 50 + (60 * y) + 10, 10, 5);
-                    } else if (itemID == 14) {
-                        for (int i = 0; i < 5; i++) {
+        if (amt>0) {
+            if (!hasImg) {
+                if (isBlock) {
+                    g.setColor(color);
+                    g.fillRect(20 + (60 * x) + 10, 50 + (60 * y) + 10, 20, 20);//draw block in inv
+                    if (isComplex) {
+                        if (itemID == 13) {
                             g.setColor(color2);
-                            g.fillRect(20 + (60 * x) + 10, 50 + (60 * y) + 10 + (i * 4), 20, 2);
+                            g.fillRect(20 + (60 * x) + 10 + 5, 50 + (60 * y) + 10, 10, 5);
+                        } else if (itemID == 14) {
+                            for (int i = 0; i < 5; i++) {
+                                g.setColor(color2);
+                                g.fillRect(20 + (60 * x) + 10, 50 + (60 * y) + 10 + (i * 4), 20, 2);
+                            }
                         }
+                    }
+                } else {
+                    if (exists) {
+                        g.setColor(Color.black);
+                        g.drawString(itemName, 20 + (60 * x) + 5, 50 + (60 * y) + 10);
                     }
                 }
             } else {
-                if (exists) {
-                    g.setColor(Color.black);
-                    g.drawString(itemName, 20 + (60 * x) + 5, 50 + (60 * y) + 10);
-                }
+                g.drawImage(img, 20 + (60 * x) + 10, 50 + (60 * y) + 10, 20, 20, null);//draw block in inv
             }
-        }else {
-            g.drawImage(img,20 + (60 * x)+10, 50+(60*y)+10, 20, 20, null);//draw block in inv
         }
     }
 
