@@ -32,6 +32,7 @@ public class Block extends Item implements Sprite {
         super(type);
         this.x=x;
         this.y=y;
+        System.out.println("new block at "+x+", "+y+" with type "+super.itemID);
         /*exists=true;
         complex=false;
         hasImg=false;
@@ -179,7 +180,8 @@ public class Block extends Item implements Sprite {
 
 
     public void draw(Graphics g, int xloc, int yloc) {
-        if (!hasImg) {
+        //System.out.println("drawing block");
+        /*if (!hasImg) {
             if (!complex && exists) {
                 g.setColor(color);
                 g.fillRect(xloc, yloc, blockSize, blockSize);
@@ -198,9 +200,11 @@ public class Block extends Item implements Sprite {
                     }
                 }
             }
-        }else {
-            g.drawImage(img,xloc,yloc,blockSize,blockSize, null);
+        }else {*/
+        if (exists) {
+            g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
         }
+        //}
     }
 
 

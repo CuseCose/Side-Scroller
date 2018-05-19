@@ -27,6 +27,11 @@ public abstract class Item implements Sprite {
     }
 
     public void setBlock(int type){
+        itemID=type;
+        exists=true;
+        complex=false;
+        hasImg=false;
+        isTool=false;
         switch (itemID) {
             case 0://nothing
                 isNotStandable=true;
@@ -78,6 +83,9 @@ public abstract class Item implements Sprite {
                 break;
             case 4://dirt
                 itemName = "Dirt";
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
                 isBlock = true;
                 isStackable = true;
                 isStackable = true;
@@ -87,6 +95,9 @@ public abstract class Item implements Sprite {
                 break;
             case 5://wood
                 itemName = "Wood";
+                isNotStandable=true;
+                isNotClimbable=false;
+                isPassable=true;
                 isBlock = true;
                 isStackable = true;
                 isStackable = true;
@@ -95,6 +106,9 @@ public abstract class Item implements Sprite {
                 img = tk.getImage(DOCPATH + "wood.png");
                 break;
             case 6://leaves
+                isNotStandable=true;
+                isNotClimbable=false;
+                isPassable=true;
                 itemName = "leaves";
                 isBlock = true;
                 isStackable = true;
@@ -103,6 +117,9 @@ public abstract class Item implements Sprite {
                 img = tk.getImage(DOCPATH + "leaves.png");
                 break;
             case 7://clouds
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=true;
                 itemName = "Cloud";
                 isBlock = true;
                 isStackable = true;
@@ -110,6 +127,9 @@ public abstract class Item implements Sprite {
                 break;
             case 8://sand
                 itemName = "Sand";
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
                 isBlock = true;
                 color = Color.yellow;
                 isStackable = true;
@@ -117,6 +137,9 @@ public abstract class Item implements Sprite {
                 img = tk.getImage(DOCPATH + "sand.png");
                 break;
             case 9://snow
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
                 itemName = "Snow";
                 isBlock = true;
                 color = Color.white;
@@ -125,6 +148,9 @@ public abstract class Item implements Sprite {
                 img = tk.getImage(DOCPATH + "snow.png");
                 break;
             case 10://snowy leaves
+                isNotStandable=true;
+                isNotClimbable=false;
+                isPassable=true;
                 itemName = "Snowy Leaves";
                 isBlock = true;
                 isStackable = true;
@@ -134,6 +160,9 @@ public abstract class Item implements Sprite {
                 break;
             case 11://cactus
                 itemName = "Cactus";
+                isNotStandable=true;
+                isNotClimbable=true;
+                isPassable=true;
                 isBlock = true;
                 isStackable = true;
                 hasImg = true;
@@ -147,6 +176,10 @@ public abstract class Item implements Sprite {
                 color = new Color(0, 120, 3);
                 break;
             case 13://table
+                complex=true;
+                isNotStandable=true;
+                isNotClimbable=false;
+                isPassable=true;
                 isComplex = true;
                 itemName = "CTable";
                 isBlock = true;
@@ -155,6 +188,10 @@ public abstract class Item implements Sprite {
                 color2 = new Color(102, 51, 0);
                 break;
             case 14://wood planks
+                complex=true;
+                isNotStandable=true;
+                isNotClimbable=true;
+                isPassable=true;
                 isComplex = true;
                 itemName = "WoodPlanks";
                 isBlock = true;
@@ -163,6 +200,9 @@ public abstract class Item implements Sprite {
                 color2 = new Color(103, 51, 0);
                 break;
             case 15://iron ore
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
                 isBlock = true;
                 itemName = "Iron Ore";
                 isStackable = true;
@@ -172,6 +212,9 @@ public abstract class Item implements Sprite {
                 img = tk.getImage(DOCPATH + "iron ore.png");
                 break;
             case 16://coal
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
                 isBlock = true;
                 itemName = "Coal";
                 isStackable = true;
@@ -181,6 +224,9 @@ public abstract class Item implements Sprite {
                 img = tk.getImage(DOCPATH + "coal ore.png");
                 break;
             case 17://copper ore
+                isNotStandable=false;
+                isNotClimbable=false;
+                isPassable=false;
                 isBlock = true;
                 itemName = "Copper Ore";
                 isStackable = true;
