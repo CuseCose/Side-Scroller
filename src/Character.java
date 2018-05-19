@@ -218,7 +218,7 @@ public class Character implements Sprite {
 
 
     public int getLoadXMin(){
-        int loadx=(int)realx-50;
+        int loadx=(int)realx-(((WIDTH/2)/BLOCKSIZE)+5);
         if (loadx<0){
             loadx=0;
         }
@@ -227,7 +227,7 @@ public class Character implements Sprite {
 
 
     public int getLoadXMax(){
-        int loadx=(int) realx+50;
+        int loadx=(int) realx+(((WIDTH/2)/BLOCKSIZE)+5);
         if (loadx>mapLength-1){
             loadx=mapLength-1;
         }
@@ -236,7 +236,7 @@ public class Character implements Sprite {
 
 
     public int getLoadYMin(){
-        int loady=(int)realy-30;
+        int loady=(int)realy-(((HEIGHT/2)/BLOCKSIZE)+5);
         if (loady<0){
             loady=0;
         }
@@ -245,7 +245,7 @@ public class Character implements Sprite {
 
 
     public int getLoadYMax(){
-        int loady=(int)realy+30;
+        int loady=(int)realy+(((HEIGHT/2)/BLOCKSIZE)+5);
         if (loady>mapHeight-1){
             loady=mapHeight-1;
         }
