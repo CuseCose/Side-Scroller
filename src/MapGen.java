@@ -9,7 +9,7 @@ public class MapGen {
     public MapGen(int size){
         switch (size){
             case 1:
-                length=500;
+                length=1000;
                 height=500;
                 break;
         }
@@ -120,7 +120,7 @@ public class MapGen {
                                         dtbe++;
                                     }else {
                                         dtbefound = true;
-                                        System.out.println(dtbe+" blocks from next biome");
+                                        //System.out.println(dtbe+" blocks from next biome");
                                     }
                                 }
                             }
@@ -128,7 +128,7 @@ public class MapGen {
                         }
                         dtbe=(int)((double)dtbe*(Math.random()+1.0));
                         for (int i=1;i<1+dtbe; i++){
-                            System.out.println("Placing sand");
+                            //System.out.println("Placing sand");
                             map[x][y+i]=8;
                         }
                     }
@@ -142,14 +142,14 @@ public class MapGen {
                         if (map[x][y] == 8) {
                             hasGrass = true;
                             groundLevel = y;
-                            System.out.println("groundlevel: " + groundLevel);
+                            //System.out.println("groundlevel: " + groundLevel);
                             break;
                         }
                     }
                     if (hasGrass) {//making cacti
                         int treeHeight = (int) (5 * Math.random()) + 1;
                         for (int y = groundLevel - 1; y >= groundLevel - treeHeight; y--) {
-                            System.out.println("putting bark at: (" + x + ", " + y + ")");
+                            //System.out.println("putting bark at: (" + x + ", " + y + ")");
                             if (y >= 0) {
                                 map[x][y] = 11;
                             }
@@ -161,21 +161,21 @@ public class MapGen {
             }else if (biomemap[x] == 1) {
                 if (Math.random() * 100 < 20&&!adjacentHasTree) {
                     adjacentHasTree=true;
-                    System.out.println("generating tree at" + x);
+                    //System.out.println("generating tree at" + x);
                     boolean hasGrass = false;
                     int groundLevel = 0;
                     for (int y = 0; y < height; y++) {
                         if (map[x][y] == 1 || map[x][y] == 4) {
                             hasGrass = true;
                             groundLevel = y;
-                            System.out.println("groundlevel: " + groundLevel);
+                            //System.out.println("groundlevel: " + groundLevel);
                             break;
                         }
                     }
                     if (hasGrass) {
                         int treeHeight = (int) (15 * Math.random()) + 3;
                         for (int y = groundLevel - 1; y >= groundLevel - treeHeight; y--) {
-                            System.out.println("putting bark at: (" + x + ", " + y + ")");
+                            //System.out.println("putting bark at: (" + x + ", " + y + ")");
                             if (y >= 0)
                                 map[x][y] = 5;
                         }
@@ -196,21 +196,21 @@ public class MapGen {
             }else if(biomemap[x]==2){
                 if (Math.random() * 100 < 20&&!adjacentHasTree) {
                     adjacentHasTree=true;
-                    System.out.println("generating tree at" + x);
+                    //System.out.println("generating tree at" + x);
                     boolean hasGrass = false;
                     int groundLevel = 0;
                     for (int y = 0; y < height; y++) {
                         if (map[x][y] == 1 || map[x][y] == 4) {
                             hasGrass = true;
                             groundLevel = y;
-                            System.out.println("groundlevel: " + groundLevel);
+                            //System.out.println("groundlevel: " + groundLevel);
                             break;
                         }
                     }
                     if (hasGrass) {
                         int treeHeight = (int) (15 * Math.random()) + 3;
                         for (int y = groundLevel - 1; y >= groundLevel - treeHeight; y--) {
-                            System.out.println("putting bark at: (" + x + ", " + y + ")");
+                            //System.out.println("putting bark at: (" + x + ", " + y + ")");
                             if (y >= 0)
                                 map[x][y] = 5;
                         }
@@ -238,7 +238,7 @@ public class MapGen {
     }
 
     public void generateClouds(){
-        System.out.println("generating clouds");
+        //System.out.println("generating clouds");
         for (int x=3; x<length-10; x++){
             if (Math.random()*100<20){
                 int cloudheight=2+(int)(Math.random()*10);
@@ -258,7 +258,7 @@ public class MapGen {
     }
 
     public void addOres(){
-        System.out.println("adding ores");
+        //System.out.println("adding ores");
         for (int x=0; x<length-3;x++){
             for (int y=groundlvlmap[x]+7; y<height; y++){
                 int dice=(int)((double)Math.random()*200);
@@ -291,19 +291,18 @@ public class MapGen {
         for (int x=0; x<length-10;x++){
             int dice=(int)(100.0*Math.random());
             if (dice<5){
-                System.out.println("CREATING CAVE BOIS");
+                //System.out.println("CREATING CAVE BOIS");
                 int yloc=(int)((double)(height-groundlvlmap[x]-20)*Math.random())+groundlvlmap[x]+20;
                 int cavelength=(int)(Math.random()*400);
                 int cavegirth=(int)(Math.random()*8);
                 int cavey=yloc;
                 int cavex=x;
-                boolean goingRight=true;
                 boolean goingLeft=false;
                 for (int i=0; i<cavelength; i++){
                     for (int ccavex=(cavex)-(cavegirth/2); ccavex<cavex+(cavegirth/2);ccavex++){
                         for (int ccavey=(cavey)-(cavegirth/2); ccavey<cavey+(cavegirth/2);ccavey++){
                             if (ccavex>0&&ccavex<length-1&&ccavey>0&&ccavey<height-1){
-                                System.out.println("making cave at "+ccavex+", "+ccavey);
+                                //System.out.println("making cave at "+ccavex+", "+ccavey);
                                 map[ccavex][ccavey]=0;
                             }
                         }
@@ -340,10 +339,10 @@ public class MapGen {
                         int dice34=(int)(Math.random()*100);
                         if (dice34<50){
                             goingLeft=true;
-                            goingRight=false;
+
                         }else{
                             goingLeft=false;
-                            goingRight=true;
+
                         }
                     }
                 }

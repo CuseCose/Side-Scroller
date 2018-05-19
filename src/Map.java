@@ -28,7 +28,7 @@ public class Map implements Sprite {
             biomemap[x]=mg.getBiomemap()[x];
             for (int y=0; y<height; y++){
                 blocks[x][y]=new Block(x, y, mg.getMap()[x][y]);
-                System.out.println("Making block "+x+". "+y);
+                //System.out.println("Making block "+x+". "+y);
             }
         }
 
