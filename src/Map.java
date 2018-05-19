@@ -37,8 +37,7 @@ public class Map implements Sprite {
     bak = new Background();
   }
 
-  public Map(String fileloc,
-      int type) {//type indicates if your using a old map and new char, or new map and old char
+  public Map(String fileloc, int type) {//type indicates if your using a old map and new char, or new map and old char
 
   }
 
@@ -52,8 +51,7 @@ public class Map implements Sprite {
     bak.draw(g);
     for (int loadx = p1.getLoadXMin(); loadx < p1.getLoadXMax(); loadx++) {
       for (int loady = p1.getLoadYMin(); loady < p1.getLoadYMax(); loady++) {
-        blocks[loadx][loady].draw(g, WIDTH / 2 + ((loadx - (length / 2)) * blockSize) - p1.getX(),
-            HEIGHT / 2 + ((loady - (height / 2)) * blockSize) + p1.getY());
+        blocks[loadx][loady].draw(g, WIDTH / 2 + ((loadx - (length / 2)) * blockSize) - p1.getX(), HEIGHT / 2 + ((loady - (height / 2)) * blockSize) + p1.getY());
       }
     }
     for (int i = 0; i < en.size(); i++) {
