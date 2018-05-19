@@ -32,6 +32,7 @@ public abstract class Item implements Sprite {
         complex=false;
         hasImg=false;
         isTool=false;
+        amt=1;
         switch (itemID) {
             case 0://nothing
                 isNotStandable=true;

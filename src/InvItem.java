@@ -1,13 +1,13 @@
 import java.awt.*;
 
 public class InvItem extends Item implements Sprite {
-    int itemID;
+    /*int itemID;
     boolean isBlock;
     String itemName;
     boolean exists=false;
     Color color;
     boolean isStackable;
-    int x,y;
+
     boolean isTool=false;
     int amt=0;
     boolean isRecipe=false;
@@ -16,7 +16,8 @@ public class InvItem extends Item implements Sprite {
     Color color2;
     boolean hasImg;
     Image img;
-
+*/
+    int x,y;
 
 
     public void draw(Graphics g){
@@ -121,26 +122,15 @@ public class InvItem extends Item implements Sprite {
 
     public InvItem(int itemnum){
         super(itemnum);
-        itemID=itemnum;
-        exists=true;
-        isTool=false;
         amt=1;
-        hasImg=false;
-        setItem();
         isRecipe=true;
     }
 
 
     public InvItem(int itemnum, int amt){
         super(itemnum);
-        itemID=itemnum;
-        exists=true;
-        isTool=false;
-        this.amt=amt;
-        hasImg=false;
-        setItem();
-        isRecipe=false;
-        isIngredient=true;
+        super.amt=amt;
+
     }
 
 
@@ -149,11 +139,6 @@ public class InvItem extends Item implements Sprite {
         itemID=itemnum;
         this.x=x;
         this.y=y;
-        exists=true;
-        isTool=false;
-        amt=1;
-        hasImg=false;
-        setItem();
     }
 
 
@@ -162,164 +147,12 @@ public class InvItem extends Item implements Sprite {
         itemID=itemnum;
         this.x=x;
         this.y=y;
-        exists=true;
-        isTool=false;
-        hasImg=false;
-        this.amt=amt;
-        setItem();
+        super.amt=amt;
+
     }
 
 
-    public void setItem(){
-        switch (itemID){
-            case 0://nothing
-                itemName="null";
-                exists=false;
-                isBlock=false;
-                amt=0;
-                break;
-            case 1://grass
-                itemName="Grass";
-                isStackable=true;
-                isBlock=true;
-                isStackable=true;
-                color=Color.green;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"grass.png");
-                break;
-            case 2://grey rock
-                itemName="Grey Rock";
-                isStackable=true;
-                isBlock=true;
-                color=Color.GRAY;
-                isStackable=true;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"grey rock.png");
-                break;
-            case 3://black rock
-                isBlock=true;
-                itemName="Black Rock";
-                isStackable=true;
-                color=Color.BLACK;
-                isStackable=true;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"black rock.png");
-                break;
-            case 4://dirt
-                itemName="Dirt";
-                isBlock=true;
-                isStackable=true;
-                isStackable=true;
-                color=new Color(102,51,0);
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"dirt.png");
-                break;
-            case 5://wood
-                itemName="Wood";
-                isBlock=true;
-                isStackable=true;
-                isStackable=true;
-                color=new Color(153,102,51);
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"wood.png");
-                break;
-            case 6://leaves
-                itemName="leaves";
-                isBlock=true;
-                isStackable=true;
-                color=new Color(0, 153, 51);
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"leaves.png");
-                break;
-            case 7://clouds
-                itemName="Cloud";
-                isBlock=true;
-                isStackable=true;
-                color=Color.white;
-                break;
-            case 8://sand
-                itemName="Sand";
-                isBlock=true;
-                color=Color.yellow;
-                isStackable=true;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"sand.png");
-                break;
-            case 9://snow
-                itemName="Snow";
-                isBlock=true;
-                color=Color.white;
-                isStackable=true;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"snow.png");
-                break;
-            case 10://snowy leaves
-                itemName="Snowy Leaves";
-                isBlock=true;
-                isStackable=true;
-                color=Color.white;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"snowy leaves.png");
-                break;
-            case 11://cactus
-                itemName="Cactus";
-                isBlock=true;
-                isStackable=true;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"cactus.png");
-                break;
-            case 12://pickaxe
-                itemName="pickaxe";
-                isTool=true;
-                isBlock=false;
-                isStackable=false;
-                color=new Color(0,120,3);
-                break;
-            case 13://table
-                isComplex=true;
-                itemName="CTable";
-                isBlock=true;
-                isStackable=true;
-                color=new Color(250,100,60);
-                color2=new Color(102,51,0);
-                break;
-            case 14://wood planks
-                isComplex=true;
-                itemName="WoodPlanks";
-                isBlock=true;
-                isStackable=true;
-                color=new Color(200,100,50);
-                color2=new Color(103,51,0);
-                break;
-            case 15://iron ore
-                isBlock=true;
-                itemName="Iron Ore";
-                isStackable=true;
-                color=Color.BLACK;
-                isStackable=true;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"iron ore.png");
-                break;
-            case 16://coal
-                isBlock=true;
-                itemName="Coal";
-                isStackable=true;
-                color=Color.BLACK;
-                isStackable=true;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"coal ore.png");
-                break;
-            case 17://copper ore
-                isBlock=true;
-                itemName="Copper Ore";
-                isStackable=true;
-                color=Color.BLACK;
-                isStackable=true;
-                hasImg=true;
-                img=tk.getImage(DOCPATH+"copper ore.png");
-                break;
-        }
-    }
+
 
 
     public boolean has(InvItem other){
