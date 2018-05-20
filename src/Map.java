@@ -12,6 +12,8 @@ public class Map implements Sprite {
     int blockSize;
     ArrayList<NPC> en=new ArrayList<NPC>();
     MapGen mg;
+    DarknessOverlay[][] shading;
+    int[][] lightSources;
 
 
     public Map(int size){
@@ -23,10 +25,13 @@ public class Map implements Sprite {
         biomemap=new int[length];
         groundlvlmap=new int[length];
         blocks=new Block[length][height];
+        lightSources=new int[length][height];
         for (int x=0; x<length;x++){
             groundlvlmap[x]=mg.getGroundlvlmap()[x];
             biomemap[x]=mg.getBiomemap()[x];
             for (int y=0; y<height; y++){
+                lightSources[x][y]=0;
+                shading[x][y]=new DarknessOverlay(x, y);
                 blocks[x][y]=new Block(x, y, mg.getMap()[x][y]);
                 //System.out.println("Making block "+x+". "+y);
             }
@@ -113,6 +118,7 @@ public class Map implements Sprite {
     int timer=0;
 
     public void move() {
+        updateSunLight();
         p1.move(this);
         for (int i=0; i<en.size();i++){
             en.get(i).move(this);
@@ -145,6 +151,27 @@ public class Map implements Sprite {
                 }
             }
         }
+    }
+
+    public void updateSunLight(){
+        double time=bak.getTime();
+        int sunlightlvl;
+        if (time>12){
+            sunlightlvl=0;
+        }else {
+            if (time<6){
+                sunlightlvl=(int)time;
+            }else {
+                sunlightlvl=(int)(12-time);
+            }
+        }
+        for (int x=p1.getLoadXMin(); x<p1.getLoadXMax();x++){
+            for (int y=p1.getLoadYMin(); y<p1.getLoadYMax();y++){
+                if (y<groundlvlmap[x])
+                shading[x][y].setSunLight(sunlightlvl);
+            }
+        }
+
     }
 
     public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}
