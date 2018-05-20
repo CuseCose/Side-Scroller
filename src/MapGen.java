@@ -1,7 +1,6 @@
 public class MapGen {
 
     int[] biomemap;//biome map
-    Block[][] blocks;//block block map
     int[] groundlvlmap;//ground level map
     int length, height;
     int[][] map;
@@ -16,7 +15,6 @@ public class MapGen {
         System.out.println("generating map");
         biomemap=new int[length];
         map=new int[length][height];
-        blocks=new Block[length][height];
         groundlvlmap=new int[length];
         int cground=height/4;
         for (int x=0; x<length;x++){
@@ -73,6 +71,8 @@ public class MapGen {
         addCaves();
         generateClouds();
     }
+
+
 
 
     public void generateBiomes(){
@@ -159,8 +159,10 @@ public class MapGen {
                 }
             }
         }
-
     }
+
+
+
 
     public void addTree(int type, int x){
         boolean canMakeTreeHere=false;
@@ -230,6 +232,9 @@ public class MapGen {
         }
     }
 
+
+
+
     public void generateClouds(){
         //System.out.println("generating clouds");
         for (int x=3; x<length-10; x++){
@@ -249,6 +254,8 @@ public class MapGen {
             }
         }
     }
+
+
 
     public void addOres(){
         //System.out.println("adding ores");
@@ -278,6 +285,7 @@ public class MapGen {
             }
         }
     }
+
 
 
     public void addCaves(){
@@ -343,7 +351,8 @@ public class MapGen {
         }
     }
 
-    public Block[][] getBlocks() { return blocks; }
+
+
     public int[][] getMap() { return map; }
     public int[] getBiomemap() { return biomemap; }
     public int[] getGroundlvlmap() { return groundlvlmap; }
