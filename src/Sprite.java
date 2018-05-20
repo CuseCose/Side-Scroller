@@ -8,6 +8,7 @@ public interface Sprite {
     int getX();
     Toolkit tk = Toolkit.getDefaultToolkit();
     Color invColor=new Color(204, 204, 179);
+    Color invTextColor=new Color(175, 175, 175);
 }
 
 
