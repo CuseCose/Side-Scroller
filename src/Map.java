@@ -167,8 +167,9 @@ public class Map implements Sprite {
         }
         for (int x=p1.getLoadXMin(); x<p1.getLoadXMax();x++){
             for (int y=p1.getLoadYMin(); y<p1.getLoadYMax();y++){
-                if (y<groundlvlmap[x])
-                shading[x][y].setSunLight(sunlightlvl);
+                if (y<groundlvlmap[x]) {
+                    lightSources[x][y]=sunlightlvl;
+                }
             }
         }
 
