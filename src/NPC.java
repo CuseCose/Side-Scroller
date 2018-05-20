@@ -82,9 +82,9 @@ public class NPC implements Sprite {
         //g.drawString(x+", "+y,(int)drawx-5, (int)drawy-35);
         //g.drawString(realx+", "+realy,(int)drawx-5, (int)drawy-50);
         g.setColor(Color.WHITE);
-        g.fillRect((int)drawx-(maxhp/2)+(width/2), (int)drawy-30, maxhp, 20);
+        g.fillRect((int)drawx-(int)((maxhp*(BLOCKSIZE/100.0))/2)+(width/2), (int)drawy-BLOCKSIZE/2, (int)(maxhp*(BLOCKSIZE/100.0)), BLOCKSIZE/3);
         g.setColor(Color.red);
-        g.fillRect((int)drawx-(maxhp/2)+(width/2), (int)drawy-30, hp, 20);
+        g.fillRect((int)drawx-(int)((maxhp*(BLOCKSIZE/100.0))/2)+(width/2), (int)drawy-BLOCKSIZE/2, (int)(hp*(BLOCKSIZE/100.0)), BLOCKSIZE/3);
     }
 
     public void move(Map map) {
