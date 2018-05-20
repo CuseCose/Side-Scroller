@@ -56,7 +56,7 @@ public abstract class Item implements Sprite {
                 isStackable = true;
                 color = Color.green;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "grass.png");
+                //img = tk.getImage(DOCPATH + "grass.png");
                 break;
             case 2://grey rock
                 isNotStandable=false;
@@ -68,7 +68,6 @@ public abstract class Item implements Sprite {
                 color = Color.GRAY;
                 isStackable = true;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "grey rock.png");
                 break;
             case 3://black rock
                 isNotStandable=false;
@@ -80,7 +79,6 @@ public abstract class Item implements Sprite {
                 color = Color.BLACK;
                 isStackable = true;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "black rock.png");
                 break;
             case 4://dirt
                 itemName = "Dirt";
@@ -92,7 +90,6 @@ public abstract class Item implements Sprite {
                 isStackable = true;
                 color = new Color(102, 51, 0);
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "dirt.png");
                 break;
             case 5://wood
                 itemName = "Wood";
@@ -104,7 +101,6 @@ public abstract class Item implements Sprite {
                 isStackable = true;
                 color = new Color(153, 102, 51);
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "wood.png");
                 break;
             case 6://leaves
                 isNotStandable=true;
@@ -115,7 +111,6 @@ public abstract class Item implements Sprite {
                 isStackable = true;
                 color = new Color(0, 153, 51);
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "leaves.png");
                 break;
             case 7://clouds
                 isNotStandable=false;
@@ -135,7 +130,6 @@ public abstract class Item implements Sprite {
                 color = Color.yellow;
                 isStackable = true;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "sand.png");
                 break;
             case 9://snow
                 isNotStandable=false;
@@ -146,7 +140,6 @@ public abstract class Item implements Sprite {
                 color = Color.white;
                 isStackable = true;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "snow.png");
                 break;
             case 10://snowy leaves
                 isNotStandable=true;
@@ -157,7 +150,6 @@ public abstract class Item implements Sprite {
                 isStackable = true;
                 color = Color.white;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "snowy leaves.png");
                 break;
             case 11://cactus
                 itemName = "Cactus";
@@ -167,7 +159,6 @@ public abstract class Item implements Sprite {
                 isBlock = true;
                 isStackable = true;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "cactus.png");
                 break;
             case 12://pickaxe
                 itemName = "pickaxe";
@@ -182,7 +173,7 @@ public abstract class Item implements Sprite {
                 isNotClimbable=false;
                 isPassable=true;
                 isComplex = true;
-                itemName = "CTable";
+                itemName = "Crafting Table";
                 isBlock = true;
                 isStackable = true;
                 color = new Color(250, 100, 60);
@@ -194,11 +185,10 @@ public abstract class Item implements Sprite {
                 isNotClimbable=true;
                 isPassable=true;
                 isComplex = true;
-                itemName = "WoodPlanks";
+                itemName = "Wood Planks";
                 isBlock = true;
                 isStackable = true;
-                color = new Color(200, 100, 50);
-                color2 = new Color(103, 51, 0);
+                hasImg=true;
                 break;
             case 15://iron ore
                 isNotStandable=false;
@@ -210,7 +200,6 @@ public abstract class Item implements Sprite {
                 color = Color.BLACK;
                 isStackable = true;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "iron ore.png");
                 break;
             case 16://coal
                 isNotStandable=false;
@@ -222,7 +211,6 @@ public abstract class Item implements Sprite {
                 color = Color.BLACK;
                 isStackable = true;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "coal ore.png");
                 break;
             case 17://copper ore
                 isNotStandable=false;
@@ -234,8 +222,10 @@ public abstract class Item implements Sprite {
                 color = Color.BLACK;
                 isStackable = true;
                 hasImg = true;
-                img = tk.getImage(DOCPATH + "copper ore.png");
                 break;
+        }
+        if (hasImg){
+            img=tk.getImage(DOCPATH+type+".png");
         }
     }
 
