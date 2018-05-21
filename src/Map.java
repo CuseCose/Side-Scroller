@@ -16,7 +16,7 @@ public class Map implements Sprite {
     double[][] lightSources;
     double[][] light;
     double[][] dark;
-    boolean[][] sky;
+
 
 
 
@@ -34,7 +34,7 @@ public class Map implements Sprite {
         light=new double[length][height];
         dark=new double[length][height];
         shading=new DarknessOverlay[length][height];
-        sky=new boolean[length][height];
+
         for (int x=0; x<length;x++){
             groundlvlmap[x]=mg.getGroundlvlmap()[x];
             biomemap[x]=mg.getBiomemap()[x];
@@ -139,16 +139,8 @@ public class Map implements Sprite {
 
     public void move() {
         if (timer==1) {
-            updateLightSrcs();
             updateLight();
-            updateDark();
         }
-        /*or (int x=p1.getLoadXMin(); x<p1.getLoadXMax();x++){
-            for (int y=p1.getLoadYMin(); y<p1.getLoadYMax();y++){
-                //shading[x][y].update(lightSources, length, height);
-                //shading[x][y].update(dark[x][y], sky[x][y]);
-            }
-        }*/
         p1.move(this);
         for (int i=0; i<en.size();i++){
             en.get(i).move(this);
@@ -183,42 +175,10 @@ public class Map implements Sprite {
         }
     }
 
-    public void updateLightSrcs(){
-        double time=bak.getTime();
-        double sunlightlvl;
-        if (time>3&&time<9){
-            sunlightlvl=10;
-        }else if (time>15&&time<21){
-            sunlightlvl=2;
-        }else {
-            if (time<=3){
-                sunlightlvl=6+(4*(time/3));
-            }else if (time>=9&&time<=15){
-                time=time-9;
-                sunlightlvl=10-(8*(time/6));
-            }else {
-                time=time-21;
-                sunlightlvl=2+(4*(time/3));
-            }
-        }
-        for (int x=p1.getLoadXMin()-5; x<p1.getLoadXMax()+5;x++){
-            for (int y=p1.getLoadYMin()-5; y<p1.getLoadYMax()+5;y++){
-                lightSources[x][y]=0;
-                if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
-                    lightSources[x][y]+=sunlightlvl;
-                    sky[x][y]=true;
-                }else {
-                    sky[x][y]=false;
-                }
-                if (blocks[x][y].isLightSrc){
-                    lightSources[x][y]+=blocks[x][y].getLightlvl();
-                }
-            }
-        }
 
-    }
 
     public void updateLight(){
+        setLightSources();
         for (int x1=p1.getLoadXMin()-5; x1<p1.getLoadXMax()+5;x1++){
             for (int y1=p1.getLoadYMin()-5; y1<p1.getLoadYMax()+5;y1++){
                 double lightlevel = 0;
@@ -241,12 +201,43 @@ public class Map implements Sprite {
                 light[x1][y1]=lightlevel;
             }
         }
-    }
-
-    public void updateDark(){
         for (int x1=p1.getLoadXMin()-5; x1<p1.getLoadXMax()+5;x1++) {
             for (int y1 = p1.getLoadYMin()-5; y1 < p1.getLoadYMax()+5; y1++) {
                 shading[x1][y1].update(12-Math.sqrt(light[x1][y1]));
+            }
+        }
+    }
+
+
+    public void setLightSources(){
+        double time=bak.getTime();
+        double sunlightlvl;
+        if (time>3&&time<9){
+            sunlightlvl=10;
+        }else if (time>15&&time<21){
+            sunlightlvl=2;
+        }else {
+            if (time<=3){
+                sunlightlvl=6+(4*(time/3));
+            }else if (time>=9&&time<=15){
+                time=time-9;
+                sunlightlvl=10-(8*(time/6));
+            }else {
+                time=time-21;
+                sunlightlvl=2+(4*(time/3));
+            }
+        }
+        for (int x=p1.getLoadXMin()-5; x<p1.getLoadXMax()+5;x++){
+            for (int y=p1.getLoadYMin()-5; y<p1.getLoadYMax()+5;y++){
+                lightSources[x][y]=0;
+                if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
+                    lightSources[x][y]+=sunlightlvl;
+
+                }else {
+                }
+                if (blocks[x][y].isLightSrc){
+                    lightSources[x][y]+=blocks[x][y].getLightlvl();
+                }
             }
         }
     }
@@ -274,7 +265,6 @@ public class Map implements Sprite {
                 lightSources[x][y]=0;
                 if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
                     lightSources[x][y]+=sunlightlvl;
-                    sky[x][y]=true;
                 }
                 if (blocks[x][y].isLightSrc){
                     lightSources[x][y]+=blocks[x][y].getLightlvl();
@@ -313,6 +303,8 @@ public class Map implements Sprite {
             }
         }
     }
+
+
 
     public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}
     public void openCloseInv(){p1.openCloseInv();}
