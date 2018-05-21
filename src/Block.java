@@ -21,17 +21,7 @@ public class Block extends Item implements Sprite {
         }
     }
 
-    public void draw(Graphics g, int xloc, int yloc, double darkness) {
-        if (exists) {
-            //g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
-            g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
-            //darkimg=tk.getImage(DOCPATH+"shading\\"+(int)((darkness/12)*29)+".png");
-            //g.drawImage(darkimg,xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
-        }
-        //g.drawImage(tk.getImage(DOCPATH+"shading\\"+(int)((darkness/9)*29)+".png"),xloc,yloc,BLOCKSIZE,BLOCKSIZE, null);
 
-
-    }
 
 
     public void move(Map map){ }

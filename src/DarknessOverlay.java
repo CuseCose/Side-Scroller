@@ -4,32 +4,35 @@ public class DarknessOverlay implements Sprite{
 
     int x, y;
     double lightlvl;
-    Image img;
+    Image dimg;
 
 
     public DarknessOverlay(int x, int y){
         this.x=x;
         this.y=y;
+        dimg=tk.getImage(DOCPATH+"shading\\0.png");
     }
 
 
 
-    public void update(Map m){
-        lightlvl=0;
 
-    }
-
-    public void update(double dark){
-        img=tk.getImage(DOCPATH+"shading\\"+(int)((dark/9)*29)+".png");
+    public void update(double light){
+        lightlvl=light;
+        dimg=tk.getImage(DOCPATH+"shading\\"+(int)(lightlvl*4)+".png");
     }
 
 
 
     public void draw(Graphics g, int xloc, int yloc) {
-        g.drawImage(img,xloc,yloc,BLOCKSIZE,BLOCKSIZE, null);
+        g.setColor(Color.BLUE);
+        //g.drawString(lightlvl+"",xloc+5, yloc+10);
+        g.drawImage(dimg,xloc,yloc,BLOCKSIZE,BLOCKSIZE, null);
     }
 
 
+    public double getLightlvl(){
+        return lightlvl;
+    }
 
     public void draw(Graphics g) { }
     public int getY() {

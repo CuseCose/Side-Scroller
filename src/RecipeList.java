@@ -3,7 +3,7 @@ import java.awt.*;
 public class RecipeList implements Sprite{
     Recipe[] allRecipes;
     Recipe[] availableRecipes;
-    int maxItemId=14;
+    int maxItemId=18;
     int selectedItemLoc=0;
 
 

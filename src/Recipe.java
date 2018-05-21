@@ -33,6 +33,14 @@ public class Recipe {
                 addToNeededItems(5,4, 0);
                 numproducts=16;
                 break;
+            case 18:
+                System.out.println("torch recipe created");
+                craftable=true;
+                neededInvItems=new InvItem[2];
+                addToNeededItems(16,1,0);
+                addToNeededItems(5,1,1);
+                numproducts=4;
+                break;
             default:
                 System.out.println("recipe for uncraftable item created");
                 craftable=false;
@@ -47,6 +55,7 @@ public class Recipe {
 
 
     public boolean canCraft(InvItem[][] inv, int invLength, int invHeight){
+
         if(craftable) {
             boolean[] hasItem = new boolean[neededInvItems.length];
             for (int i = 0; i < hasItem.length; i++) {
@@ -66,6 +75,7 @@ public class Recipe {
                     return false;
                 }
             }
+            //System.out.println("can craft"+productID);
             return true;
         }else{
             return false;

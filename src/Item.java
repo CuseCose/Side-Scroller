@@ -21,6 +21,8 @@ public abstract class Item implements Sprite {
     int blockSize;
     boolean isLightSrc;
     int lightlvl;
+    double lightBlockage;
+    boolean isPlacable;
 
 
 
@@ -36,6 +38,10 @@ public abstract class Item implements Sprite {
         amt=1;
         hasImg = true;
         isLightSrc=false;
+        lightBlockage=.5;
+        isStackable=true;
+        isBlock=true;
+        isPlacable=true;
         switch (itemID) {
             case 0://nothing
                 isNotStandable=true;
@@ -45,161 +51,133 @@ public abstract class Item implements Sprite {
                 exists = false;
                 isBlock = false;
                 amt = 0;
-                isNotStandable=true;
-                isNotClimbable=true;
-                isPassable=true;
+                lightBlockage=.25;
                 break;
             case 1://grass
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
                 itemName = "Grass";
-                isStackable = true;
-                isBlock = true;
-                isStackable = true;
                 break;
             case 2://grey rock
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
                 itemName = "Grey Rock";
-                isStackable = true;
-                isBlock = true;
-                isStackable = true;
                 break;
             case 3://black rock
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
-                isBlock = true;
                 itemName = "Black Rock";
-                isStackable = true;
-                isStackable = true;
                 break;
             case 4://dirt
                 itemName = "Dirt";
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
-                isBlock = true;
-                isStackable = true;
-                isStackable = true;
                 break;
             case 5://wood
                 itemName = "Wood";
                 isNotStandable=true;
                 isNotClimbable=false;
                 isPassable=true;
-                isBlock = true;
-                isStackable = true;
-                isStackable = true;
                 break;
             case 6://leaves
                 isNotStandable=true;
                 isNotClimbable=false;
                 isPassable=true;
                 itemName = "leaves";
-                isBlock = true;
-                isStackable = true;
+                lightBlockage=.25;
                 break;
             case 7://clouds
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=true;
                 itemName = "Cloud";
-                isBlock = true;
-                isStackable = true;
+                lightBlockage=.25;
                 break;
             case 8://sand
                 itemName = "Sand";
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
-                isBlock = true;
-                isStackable = true;
                 break;
             case 9://snow
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
                 itemName = "Snow";
-                isBlock = true;
-                isStackable = true;
                 break;
             case 10://snowy leaves
                 isNotStandable=true;
                 isNotClimbable=false;
                 isPassable=true;
                 itemName = "Snowy Leaves";
-                isBlock = true;
-                isStackable = true;
                 break;
             case 11://cactus
                 itemName = "Cactus";
                 isNotStandable=true;
                 isNotClimbable=true;
                 isPassable=true;
-                isBlock = true;
-                isStackable = true;
                 break;
             case 12://pickaxe
                 itemName = "pickaxe";
                 isTool = true;
                 isBlock = false;
                 isStackable = false;
+                isPlacable=false;
                 break;
             case 13://table
-                complex=true;
                 isNotStandable=true;
                 isNotClimbable=false;
                 isPassable=true;
-                isComplex = true;
                 itemName = "Crafting Table";
-                isBlock = true;
-                isStackable = true;
                 break;
             case 14://wood planks
-                complex=true;
                 isNotStandable=true;
                 isNotClimbable=true;
                 isPassable=true;
-                isComplex = true;
                 itemName = "Wood Planks";
-                isBlock = true;
-                isStackable = true;
-                hasImg=true;
                 break;
             case 15://iron ore
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
-                isBlock = true;
                 itemName = "Iron Ore";
-                isStackable = true;
-                isStackable = true;
                 break;
             case 16://coal
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
-                isBlock = true;
                 itemName = "Coal";
-                isStackable = true;
-
                 break;
             case 17://copper ore
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=false;
-                isBlock = true;
                 itemName = "Copper Ore";
-                isStackable = true;
+                break;
+            case 18://torch
+                isLightSrc=true;
+                isNotStandable=true;
+                isNotClimbable=true;
+                isPassable=true;
+                lightlvl=5;
+                isBlock=false;
+                itemName="Torch";
                 break;
         }
+        if (isPassable){
+            lightBlockage=.25;
+        }
+
         if (hasImg){
             img=tk.getImage(DOCPATH+type+".png");
         }
     }
+
+    public double getLightBlockage(){return lightBlockage;}
 
     public void draw(Graphics g) { }
     public int getY() { return 0; }

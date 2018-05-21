@@ -246,14 +246,14 @@ public class Character implements Sprite {
 
 
     public void useSelectedItem(){
-        if (inv[0][selectedItem].isBlock){
+        if (inv[0][selectedItem].isPlacable){
             inv[0][selectedItem].changeAmt(false);
         }
     }
 
 
-    public boolean selectedItemIsBlock(){
-        if (inv[0][selectedItem].isBlock){
+    public boolean selectedItemIsPlacable(){
+        if (inv[0][selectedItem].isPlacable){
             return true;
         }else {
             return false;

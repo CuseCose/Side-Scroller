@@ -24,7 +24,7 @@ public class InvItem extends Item implements Sprite {
         g.setColor(invTextColor);
         g.drawString(amt + "", 20 + (60 * x) + 30, 50 + (60 * y) + 30);//show amount of an item
         if (amt>0) {
-            if (!isTool) {
+            if (isBlock) {
                 g.drawImage(img, 20 + (60 * x) + 10, 50 + (60 * y) + 10, 20, 20, null);//draw block in inv
             }else {
                 g.drawImage(img, 20 + (60 * x) + 5, 50 + (60 * y) + 5, 30, 30, null);//draw block in inv
