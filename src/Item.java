@@ -23,6 +23,7 @@ public abstract class Item implements Sprite {
     int lightlvl;
     double lightBlockage;
     boolean isPlacable;
+    int pickstr;
 
 
 
@@ -42,6 +43,7 @@ public abstract class Item implements Sprite {
         isStackable=true;
         isBlock=true;
         isPlacable=true;
+
         switch (itemID) {
             case 0://nothing
                 isNotStandable=true;
@@ -125,6 +127,7 @@ public abstract class Item implements Sprite {
                 isBlock = false;
                 isStackable = false;
                 isPlacable=false;
+                pickstr=20;
                 break;
             case 13://table
                 isNotStandable=true;
@@ -182,4 +185,5 @@ public abstract class Item implements Sprite {
     public int getX() { return 0; }
     public boolean isLightSrc(){return isLightSrc;}
     public int getLightlvl(){return lightlvl;}
+
 }

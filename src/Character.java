@@ -289,4 +289,6 @@ public class Character implements Sprite {
     public boolean isInvOpen() { return invOpen; }
     public void craftSelected(){re.craftSelected(inv, invLength, invHeight);}
     public void changeSelected(boolean isInc){ re.changeSelected(isInc); }
+    public boolean selectedItemIsTool(){return inv[0][selectedItem].isTool;}
+    public int getPickStr(){return inv[0][selectedItem].pickstr;}
 }

@@ -187,12 +187,17 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
 
 
     public void mousePressed(MouseEvent e) {
+        if (screenNum==1) {
+            map.leftClickPress(e.getX(), e.getY());
+        }
     }
 
 
     public void mouseReleased(MouseEvent e) {
         System.out.println("clicked "+e.getX()+", "+e.getY()+" Block: "+map.getRealMouseX(e.getX())+", "+map.getRealMouseY(e.getY()));
-        map.leftClick(e.getX(),e.getY());
+        if (screenNum==1) {
+            map.leftClickRelease();
+        }
     }
 
 

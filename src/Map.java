@@ -17,6 +17,9 @@ public class Map implements Sprite {
     double[][] light;
     float[][] dark;
     boolean[][] sky;
+    boolean isPressingLeft=false;
+    int clickx, clicky;
+    int clickDuration=0;
 
 
     /*
@@ -102,23 +105,48 @@ public class Map implements Sprite {
     }
 
 
-    public void leftClick(int x, int y){
+    public void leftClickPress(int x, int y){
         System.out.println("block clicked");
-        int clickx=getRealMouseX(x);
-        int clicky=getRealMouseY(y);
+        clickx=getRealMouseX(x);
+        clicky=getRealMouseY(y);
+        if (isPressingLeft==false) {
+            isPressingLeft = true;
+            clickDuration = 0;
+        }
+
+        /*
         if (p1.selectedItemID==12){
             System.out.println("breaking block");
             if (blocks[clickx][clicky].exists) {
                 p1.addToInv(blocks[clickx][clicky].getitemID());
                 blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), 0);
             }
-        }else if (p1.selectedItemIsPlacable()){
+        } */
+        if (p1.selectedItemIsPlacable()){
             if (blocks[clickx][clicky].getitemID()==0) {
                 blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), p1.selectedItemID);
                 p1.useSelectedItem();
                 timer=0;
                 updateLight();
             }
+        }
+    }
+
+    public void breakBlock(){
+        if (p1.selectedItemID==12){
+            System.out.println("breaking block");
+            if (blocks[clickx][clicky].exists) {
+                p1.addToInv(blocks[clickx][clicky].getitemID());
+                blocks[clickx][clicky] = new Block(clickx, clicky, 0);
+                updateLight();
+            }
+        }
+    }
+
+    public void leftClickRelease(){
+        if (isPressingLeft) {
+            isPressingLeft = false;
+            clickDuration = 0;
         }
     }
 
@@ -155,6 +183,16 @@ public class Map implements Sprite {
     int timer=0;
 
     public void move() {
+        if (isPressingLeft){
+            clickDuration++;
+            if (p1.selectedItemIsTool()) {
+                if (clickDuration>p1.getPickStr()) {
+                        breakBlock();
+                }
+            }
+        }
+
+
         if (timer==1) {
             updateLight();
         }
