@@ -21,6 +21,8 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
     private boolean firstLaunch=true;
     private Map map;
     private Menu menu;
+    private boolean textOpen=false;
+    TextBox t;
 
 
 
@@ -31,6 +33,7 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
         img=createImage(WIDTH,HEIGHT);
         gfx=img.getGraphics();
         menu=new Menu(0);
+        t=new TextBox();
         System.out.println("creating thread");
         thread=new Thread(this);
         System.out.println("thread created, starting thread");
@@ -56,7 +59,11 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
             //System.out.println("drawing main");
             gfx.setColor(Color.BLACK);//background
             gfx.fillRect(0,0,WIDTH,HEIGHT);//background size
+
             map.draw(gfx);
+            if (textOpen){
+                t.draw(gfx);
+            }
 
         }
         g.drawImage(img,0,0,this);
@@ -72,7 +79,9 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
         for (;;){
             if(screenNum==0){
             }else if(screenNum==1) {
-                map.move();
+                if (!textOpen) {
+                    map.move();
+                }
             }
             repaint();
             try{
@@ -90,41 +99,60 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
 
 
     public void keyPressed(KeyEvent e) {
-        if(screenNum==1) {
-            if (e.getKeyCode() == KeyEvent.VK_D) {
-                map.setMovingRight(true);
-            }else if (e.getKeyCode() == KeyEvent.VK_A) {
-                map.setMovingLeft(true);
-            }else if(e.getKeyCode()==KeyEvent.VK_SPACE){
-                map.jump();
-            }else if(e.getKeyCode()==KeyEvent.VK_W){
-                map.setClimbing(true);
-            }else if(e.getKeyCode()>47&&e.getKeyCode()<58){
-                System.out.println(e.getKeyCode());
-                if (e.getKeyCode()=='0'){
-                    System.out.println("selecting invnum 9");
-                    map.setSelectedItem(9);
-                }else {
-                    System.out.println("selecting invnum "+(e.getKeyCode()-49));
-                    map.setSelectedItem(e.getKeyCode()-49);
+        if (!textOpen) {
+            if (screenNum == 1) {
+
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    map.setMovingRight(true);
+                } else if (e.getKeyCode() == KeyEvent.VK_A) {
+                    map.setMovingLeft(true);
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    map.jump();
+                } else if (e.getKeyCode() == KeyEvent.VK_W) {
+                    map.setClimbing(true);
+                } else if (e.getKeyCode() > 47 && e.getKeyCode() < 58) {
+                    System.out.println(e.getKeyCode());
+                    if (e.getKeyCode() == '0') {
+                        System.out.println("selecting invnum 9");
+                        map.setSelectedItem(9);
+                    } else {
+                        System.out.println("selecting invnum " + (e.getKeyCode() - 49));
+                        map.setSelectedItem(e.getKeyCode() - 49);
+                    }
+                } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    map.openCloseInv();
+                } else if (map.isInvOpen()) {
+                    if (e.getKeyCode() == KeyEvent.VK_UP) {
+                        map.changeSelected(false);
+                    } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                        map.changeSelected(true);
+                    } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        map.craft();
+                    }
                 }
-            }else if (e.getKeyCode()==KeyEvent.VK_ESCAPE){
-                map.openCloseInv();
-            }else if (map.isInvOpen()) {
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    map.changeSelected(false);
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    map.changeSelected(true);
-                }else if (e.getKeyCode()==KeyEvent.VK_ENTER){
-                    map.craft();
+                if (e.getKeyCode()==KeyEvent.VK_CAPS_LOCK){
+                    textOpen=true;
                 }
+
             }
+        }else {
+            if (e.getKeyCode()==KeyEvent.VK_ESCAPE){
+                t.setInput("");
+                textOpen=false;
+            }if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                map.execmd(t.getInput());
+                t.setInput("");
+                textOpen=false;
+            }else {
+                t.changeInput(e);
+            }
+
         }
     }
 
 
     public void keyReleased(KeyEvent e) {
-        System.out.println("key released");
+        //System.out.println("key released");
         if(screenNum==1) {
             if (e.getKeyCode() == KeyEvent.VK_D) {
                 map.setMovingRight(false);

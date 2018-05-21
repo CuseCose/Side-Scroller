@@ -33,6 +33,8 @@ public class Character implements Sprite {
     int selectedItem=0;
     int selectedItemID;
 
+    boolean jumpTimerOn=true;
+
 
     public Character(Map m){
         re=new RecipeList();
@@ -156,10 +158,15 @@ public class Character implements Sprite {
 
 
     public void jump(){
-        if (!inJump) {
-            System.out.println("jump");
-            yvel = (int)(BLOCKSIZE*.6);
-            inJump=true;
+        if (jumpTimerOn) {
+            if (!inJump) {
+                System.out.println("jump");
+                yvel = (int) (BLOCKSIZE * .6);
+                inJump = true;
+            }
+        }else {
+            yvel = (int) (BLOCKSIZE * .6);
+            inJump = true;
         }
     }
 
@@ -271,6 +278,13 @@ public class Character implements Sprite {
         }
     }
 
+    public void changeIsJumpTimerOn() {
+        if (jumpTimerOn){
+            jumpTimerOn=false;
+        }else {
+            jumpTimerOn=true;
+        }
+    }
 
     public boolean isInvOpen() { return invOpen; }
     public void craftSelected(){re.craftSelected(inv, invLength, invHeight);}

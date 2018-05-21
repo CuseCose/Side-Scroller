@@ -258,45 +258,20 @@ public class Map implements Sprite {
         }
     }
 
-    /*public void setLight(){
-        double time=bak.getTime();
-        double sunlightlvl;
-        if (time>3&&time<9){
-            sunlightlvl=5;
-        }else if (time>15&&time<21){
-            sunlightlvl=1;
-        }else {
-            if (time<=3){
-                sunlightlvl=3+(2*(time/3));
-            }else if (time>=9&&time<=15){
-                time=time-9;
-                sunlightlvl=5-(4*(time/6));
+
+    public void execmd(String command){
+        String cmd=command;
+        if (cmd.charAt(0)=='/'){
+            cmd=cmd.substring(1);
+            if (cmd.contains(" ")) {
+                String cmdprefix = cmd.substring(0, cmd.indexOf(' '));
             }else {
-                time=time-21;
-                sunlightlvl=1+(2*(time/3));
-            }
-        }
-        for (int x=0; x<length;x++) {
-            for (int y =0; y < height; y++) {
-                lightSources[x][y]=0;
-                if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
-                    lightSources[x][y]+=sunlightlvl;
-                }
-                if (blocks[x][y].isLightSrc){
-                    lightSources[x][y]+=blocks[x][y].getLightlvl();
+                if (cmd.equalsIgnoreCase("fly")) {
+                    p1.changeIsJumpTimerOn();
                 }
             }
         }
-        for (int x1=0; x1<length;x1++) {
-            for (int y1 =0; y1 < height; y1++) {
-                if (lightSources[x1][y1]!=0) {
-                    spreadLight(x1,y1,lightSources[x1][y1]);
-                }
-            }
-        }
-
-    }*/
-
+    }
 
 
     public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}
