@@ -20,21 +20,10 @@ public class Map implements Sprite {
     boolean isPressingLeft=false;
     int clickx, clicky;
     int clickDuration=0;
-
-
-    /*
-    public void applyLightRec(int currentx, int currenty, float lastLight) {
-   if (!isValidPosition(currentx, currenty)) return;
-   float newLight = lastLight-map.getLightBlockingAmmoutAt(currentx, currenty);
-   if (newLight <= map.getLight(currentx, currenty)) return;
-
-   map.setLight(currentx, currenty, newLight);
-
-   applyLightRec(currentx+1, currenty, newLight);
-   applyLightRec(currentx, currenty+1, newLight);
-   applyLightRec(currentx-1, currenty, newLight);
-   applyLightRec(currentx, currenty-1, newLight);
-     */
+    Image[] dmgmgs={tk.getImage(DOCPATH+"dmg\\1.png"),tk.getImage(DOCPATH+"dmg\\2.png"),
+            tk.getImage(DOCPATH+"dmg\\3.png"),tk.getImage(DOCPATH+"dmg\\4.png"),tk.getImage(DOCPATH+"dmg\\5.png"),
+            tk.getImage(DOCPATH+"dmg\\6.png"),tk.getImage(DOCPATH+"dmg\\7.png"),tk.getImage(DOCPATH+"dmg\\8.png"),
+            tk.getImage(DOCPATH+"dmg\\9.png"),tk.getImage(DOCPATH+"dmg\\10.png")};
 
 
 
@@ -84,10 +73,12 @@ public class Map implements Sprite {
         bak.draw(g);
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
             for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
-                blocks[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY());
-                //g.setColor(Color.black);
-                //g.drawString("src: "+(int)lightSources[loadx][loady]+"", WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX()+5, HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY()+10);
-                //g.drawString("lit: "+(int)light[loadx][loady]+"", WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX()+5, HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY()+20);
+                blocks[loadx][loady].draw(g, WIDTH / 2 + ((loadx - (length / 2)) * blockSize) - p1.getX(), HEIGHT / 2 + ((loady - (height / 2)) * blockSize) + p1.getY());
+                if (loadx==clickx&&loady==clicky&&isPressingLeft&&p1.selectedItemIsTool()&&blocks[clickx][clicky].exists){
+                    int percentBroke=(int)(10.0*((double)timer/p1.getPickStr()));
+                    g.drawImage(dmgmgs[percentBroke-1],WIDTH / 2 + ((loadx - (length / 2)) * blockSize) - p1.getX(), HEIGHT / 2 + ((loady - (height / 2)) * blockSize) + p1.getY(), BLOCKSIZE, BLOCKSIZE, null);
+                }
+
             }
         }
         for (int i=0; i<en.size(); i++){

@@ -3,12 +3,12 @@ import java.awt.*;
 public class Block extends Item implements Sprite {
 
     int x,y;
-    Image darkimg=tk.getImage(DOCPATH+"shading\\");
 
     public Block(int x, int y, int type){
         super(type);
         this.x=x;
         this.y=y;
+
     }
 
 
@@ -17,9 +17,11 @@ public class Block extends Item implements Sprite {
     public void draw(Graphics g, int xloc, int yloc) {
         if (exists) {
             //g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
-            g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE,invColor, null);
+            g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
         }
     }
+
+
 
 
 
