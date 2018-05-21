@@ -38,7 +38,7 @@ public abstract class Item implements Sprite {
         amt=1;
         hasImg = true;
         isLightSrc=false;
-        lightBlockage=.5;
+        lightBlockage=.3;
         isStackable=true;
         isBlock=true;
         isPlacable=true;
@@ -88,14 +88,12 @@ public abstract class Item implements Sprite {
                 isNotClimbable=false;
                 isPassable=true;
                 itemName = "leaves";
-                lightBlockage=.25;
                 break;
             case 7://clouds
                 isNotStandable=false;
                 isNotClimbable=false;
                 isPassable=true;
                 itemName = "Cloud";
-                lightBlockage=.25;
                 break;
             case 8://sand
                 itemName = "Sand";
@@ -169,7 +167,7 @@ public abstract class Item implements Sprite {
                 break;
         }
         if (isPassable){
-            lightBlockage=.25;
+            lightBlockage=.1;
         }
 
         if (hasImg){

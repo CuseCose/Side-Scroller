@@ -18,7 +18,7 @@ public class DarknessOverlay implements Sprite{
 
     public void update(double light){
         lightlvl=light;
-        dimg=tk.getImage(DOCPATH+"shading\\"+(int)(lightlvl*4)+".png");
+        dimg=tk.getImage(DOCPATH+"shading\\"+(int)(lightlvl*(10/3))+".png");
     }
 
 
