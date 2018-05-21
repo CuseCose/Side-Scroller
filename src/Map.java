@@ -183,8 +183,7 @@ public class Map implements Sprite {
             }
         }
 
-
-        if (timer==1) {
+        if (timer==10) {
             updateLight();
         }
         p1.move(this);
@@ -276,12 +275,14 @@ public class Map implements Sprite {
         }
         for (int x=p1.getLoadXMin()-5; x<p1.getLoadXMax()+5;x++){
             for (int y=p1.getLoadYMin()-5; y<p1.getLoadYMax()+5;y++){
-                lightSources[x][y]=0;
-                if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
-                    lightSources[x][y] += sunlightlvl;
-                }
-                if (blocks[x][y].isLightSrc){
-                    lightSources[x][y]+=blocks[x][y].getLightlvl();
+                if (isValidPosition(x,y)) {
+                    lightSources[x][y] = 0;
+                    if (y < groundlvlmap[x] + 15 && blocks[x][y].isPassable()) {
+                        lightSources[x][y] += sunlightlvl;
+                    }
+                    if (blocks[x][y].isLightSrc) {
+                        lightSources[x][y] += blocks[x][y].getLightlvl();
+                    }
                 }
             }
         }

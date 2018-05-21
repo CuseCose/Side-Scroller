@@ -85,7 +85,7 @@ public class Main extends Applet implements Runnable, KeyListener, MouseListener
             }
             repaint();
             try{
-                Thread.sleep(15);
+                Thread.sleep(16);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 System.out.println("GAME FAILED TO RUN");

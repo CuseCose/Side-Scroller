@@ -134,7 +134,7 @@ public class NPC implements Sprite {
             }
             if (timer == 49) {
                 int dice = (int) (Math.random() * 100);
-                System.out.println("npc is moving left: " + isMovingLeft + " is moving right: " + isMovingRight + " x velocity: " + xvel + " y velocity: " + yvel + " at " + x + ", " + y);
+                //System.out.println("npc is moving left: " + isMovingLeft + " is moving right: " + isMovingRight + " x velocity: " + xvel + " y velocity: " + yvel + " at " + x + ", " + y);
             }
             if (isMovingLeft){
                 if(xvel>-(BLOCKSIZE*.2)){
