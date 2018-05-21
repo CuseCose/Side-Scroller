@@ -16,6 +16,7 @@ public class Map implements Sprite {
     double[][] lightSources;
     double[][] light;
     double[][] dark;
+    boolean[][] sky;
 
 
 
@@ -34,6 +35,7 @@ public class Map implements Sprite {
         light=new double[length][height];
         dark=new double[length][height];
         shading=new DarknessOverlay[length][height];
+        sky=new boolean[length][height];
 
         for (int x=0; x<length;x++){
             groundlvlmap[x]=mg.getGroundlvlmap()[x];
