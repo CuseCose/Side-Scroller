@@ -19,6 +19,8 @@ public abstract class Item implements Sprite {
     Color color2;
     boolean complex;
     int blockSize;
+    boolean isLightSrc;
+    int lightlvl;
 
 
 
@@ -33,6 +35,7 @@ public abstract class Item implements Sprite {
         isTool=false;
         amt=1;
         hasImg = true;
+        isLightSrc=false;
         switch (itemID) {
             case 0://nothing
                 isNotStandable=true;
@@ -201,4 +204,6 @@ public abstract class Item implements Sprite {
     public void draw(Graphics g) { }
     public int getY() { return 0; }
     public int getX() { return 0; }
+    public boolean isLightSrc(){return isLightSrc;}
+    public int getLightlvl(){return lightlvl;}
 }

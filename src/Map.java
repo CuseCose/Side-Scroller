@@ -12,8 +12,13 @@ public class Map implements Sprite {
     int blockSize;
     ArrayList<NPC> en=new ArrayList<NPC>();
     MapGen mg;
-    DarknessOverlay[][] shading;
-    int[][] lightSources;
+    //DarknessOverlay[][] shading;
+    double[][] lightSources;
+    double[][] light;
+    double[][] dark;
+    boolean[][] sky;
+
+
 
 
     public Map(int size){
@@ -25,13 +30,17 @@ public class Map implements Sprite {
         biomemap=new int[length];
         groundlvlmap=new int[length];
         blocks=new Block[length][height];
-        lightSources=new int[length][height];
+        lightSources=new double[length][height];
+        light=new double[length][height];
+        dark=new double[length][height];
+        //shading=new DarknessOverlay[length][height];
+        sky=new boolean[length][height];
         for (int x=0; x<length;x++){
             groundlvlmap[x]=mg.getGroundlvlmap()[x];
             biomemap[x]=mg.getBiomemap()[x];
             for (int y=0; y<height; y++){
                 lightSources[x][y]=0;
-                shading[x][y]=new DarknessOverlay(x, y);
+                //shading[x][y]=new DarknessOverlay(x, y);
                 blocks[x][y]=new Block(x, y, mg.getMap()[x][y]);
                 //System.out.println("Making block "+x+". "+y);
             }
@@ -40,6 +49,7 @@ public class Map implements Sprite {
         blockSize=BLOCKSIZE;
         p1=new Character(this);
         bak=new Background();
+        setLight();
     }
 
     public Map(String fileloc, int type){//type indicates if your using a old map and new char, or new map and old char
@@ -56,13 +66,23 @@ public class Map implements Sprite {
         bak.draw(g);
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
             for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
-                blocks[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY());
+                blocks[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY(), dark[loadx][loady]);
+                //g.setColor(Color.black);
+                //g.drawString((int)dark[loadx][loady]+"", WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX()+5, HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY()+10);
+                //g.drawString("l:"+(int)light[loadx][loady]+"", WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX()+5, HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY()+20);
             }
         }
         for (int i=0; i<en.size(); i++){
             en.get(i).draw(g, p1.getX(), p1.getY(), length);
         }
         p1.draw(g);
+
+        for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
+            for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
+                //shading[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY(), bak.getTime());
+            }
+        }
+
 
     }
 
@@ -118,13 +138,23 @@ public class Map implements Sprite {
     int timer=0;
 
     public void move() {
-        updateSunLight();
+
+            updateLightSrcs();
+            updateLight();
+            updateDark();
+
+        for (int x=p1.getLoadXMin(); x<p1.getLoadXMax();x++){
+            for (int y=p1.getLoadYMin(); y<p1.getLoadYMax();y++){
+                //shading[x][y].update(lightSources, length, height);
+                //shading[x][y].update(dark[x][y], sky[x][y]);
+            }
+        }
         p1.move(this);
         for (int i=0; i<en.size();i++){
             en.get(i).move(this);
         }
         bak.move(p1.getRealy(), p1.getRealx(), groundlvlmap, height, biomemap);
-        if (timer<10){
+        if (timer<20){
             timer++;
         }else {
             timer=0;
@@ -133,14 +163,14 @@ public class Map implements Sprite {
             if (!bak.isDay()) {
                 int dice = (int) (Math.random() * 100);
                 int dice2 = (int) (Math.random() * 100);
-                if (dice < 10 && dice2 < 20) {
+                if (dice < 10 && dice2 < 40) {
                     en.add(new NPC(this));
                     System.out.println("spawned enemy");
                 }
             }else {
                 if (en.size()>0) {
                     int dice = (int) (Math.random() * 100);
-                    if (dice < 10) {
+                    if (dice < /*10*/20) {
                         int dice3 = (int) (Math.random() * en.size());
                         System.out.println("trying to remove enemy");
                         if (en.get(dice3).isOffScreen(this)){
@@ -153,26 +183,135 @@ public class Map implements Sprite {
         }
     }
 
-    public void updateSunLight(){
+    public void updateLightSrcs(){
         double time=bak.getTime();
-        int sunlightlvl;
-        if (time>12){
-            sunlightlvl=0;
+        double sunlightlvl;
+        if (time>3&&time<9){
+            sunlightlvl=10;
+        }else if (time>15&&time<21){
+            sunlightlvl=2;
         }else {
-            if (time<6){
-                sunlightlvl=(int)time;
+            if (time<=3){
+                sunlightlvl=6+(4*(time/3));
+            }else if (time>=9&&time<=15){
+                time=time-9;
+                sunlightlvl=10-(8*(time/6));
             }else {
-                sunlightlvl=(int)(12-time);
+                time=time-21;
+                sunlightlvl=2+(4*(time/3));
             }
         }
         for (int x=p1.getLoadXMin(); x<p1.getLoadXMax();x++){
             for (int y=p1.getLoadYMin(); y<p1.getLoadYMax();y++){
-                if (y<groundlvlmap[x]) {
-                    lightSources[x][y]=sunlightlvl;
+                lightSources[x][y]=0;
+                if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
+                    lightSources[x][y]+=sunlightlvl;
+                    sky[x][y]=true;
+                }else {
+                    sky[x][y]=false;
+                }
+                if (blocks[x][y].isLightSrc){
+                    lightSources[x][y]+=blocks[x][y].getLightlvl();
                 }
             }
         }
 
+    }
+
+    public void updateLight(){
+        for (int x1=p1.getLoadXMin(); x1<p1.getLoadXMax();x1++){
+            for (int y1=p1.getLoadYMin(); y1<p1.getLoadYMax();y1++){
+                double lightlevel = 0;
+                if (lightSources[x1][y1]!=0) {
+                    lightlevel = lightSources[x1][y1];
+                }
+                for (int dtbe=1;dtbe<5;dtbe++) {
+                    lightlevel += (lightSources[x1 + dtbe][y1] / (dtbe + 1));
+                    lightlevel += (lightSources[x1 - dtbe][1] / (dtbe + 1));
+                    lightlevel += (lightSources[x1][y1 + dtbe] / (dtbe + 1));
+                    lightlevel += (lightSources[x1][y1 - dtbe] / (dtbe + 1));
+                    for (int i=1;i<1+2*(dtbe-1);i++){
+                        lightlevel+= (lightSources[x1 + dtbe][y1+i] / (dtbe + 1+i));
+                        lightlevel+= (lightSources[x1 - dtbe][y1-i] / (dtbe + 1+i));
+                        lightlevel+= (lightSources[x1-i][y1+dtbe] / (dtbe + 1+i));
+                        lightlevel+= (lightSources[x1 + i][y1-dtbe] / (dtbe + 1+i));
+
+                    }
+                }
+                light[x1][y1]=lightlevel;
+            }
+        }
+    }
+
+    public void updateDark(){
+        for (int x1=p1.getLoadXMin(); x1<p1.getLoadXMax();x1++) {
+            for (int y1 = p1.getLoadYMin(); y1 < p1.getLoadYMax(); y1++) {
+                dark[x1][y1]=12-Math.sqrt(light[x1][y1]);
+            }
+        }
+    }
+
+    public void setLight(){
+        double time=bak.getTime();
+        double sunlightlvl;
+        if (time>3&&time<9){
+            sunlightlvl=10;
+        }else if (time>15&&time<21){
+            sunlightlvl=2;
+        }else {
+            if (time<=3){
+                sunlightlvl=6+(4*(time/3));
+            }else if (time>=9&&time<=15){
+                time=time-9;
+                sunlightlvl=10-(8*(time/6));
+            }else {
+                time=time-21;
+                sunlightlvl=2+(4*(time/3));
+            }
+        }
+        for (int x=0; x<length;x++) {
+            for (int y =0; y < height; y++) {
+                lightSources[x][y]=0;
+                if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
+                    lightSources[x][y]+=sunlightlvl;
+                    sky[x][y]=true;
+                }
+                if (blocks[x][y].isLightSrc){
+                    lightSources[x][y]+=blocks[x][y].getLightlvl();
+                }
+            }
+        }
+        for (int x1=0; x1<length;x1++) {
+            for (int y1 =0; y1 < height; y1++) {
+                double lightlevel = 0;
+                if (lightSources[x1][y1]!=0) {
+                    lightlevel = lightSources[x1][y1];
+                }
+                for (int dtbe=1;dtbe<5;dtbe++) {
+                    if (x1-dtbe>0&&x1+dtbe<height&&y1+dtbe<height&&y1-dtbe>0) {
+                        lightlevel += (lightSources[x1 + dtbe][y1] / (dtbe + 1));
+                        lightlevel += (lightSources[x1 - dtbe][1] / (dtbe + 1));
+                        lightlevel += (lightSources[x1][y1 + dtbe] / (dtbe + 1));
+                        lightlevel += (lightSources[x1][y1 - dtbe] / (dtbe + 1));
+                        for (int i = 1; i < 1 + 2 * (dtbe - 1); i++) {
+                            if (x1-i>0&&x1+i<height&&y1+i<height&&y1-i>0) {
+                                lightlevel += (lightSources[x1 + dtbe][y1 + i] / (dtbe + 1 + i));
+                                lightlevel += (lightSources[x1 - dtbe][y1 - i] / (dtbe + 1 + i));
+                                lightlevel += (lightSources[x1 - i][y1 + dtbe] / (dtbe + 1 + i));
+                                lightlevel += (lightSources[x1 + i][y1 - dtbe] / (dtbe + 1 + i));
+                            }
+
+                        }
+                    }
+                }
+                light[x1][y1]=lightlevel;
+            }
+        }
+        for (int x1=0; x1<length;x1++) {
+            for (int y1 =0; y1 < height; y1++) {
+                dark[x1][y1]=12-Math.sqrt(light[x1][y1]);
+            }
+        }
     }
 
     public void setSelectedItem(int itemnum){p1.setSelectedItem(itemnum);}

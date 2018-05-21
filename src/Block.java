@@ -3,6 +3,7 @@ import java.awt.*;
 public class Block extends Item implements Sprite {
 
     int x,y;
+    Image darkimg=tk.getImage(DOCPATH+"shading\\");
 
     public Block(int x, int y, int type){
         super(type);
@@ -15,8 +16,20 @@ public class Block extends Item implements Sprite {
 
     public void draw(Graphics g, int xloc, int yloc) {
         if (exists) {
-            g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
+            //g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
+            g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE,invColor, null);
         }
+    }
+
+    public void draw(Graphics g, int xloc, int yloc, double darkness) {
+        if (exists) {
+            //g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
+            g.drawImage(super.img, xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
+            darkimg=tk.getImage(DOCPATH+"shading\\"+(int)((darkness/12)*29)+".png");
+            g.drawImage(darkimg,xloc, yloc, BLOCKSIZE, BLOCKSIZE, null);
+        }
+
+
     }
 
 

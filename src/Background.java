@@ -12,7 +12,7 @@ public class Background implements Sprite{
 
 
     public Background(){
-        time=12;
+        time=6;
         playerLayer=0;
         moon=tk.getImage(DOCPATH+"moon.png");
     }
