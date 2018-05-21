@@ -137,12 +137,12 @@ public class NPC implements Sprite {
                 //System.out.println("npc is moving left: " + isMovingLeft + " is moving right: " + isMovingRight + " x velocity: " + xvel + " y velocity: " + yvel + " at " + x + ", " + y);
             }
             if (isMovingLeft){
-                if(xvel>-(BLOCKSIZE*.2)){
+                if(xvel>-(BLOCKSIZE*.15)){
                     xvel-=BLOCKSIZE*.05;
                 }
             }
             if (isMovingRight){
-                if(xvel<(BLOCKSIZE*.2)){
+                if(xvel<(BLOCKSIZE*.15)){
                     xvel+=BLOCKSIZE*.05;
                 }
             }

@@ -104,15 +104,6 @@ public class Map implements Sprite {
             isPressingLeft = true;
             clickDuration = 0;
         }
-
-        /*
-        if (p1.selectedItemID==12){
-            System.out.println("breaking block");
-            if (blocks[clickx][clicky].exists) {
-                p1.addToInv(blocks[clickx][clicky].getitemID());
-                blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), 0);
-            }
-        } */
         if (p1.selectedItemIsPlacable()){
             if (blocks[clickx][clicky].getitemID()==0) {
                 blocks[clickx][clicky] = new Block(getRealMouseX(x), getRealMouseY(y), p1.selectedItemID);

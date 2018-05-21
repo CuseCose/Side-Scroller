@@ -39,7 +39,7 @@ public abstract class Item implements Sprite {
         amt=1;
         hasImg = true;
         isLightSrc=false;
-        lightBlockage=.3;
+        lightBlockage=.2;
         isStackable=true;
         isBlock=true;
         isPlacable=true;
@@ -164,13 +164,13 @@ public abstract class Item implements Sprite {
                 isNotStandable=true;
                 isNotClimbable=true;
                 isPassable=true;
-                lightlvl=5;
+                lightlvl=4;
                 isBlock=false;
                 itemName="Torch";
                 break;
         }
         if (isPassable){
-            lightBlockage=.1;
+            lightBlockage=.05;
         }
 
         if (hasImg){
