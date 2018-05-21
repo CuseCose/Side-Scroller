@@ -18,6 +18,19 @@ public class Map implements Sprite {
     double[][] dark;
     boolean[][] sky;
 
+    /*
+    public void applyLightRec(int currentx, int currenty, float lastLight) {
+   if (!isValidPosition(currentx, currenty)) return;
+   float newLight = lastLight-map.getLightBlockingAmmoutAt(currentx, currenty);
+   if (newLight <= map.getLight(currentx, currenty)) return;
+
+   map.setLight(currentx, currenty, newLight);
+
+   applyLightRec(currentx+1, currenty, newLight);
+   applyLightRec(currentx, currenty+1, newLight);
+   applyLightRec(currentx-1, currenty, newLight);
+   applyLightRec(currentx, currenty-1, newLight);
+     */
 
 
 
@@ -180,7 +193,7 @@ public class Map implements Sprite {
 
 
     public void updateLight(){
-        setLightSources();
+        updateLightSources();
         for (int x1=p1.getLoadXMin()-5; x1<p1.getLoadXMax()+5;x1++){
             for (int y1=p1.getLoadYMin()-5; y1<p1.getLoadYMax()+5;y1++){
                 double lightlevel = 0;
@@ -211,7 +224,7 @@ public class Map implements Sprite {
     }
 
 
-    public void setLightSources(){
+    public void updateLightSources(){
         double time=bak.getTime();
         double sunlightlvl;
         if (time>3&&time<9){
@@ -233,9 +246,8 @@ public class Map implements Sprite {
             for (int y=p1.getLoadYMin()-5; y<p1.getLoadYMax()+5;y++){
                 lightSources[x][y]=0;
                 if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
-                    lightSources[x][y]+=sunlightlvl;
-
-                }else {
+                    lightSources[x][y] += sunlightlvl;
+                    sky[x][y] = true;
                 }
                 if (blocks[x][y].isLightSrc){
                     lightSources[x][y]+=blocks[x][y].getLightlvl();
