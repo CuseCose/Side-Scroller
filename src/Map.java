@@ -12,7 +12,7 @@ public class Map implements Sprite {
     int blockSize;
     ArrayList<NPC> en=new ArrayList<NPC>();
     MapGen mg;
-    //DarknessOverlay[][] shading;
+    DarknessOverlay[][] shading;
     double[][] lightSources;
     double[][] light;
     double[][] dark;
@@ -33,14 +33,14 @@ public class Map implements Sprite {
         lightSources=new double[length][height];
         light=new double[length][height];
         dark=new double[length][height];
-        //shading=new DarknessOverlay[length][height];
+        shading=new DarknessOverlay[length][height];
         sky=new boolean[length][height];
         for (int x=0; x<length;x++){
             groundlvlmap[x]=mg.getGroundlvlmap()[x];
             biomemap[x]=mg.getBiomemap()[x];
             for (int y=0; y<height; y++){
                 lightSources[x][y]=0;
-                //shading[x][y]=new DarknessOverlay(x, y);
+                shading[x][y]=new DarknessOverlay(x, y);
                 blocks[x][y]=new Block(x, y, mg.getMap()[x][y]);
                 //System.out.println("Making block "+x+". "+y);
             }
@@ -67,7 +67,7 @@ public class Map implements Sprite {
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
             for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
                 blocks[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY(), dark[loadx][loady]);
-                //g.setColor(Color.black);
+                g.setColor(Color.black);
                 //g.drawString((int)dark[loadx][loady]+"", WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX()+5, HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY()+10);
                 //g.drawString("l:"+(int)light[loadx][loady]+"", WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX()+5, HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY()+20);
             }
@@ -79,7 +79,7 @@ public class Map implements Sprite {
 
         for(int loadx=p1.getLoadXMin();loadx<p1.getLoadXMax();loadx++){
             for(int loady=p1.getLoadYMin(); loady<p1.getLoadYMax(); loady++){
-                //shading[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY(), bak.getTime());
+                shading[loadx][loady].draw(g,WIDTH/2+((loadx-(length/2))*blockSize)-p1.getX(), HEIGHT/2+((loady-(height/2))*blockSize)+p1.getY());
             }
         }
 
@@ -138,17 +138,17 @@ public class Map implements Sprite {
     int timer=0;
 
     public void move() {
-
+        if (timer==1) {
             updateLightSrcs();
             updateLight();
             updateDark();
-
-        for (int x=p1.getLoadXMin(); x<p1.getLoadXMax();x++){
+        }
+        /*or (int x=p1.getLoadXMin(); x<p1.getLoadXMax();x++){
             for (int y=p1.getLoadYMin(); y<p1.getLoadYMax();y++){
                 //shading[x][y].update(lightSources, length, height);
                 //shading[x][y].update(dark[x][y], sky[x][y]);
             }
-        }
+        }*/
         p1.move(this);
         for (int i=0; i<en.size();i++){
             en.get(i).move(this);
@@ -201,8 +201,8 @@ public class Map implements Sprite {
                 sunlightlvl=2+(4*(time/3));
             }
         }
-        for (int x=p1.getLoadXMin(); x<p1.getLoadXMax();x++){
-            for (int y=p1.getLoadYMin(); y<p1.getLoadYMax();y++){
+        for (int x=p1.getLoadXMin()-5; x<p1.getLoadXMax()+5;x++){
+            for (int y=p1.getLoadYMin()-5; y<p1.getLoadYMax()+5;y++){
                 lightSources[x][y]=0;
                 if (y<groundlvlmap[x]+15&&blocks[x][y].isPassable()) {
                     lightSources[x][y]+=sunlightlvl;
@@ -219,8 +219,8 @@ public class Map implements Sprite {
     }
 
     public void updateLight(){
-        for (int x1=p1.getLoadXMin(); x1<p1.getLoadXMax();x1++){
-            for (int y1=p1.getLoadYMin(); y1<p1.getLoadYMax();y1++){
+        for (int x1=p1.getLoadXMin()-5; x1<p1.getLoadXMax()+5;x1++){
+            for (int y1=p1.getLoadYMin()-5; y1<p1.getLoadYMax()+5;y1++){
                 double lightlevel = 0;
                 if (lightSources[x1][y1]!=0) {
                     lightlevel = lightSources[x1][y1];
@@ -244,9 +244,9 @@ public class Map implements Sprite {
     }
 
     public void updateDark(){
-        for (int x1=p1.getLoadXMin(); x1<p1.getLoadXMax();x1++) {
-            for (int y1 = p1.getLoadYMin(); y1 < p1.getLoadYMax(); y1++) {
-                dark[x1][y1]=12-Math.sqrt(light[x1][y1]);
+        for (int x1=p1.getLoadXMin()-5; x1<p1.getLoadXMax()+5;x1++) {
+            for (int y1 = p1.getLoadYMin()-5; y1 < p1.getLoadYMax()+5; y1++) {
+                shading[x1][y1].update(12-Math.sqrt(light[x1][y1]));
             }
         }
     }

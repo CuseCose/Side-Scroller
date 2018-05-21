@@ -8,6 +8,7 @@ public class Background implements Sprite{
     Color dirtLayer=new Color(103,51,50);
     Color caveLayer=new Color(153, 153, 102);
     Image moon;
+    Image darkoverlay;
 
 
 
@@ -52,6 +53,9 @@ public class Background implements Sprite{
                 g.drawImage(moon,(int)((time-12)*(WIDTH/10)-100), (int)(HEIGHT*.1), 100,100, null);
             }
         }
+    }
+
+    public void drawOverlay(){
     }
 
 
