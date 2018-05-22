@@ -217,7 +217,7 @@ public class Map implements Sprite {
         updateLightSources();
         for (int x1=p1.getLoadXMin()-5; x1<p1.getLoadXMax()+5;x1++){
             for (int y1=p1.getLoadYMin()-5; y1<p1.getLoadYMax()+5;y1++){
-                //shading[x1][y1].update(0);
+                if (!isValidPosition(x1,y1)){return;}
                 if (lightSources[x1][y1]!=0) {
                     spreadLight(x1,y1,lightSources[x1][y1]);
                 }
