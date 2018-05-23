@@ -5,7 +5,7 @@ import java.awt.Toolkit;
 public interface Sprite {
 
   String DOCPATH = (System.getenv("USERPROFILE"))
-      + "\\Development\\IntelliJ\\IdeaProjects\\Side-Scroller\\textures\\";
+      + "\\Documents\\GitHub\\Side-Scroller\\textures\\";
   int WIDTH = 1280, HEIGHT = 900, BLOCKSIZE = 40;
 
   void draw(Graphics g);
